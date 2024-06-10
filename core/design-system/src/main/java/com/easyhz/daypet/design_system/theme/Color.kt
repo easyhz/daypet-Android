@@ -1,0 +1,24 @@
+package com.easyhz.daypet.design_system.theme
+
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.graphics.Color
+
+@Stable
+val Primary = Color(0xFF119822)
+
+@Stable
+val mainBackground = Color(0xFFFFFFFF)
+
+@Stable
+val Primary2 = Color(0xFF92DF9C)
+
+@Stable
+val TextColor = Color(0xFF1B1E28)
+
+@Stable
+val SubTextColor = Color(0xFFA8A8AA)
+
+@Stable
+val ButtonShapeColor = Color(0xFFF0F0F2)
+
+
