@@ -34,6 +34,10 @@ gradlePlugin {
             id = "daypet.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidApplicationTest") {
+            id = "daypet.android.application.test"
+            implementationClass = "AndroidApplicationTestConventionPlugin"
+        }
         register("androidLibraryCompose") {
             id = "daypet.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"

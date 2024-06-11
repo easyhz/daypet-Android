@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.daypet.android.application)
     alias(libs.plugins.daypet.android.application.compose)
     alias(libs.plugins.daypet.android.application.flavors)
+    alias(libs.plugins.daypet.android.application.test)
     alias(libs.plugins.daypet.android.application.firebase)
     alias(libs.plugins.daypet.android.hilt)
 }

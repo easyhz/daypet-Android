@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.daypet.android.library)
     alias(libs.plugins.daypet.android.library.compose)
+    alias(libs.plugins.daypet.android.application.test)
 }
 
 android {

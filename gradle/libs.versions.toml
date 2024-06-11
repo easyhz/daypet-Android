@@ -69,6 +69,7 @@ daypet-android-application = { id = "daypet.android.application", version = "uns
 daypet-android-application-compose = { id = "daypet.android.application.compose", version = "unspecified" }
 daypet-android-application-firebase = { id = "daypet.android.application.firebase", version = "unspecified" }
 daypet-android-application-flavors = { id = "daypet.android.application.flavors", version = "unspecified" }
+daypet-android-application-test = { id="daypet.android.application.test", version="unspecified" }
 daypet-android-feature = { id = "daypet.android.feature", version = "unspecified" }
 daypet-android-hilt = { id = "daypet.android.hilt", version = "unspecified" }
 daypet-android-library = { id = "daypet.android.library", version = "unspecified" }
