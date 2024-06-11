@@ -23,6 +23,8 @@ navigation = "2.8.0-beta02"
 materialVersion = "1.12.0"
 kotlinxCoroutines = "1.8.1"
 javaxInject = "1"
+desugaring = "2.0.4"
+calendar = "2.6.0-beta01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,6 +56,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
+calendar-compose = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "calendar" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -16,4 +16,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Calendar library
+    implementation(libs.calendar.compose)
 }
