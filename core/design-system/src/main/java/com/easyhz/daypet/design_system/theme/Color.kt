@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 val Primary = Color(0xFF119822)
 
 @Stable
-val mainBackground = Color(0xFFFFFFFF)
+val MainBackground = Color(0xFFFFFFFF)
 
 @Stable
 val Primary2 = Color(0xFF92DF9C)
