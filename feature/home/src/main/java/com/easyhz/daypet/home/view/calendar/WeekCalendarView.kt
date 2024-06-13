@@ -13,11 +13,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -34,35 +30,31 @@ import com.easyhz.daypet.home.util.displayText
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.core.daysOfWeek
-import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Composable
 fun HomeWeekCalendar(
     modifier: Modifier = Modifier,
     weekState: WeekCalendarState,
-    currentDate: LocalDate
+    currentDate: LocalDate,
+    selection: LocalDate,
+    onChangedDate: (LocalDate) -> Unit
 ) {
-    var selection by rememberSaveable { mutableStateOf(currentDate) }
-    val daysOfWeek = remember { daysOfWeek() }
     WeekCalendar(
         state = weekState,
-        weekHeader = { CalendarHeader(daysOfWeek = daysOfWeek) },
+        weekHeader = { CalendarHeader() },
         dayContent = {day ->
             Day(
                 date = day.date,
                 isSelected = selection == day.date,
                 isCurrentDate = currentDate == day.date
             ) { clickedDay ->
-                if (selection != clickedDay) {
-                    selection = clickedDay
-                }
+                onChangedDate(clickedDay)
             }
         },
         modifier = modifier
     )
 }
-
 
 @Composable
 private fun Day(
@@ -77,10 +69,7 @@ private fun Day(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .noRippleClickable {
-                onClick(date)
-                println("day.position.name ${date.dayOfWeek.name} ,, ")
-            },
+            .noRippleClickable { onClick(date) },
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -108,7 +97,8 @@ private fun Day(
 
 @Stable
 @Composable
-private fun CalendarHeader(daysOfWeek: List<DayOfWeek>) {
+private fun CalendarHeader() {
+    val daysOfWeek = remember { daysOfWeek() }
     Row(
         modifier = Modifier
             .fillMaxWidth()
