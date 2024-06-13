@@ -11,7 +11,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-
+/**
+ * MVI 를 위한 [BaseViewModel]
+ *
+ * [UiState] State : 상태
+ * [UiIntent] Intent : 의도
+ * [SideEffect] SideEffect: 부수효과
+ */
 abstract class BaseViewModel<State: UiState, Intent: UiIntent, SideEffect: UiSideEffect>(
     initialState: State
 ): ViewModel() {
@@ -32,29 +38,29 @@ abstract class BaseViewModel<State: UiState, Intent: UiIntent, SideEffect: UiSid
     }
 
     /**
-     * Intent 구독
+     * [Intent] 구독
      */
     private fun subscribeIntent() = viewModelScope.launch {
         intent.collect { handleIntent(it) }
     }
 
     /**
-     * Intent 핸들러
+     * [Intent] 핸들러
      */
     abstract fun handleIntent(intent: UiIntent)
 
     /**
-     * State 설정
+     * [State] 설정
      */
     fun reduce(reducer: State.() -> State) { _uiState.value = currentState.reducer() }
 
     /**
-     * Intent 설정
+     * [Intent] 설정
      */
     fun postIntent(intent: Intent) = viewModelScope.launch { _intent.emit(intent) }
 
     /**
-     * SideEffect 설정
+     * [SideEffect] 설정
      */
     fun postSideEffect(builder: () -> SideEffect) = viewModelScope.launch { _sideEffect.send(builder()) }
 }
