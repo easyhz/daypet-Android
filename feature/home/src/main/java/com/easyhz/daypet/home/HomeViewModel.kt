@@ -18,8 +18,8 @@ class HomeViewModel @Inject constructor(
     override fun handleIntent(intent: UiIntent) {
         when(intent) {
             is HomeIntent.ChangeDate -> { onChangeDate(intent.clickedDay) }
+            is HomeIntent.ArchiveClick -> { }
             is HomeIntent.TaskClick -> { }
-            is HomeIntent.EventClick -> { }
         }
     }
 
