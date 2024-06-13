@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 
 @Composable
-fun rememberFirstVisibleWeekAfterScroll(
+internal fun rememberFirstVisibleWeekAfterScroll(
     state: WeekCalendarState,
     viewportPercent: Float = 50f
 ): Week {

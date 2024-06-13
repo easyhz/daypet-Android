@@ -29,7 +29,7 @@ import com.easyhz.daypet.design_system.R
 
 
 @Composable
-fun TaskContent(
+internal fun TaskContent(
     task: Task
 ) {
     val textDecoration = if (task.isDone) TextDecoration.LineThrough else TextDecoration.None

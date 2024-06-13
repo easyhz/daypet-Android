@@ -33,7 +33,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import java.time.LocalDate
 
 @Composable
-fun HomeWeekCalendar(
+internal fun HomeWeekCalendar(
     modifier: Modifier = Modifier,
     weekState: WeekCalendarState,
     currentDate: LocalDate,
