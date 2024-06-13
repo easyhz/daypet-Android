@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowForwardIos
+import androidx.compose.material.icons.automirrored.outlined.NavigateNext
 import androidx.compose.material.icons.outlined.AccessTime
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -43,8 +43,8 @@ fun ArchiveContent(
             ArchiveInfo(archive)
         }
         Icon(
-            modifier = Modifier.align(Alignment.CenterEnd),
-            imageVector = Icons.AutoMirrored.Outlined.ArrowForwardIos,
+            modifier = Modifier.size(24.dp).align(Alignment.CenterEnd),
+            imageVector = Icons.AutoMirrored.Outlined.NavigateNext,
             contentDescription = null
         )
     }
