@@ -3,5 +3,6 @@
 
     <string name="event_archive">기억</string>
     <string name="event_task">할 일</string>
+    <string name="menu_add">추가</string>
 
 </resources>

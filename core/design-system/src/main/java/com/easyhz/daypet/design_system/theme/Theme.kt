@@ -1,6 +1,8 @@
 package com.easyhz.daypet.design_system.theme
 
 import android.app.Activity
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -25,5 +27,19 @@ fun DayPetTheme(
 
     MaterialTheme(
         content = content
+    )
+}
+
+// no ripple
+class NoRippleTheme : RippleTheme {
+    @Composable
+    override fun defaultColor(): Color = Color.Unspecified
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleAlpha(
+        draggedAlpha = 0f,
+        focusedAlpha = 0f,
+        hoveredAlpha = 0f,
+        pressedAlpha = 0f,
     )
 }
