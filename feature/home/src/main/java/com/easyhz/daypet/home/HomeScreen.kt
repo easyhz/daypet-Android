@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.home.util.getCalendarPadding
 import com.easyhz.daypet.home.util.getWeekPageTitle
@@ -31,8 +32,7 @@ fun HomeScreen() {
         firstVisibleWeekDate = currentDate,
     )
     val visibleWeek = rememberFirstVisibleWeekAfterScroll(state)
-
-    Scaffold(
+    DayPetScaffold(
         topBar = { HomeTopBar(title = getWeekPageTitle(visibleWeek)) }
     ) {
         Column(
