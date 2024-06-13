@@ -24,7 +24,7 @@ import com.easyhz.daypet.design_system.theme.SubTextColor
 import com.easyhz.daypet.domain.model.event.Archive
 
 @Composable
-fun ArchiveContent(
+internal fun ArchiveContent(
     archive: Archive
 ) {
     Box(

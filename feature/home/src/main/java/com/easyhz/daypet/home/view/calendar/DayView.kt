@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 
 @Composable
-fun DayCircle() {
+internal fun DayCircle() {
 //    if (false) {
 //                Image(
 //                    modifier = Modifier

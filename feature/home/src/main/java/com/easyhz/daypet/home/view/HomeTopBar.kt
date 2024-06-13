@@ -24,7 +24,7 @@ import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading1
 
 @Composable
-fun HomeTopBar(
+internal fun HomeTopBar(
     title: String,
 ) {
     Box(

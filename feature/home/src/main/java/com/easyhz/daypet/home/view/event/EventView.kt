@@ -44,7 +44,7 @@ enum class Event(
 }
 
 @Composable
-fun EventView(
+internal fun EventView(
     modifier: Modifier = Modifier,
     archiveList: List<Archive>,
     taskList: List<Task>
