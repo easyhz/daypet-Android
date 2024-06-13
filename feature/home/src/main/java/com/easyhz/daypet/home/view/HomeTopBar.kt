@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -36,7 +36,7 @@ fun HomeTopBar(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
                 modifier = Modifier.height(32.dp),
@@ -45,8 +45,8 @@ fun HomeTopBar(
             )
             Icon(
                 modifier = Modifier.size(32.dp),
-                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                contentDescription = "KeyboardArrowRight"
+                imageVector = Icons.Outlined.KeyboardArrowDown,
+                contentDescription = "KeyboardArrowDown"
             )
         }
         InfoTab(
