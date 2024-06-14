@@ -21,4 +21,7 @@ val SubTextColor = Color(0xFFA8A8AA)
 @Stable
 val ButtonShapeColor = Color(0xFFF0F0F2)
 
+@Stable
+val DimColor = Color(0xFF000000).copy(0.25f)
+
 
