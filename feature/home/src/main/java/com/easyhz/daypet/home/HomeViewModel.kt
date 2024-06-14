@@ -15,7 +15,7 @@ class HomeViewModel @Inject constructor(
 ): BaseViewModel<HomeState, HomeIntent, HomeSideEffect>(
     initialState = HomeState.init()
 ) {
-    override fun handleIntent(intent: UiIntent) {
+    override fun handleIntent(intent: HomeIntent) {
         when(intent) {
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
             is HomeIntent.ClickArchive -> { }

@@ -47,7 +47,7 @@ abstract class BaseViewModel<State: UiState, Intent: UiIntent, SideEffect: UiSid
     /**
      * [Intent] 핸들러
      */
-    protected abstract fun handleIntent(intent: UiIntent)
+    protected abstract fun handleIntent(intent: Intent)
 
     /**
      * [State] 설정
