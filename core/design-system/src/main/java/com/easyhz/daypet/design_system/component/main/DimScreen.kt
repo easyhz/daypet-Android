@@ -22,7 +22,7 @@ import com.easyhz.daypet.design_system.theme.MainBackground
  * @param dimColor 어두워지는 색
  * @param statusBarColor statusBar 색 (null 이면 적용 X)
  * @param navigationBarColor navigationBar 색 (null 이면 적용 X)
- * @param onDismiss 배경을 눌렀을 때 이벤트
+ * @param onDismissRequest 배경을 눌렀을 때 이벤트
  * @param content UI
  */
 @Composable
@@ -31,7 +31,7 @@ fun DimScreenProvider(
     dimColor: Color = Color.Black.copy(0.25f),
     statusBarColor: Color? = MainBackground,
     navigationBarColor: Color? = MainBackground,
-    onDismiss: () -> Unit,
+    onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -41,7 +41,7 @@ fun DimScreenProvider(
             dimColor = dimColor,
             statusBarColor = statusBarColor,
             navigationBarColor = navigationBarColor,
-            onDismiss = onDismiss
+            onDismissRequest = onDismissRequest
         )
     }
 }
@@ -52,7 +52,7 @@ private fun Dim(
     dimColor: Color,
     statusBarColor: Color?,
     navigationBarColor: Color?,
-    onDismiss: () -> Unit,
+    onDismissRequest: () -> Unit,
 ) {
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -71,7 +71,7 @@ private fun Dim(
             modifier = Modifier
                 .fillMaxSize()
                 .background(dimColor)
-                .noRippleClickable { onDismiss() }
+                .noRippleClickable { onDismissRequest() }
         )
     }
 }
