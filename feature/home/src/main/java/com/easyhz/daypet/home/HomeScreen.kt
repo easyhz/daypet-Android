@@ -1,6 +1,5 @@
 package com.easyhz.daypet.home
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,11 +18,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
+import com.easyhz.daypet.design_system.component.main.DimScreenProvider
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.fab.FabButtonItem
 import com.easyhz.daypet.design_system.util.fab.FabOption
+import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.dummy.ARCHIVE_DUMMY
 import com.easyhz.daypet.home.dummy.TASK_DUMMY
@@ -41,7 +41,6 @@ import java.time.LocalDate
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val calendarPadding = getCalendarPadding(20, screenWidth).dp
@@ -54,10 +53,13 @@ fun HomeScreen(
         firstVisibleWeekDate = currentDate,
     )
     val visibleWeek = rememberFirstVisibleWeekAfterScroll(state)
+    val fabState = rememberMultiFabState()
+
     DayPetScaffold(
         topBar = { HomeTopBar(title = getWeekPageTitle(visibleWeek)) },
         floatingActionButton = {
             ExpandedFloatingActionButton(
+                fabState = fabState,
                 items = listOf(
                     FabButtonItem(
                         imageVector = Icons.Outlined.CalendarMonth,
@@ -78,28 +80,33 @@ fun HomeScreen(
                     backgroundColor = ButtonShapeColor
                 ),
                 onFabItemClicked = {
-                    Toast.makeText(context, it.label, Toast.LENGTH_SHORT).show()
+                    println("it> ${it.label}")
                 },
             )
         }
     ) {
-        Column(
-            modifier = Modifier.padding(it)
+        DimScreenProvider(
+            isDim = fabState.value.isExpanded(),
+            onDismiss = { fabState.value = fabState.value.toggleValue() }
         ) {
-            HomeWeekCalendar(
-                modifier = Modifier
-                    .padding(horizontal = calendarPadding, vertical = 8.dp),
-                weekState = state,
-                currentDate = currentDate,
-                selection = uiState.selection,
-                onChangedDate = { clickedDay ->
-                    viewModel.postIntent(HomeIntent.ChangeDate(clickedDay))
-                }
-            )
-            EventView(
-                modifier = Modifier.screenHorizonPadding(),
-                archiveList = ARCHIVE_DUMMY, taskList = TASK_DUMMY
-            )
+            Column(
+                modifier = Modifier.padding(it)
+            ) {
+                HomeWeekCalendar(
+                    modifier = Modifier
+                        .padding(horizontal = calendarPadding, vertical = 8.dp),
+                    weekState = state,
+                    currentDate = currentDate,
+                    selection = uiState.selection,
+                    onChangedDate = { clickedDay ->
+                        viewModel.postIntent(HomeIntent.ChangeDate(clickedDay))
+                    }
+                )
+                EventView(
+                    modifier = Modifier.screenHorizonPadding(),
+                    archiveList = ARCHIVE_DUMMY, taskList = TASK_DUMMY
+                )
+            }
         }
     }
 }
