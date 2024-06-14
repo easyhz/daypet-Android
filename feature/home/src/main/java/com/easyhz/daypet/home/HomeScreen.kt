@@ -87,7 +87,7 @@ fun HomeScreen(
     ) {
         DimScreenProvider(
             isDim = fabState.value.isExpanded(),
-            onDismiss = { fabState.value = fabState.value.toggleValue() }
+            onDismissRequest = { fabState.value = fabState.value.toggleValue() }
         ) {
             Column(
                 modifier = Modifier.padding(it)
