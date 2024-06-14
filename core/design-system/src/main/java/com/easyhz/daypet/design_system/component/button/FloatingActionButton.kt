@@ -51,7 +51,6 @@ fun ExpandedFloatingActionButton(
             0f
         }, label = "rotation"
     )
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.End
@@ -80,12 +79,15 @@ fun ExpandedFloatingActionButton(
             imageVector = mainMenu.imageVector,
             label = mainMenu.label,
             fabOption = mainMenu.fapOption,
-            modifier = Modifier.size(32.dp).rotate(rotation)
+            modifier = Modifier
+                .size(32.dp)
+                .rotate(rotation)
         ) {
             fabState.value = fabState.value.toggleValue()
             stateChanged(fabState.value)
         }
     }
+
 }
 
 @Composable
