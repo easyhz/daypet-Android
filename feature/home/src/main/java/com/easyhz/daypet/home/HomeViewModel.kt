@@ -17,13 +17,13 @@ class HomeViewModel @Inject constructor(
 ) {
     override fun handleIntent(intent: UiIntent) {
         when(intent) {
-            is HomeIntent.ChangeDate -> { onChangeDate(intent.clickedDay) }
-            is HomeIntent.ArchiveClick -> { }
-            is HomeIntent.TaskClick -> { }
+            is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
+            is HomeIntent.ClickArchive -> { }
+            is HomeIntent.ClickTask -> { }
         }
     }
 
-    private fun onChangeDate(clickedDay: LocalDate) {
+    private fun changeDate(clickedDay: LocalDate) {
         if (uiState.value.selection != clickedDay) {
             reduce { copy(selection = clickedDay) }
         }
