@@ -23,7 +23,6 @@ import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.TextColor
-import com.easyhz.daypet.design_system.util.fab.FabButton
 import com.easyhz.daypet.design_system.util.fab.FabButtonItem
 import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.home.contract.HomeIntent
@@ -69,7 +68,7 @@ fun HomeScreen(
                         label = stringResource(id = R.string.event_task)
                     ),
                 ),
-                mainIcon = FabButton(
+                mainMenu = FabButtonItem(
                     imageVector = Icons.Outlined.Add,
                     label = stringResource(id = R.string.menu_add),
                     fapOption = FabOption()

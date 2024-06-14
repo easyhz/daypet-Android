@@ -31,7 +31,6 @@ import com.easyhz.daypet.design_system.extension.shadowEffect
 import com.easyhz.daypet.design_system.theme.NoRippleTheme
 import com.easyhz.daypet.design_system.util.fab.FabButtonItem
 import com.easyhz.daypet.design_system.util.fab.FabButtonState
-import com.easyhz.daypet.design_system.util.fab.FabButton
 import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 
@@ -40,14 +39,14 @@ fun ExpandedFloatingActionButton(
     modifier: Modifier = Modifier,
     items: List<FabButtonItem>,
     fabState: MutableState<FabButtonState> = rememberMultiFabState(),
-    mainIcon: FabButton,
-    subMenuOption: FabOption = FabOption(),
+    mainMenu: FabButtonItem,
+    subMenuOption: FabOption,
     onFabItemClicked: (fabItem: FabButtonItem) -> Unit,
     stateChanged: (fabState: FabButtonState) -> Unit = {},
 ) {
     val rotation by animateFloatAsState(
         if (fabState.value == FabButtonState.Expand) {
-            mainIcon.iconRotate ?: 0f
+            mainMenu.iconRotate ?: 0f
         } else {
             0f
         }, label = "rotation"
@@ -78,10 +77,10 @@ fun ExpandedFloatingActionButton(
             }
         }
         DayPetFloatingActionButton(
-            imageVector = mainIcon.imageVector,
-            label = mainIcon.description,
-            fabOption = mainIcon.fapOption,
-            modifier = Modifier.rotate(rotation)
+            imageVector = mainMenu.imageVector,
+            label = mainMenu.label,
+            fabOption = mainMenu.fapOption,
+            modifier = Modifier.size(32.dp).rotate(rotation)
         ) {
             fabState.value = fabState.value.toggleValue()
             stateChanged(fabState.value)
@@ -96,6 +95,7 @@ private fun FabSubItem(
     onFabItemClicked: (item: FabButtonItem) -> Unit
 ) {
     DayPetFloatingActionButton(
+        modifier = Modifier.size(32.dp),
         imageVector = item.imageVector,
         label = item.label,
         fabOption = fabOption
@@ -133,7 +133,7 @@ private fun DayPetFloatingActionButton(
             contentColor = fabOption.iconColor
         ) {
             Icon(
-                modifier = modifier.size(32.dp),
+                modifier = modifier,
                 imageVector = imageVector,
                 contentDescription = label,
                 tint = fabOption.iconColor
