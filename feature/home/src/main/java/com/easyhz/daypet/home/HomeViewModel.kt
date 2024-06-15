@@ -1,7 +1,6 @@
 package com.easyhz.daypet.home
 
 import com.easyhz.daypet.common.base.BaseViewModel
-import com.easyhz.daypet.common.base.UiIntent
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
 import com.easyhz.daypet.home.contract.HomeState
@@ -20,6 +19,8 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
             is HomeIntent.ClickArchive -> { }
             is HomeIntent.ClickTask -> { }
+            is HomeIntent.ShowMonthCalendar -> { showMonthCalendar() }
+            is HomeIntent.HideMonthCalendar -> { hideMonthCalendar() }
         }
     }
 
@@ -27,5 +28,13 @@ class HomeViewModel @Inject constructor(
         if (uiState.value.selection != clickedDay) {
             reduce { copy(selection = clickedDay) }
         }
+    }
+
+    private fun showMonthCalendar() {
+        reduce { copy(showMonthCalendar = true) }
+    }
+
+    private fun hideMonthCalendar() {
+        reduce { copy(showMonthCalendar = false) }
     }
 }

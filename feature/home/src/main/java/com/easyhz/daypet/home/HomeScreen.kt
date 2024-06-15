@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CheckCircleOutline
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.main.DimScreenProvider
@@ -33,10 +35,12 @@ import com.easyhz.daypet.home.util.getWeekPageTitle
 import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
 import com.easyhz.daypet.home.view.HomeTopBar
 import com.easyhz.daypet.home.view.calendar.HomeWeekCalendar
+import com.easyhz.daypet.home.view.calendar.MonthCalendarBottomSheetContent
 import com.easyhz.daypet.home.view.event.EventView
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
@@ -56,7 +60,11 @@ fun HomeScreen(
     val fabState = rememberMultiFabState()
 
     DayPetScaffold(
-        topBar = { HomeTopBar(title = getWeekPageTitle(visibleWeek)) },
+        topBar = {
+            HomeTopBar(
+                title = getWeekPageTitle(visibleWeek),
+                onClickTitle = { viewModel.postIntent(HomeIntent.ShowMonthCalendar) }
+            )},
         floatingActionButton = {
             ExpandedFloatingActionButton(
                 fabState = fabState,
@@ -80,7 +88,7 @@ fun HomeScreen(
                     backgroundColor = ButtonShapeColor
                 ),
                 onFabItemClicked = {
-                    println("it> ${it.label}")
+                    // TODO: navigate to Item Screen
                 },
             )
         }
@@ -89,6 +97,15 @@ fun HomeScreen(
             isDim = fabState.value.isExpanded(),
             onDismissRequest = { fabState.value = fabState.value.toggleValue() }
         ) {
+            if (uiState.showMonthCalendar) {
+                BottomSheet(onDismissRequest = { viewModel.postIntent(HomeIntent.HideMonthCalendar) }) {
+                    MonthCalendarBottomSheetContent(
+                        currentDate = currentDate,
+                        selection = uiState.selection,
+                        calendarPadding = calendarPadding
+                    )
+                }
+            }
             Column(
                 modifier = Modifier.padding(it)
             ) {

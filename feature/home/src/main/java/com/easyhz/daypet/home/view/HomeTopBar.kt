@@ -20,12 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading1
 
 @Composable
 internal fun HomeTopBar(
     title: String,
+    onClickTitle: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -35,6 +37,7 @@ internal fun HomeTopBar(
         contentAlignment = Alignment.CenterStart
     ) {
         Row(
+            modifier = Modifier.noRippleClickable { onClickTitle() },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -81,7 +84,7 @@ private fun InfoTab(
 @Composable
 private fun HomeTopBarPreview() {
     Scaffold(
-        topBar = { HomeTopBar(title = "5월") }
+        topBar = { HomeTopBar(title = "5월") { } }
     ) { it ->
         Text(text = it.toString(), Modifier.padding(it))
     }

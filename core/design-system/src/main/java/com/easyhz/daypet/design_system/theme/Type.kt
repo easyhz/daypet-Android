@@ -38,6 +38,31 @@ val Heading1 = TextStyle(
 val Heading2 = TextStyle(
     fontFamily = AppleSDGothicNeo,
     fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    lineHeight = 20.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val Heading3 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.SemiBold,
+    color = TextColor,
+    fontSize = 20.sp,
+    lineHeight = 20.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val Heading4 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Bold,
     color = TextColor,
     fontSize = 18.sp,
     lineHeight = 18.sp,

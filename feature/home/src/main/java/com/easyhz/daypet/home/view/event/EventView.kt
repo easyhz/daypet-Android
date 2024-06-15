@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.easyhz.daypet.design_system.theme.Heading2
+import com.easyhz.daypet.design_system.theme.Heading4
 import com.easyhz.daypet.design_system.theme.SubBody1
 import com.easyhz.daypet.domain.model.event.Archive
 import com.easyhz.daypet.domain.model.event.Task
@@ -73,7 +73,7 @@ private fun EventTitle(
     ) {
         Text(
             text = stringResource(id = event.titleId),
-            style = Heading2
+            style = Heading4
         )
         Icon(
             modifier = Modifier.size(16.dp),
@@ -97,8 +97,10 @@ private fun<T> LazyListScope.eventItem(
     if (list.isEmpty()) {
         item {
             Text(
-                modifier = Modifier.height(72.dp).padding(top = 10.dp),
-                text = "${stringResource(id = event.titleId)}을 추가해 주세요.",
+                modifier = Modifier
+                    .height(72.dp)
+                    .padding(top = 10.dp),
+                text = "${stringResource(id = event.titleId)}${stringResource(id = R.string.need_add)}",
                 style = SubBody1,
             )
         }
