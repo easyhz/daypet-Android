@@ -13,6 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
+/**
+ * SideEffect Collect 함수
+ */
 @SuppressLint("ComposableNaming")
 @Composable
 fun <T> Flow<T>.collectInLaunchedEffectWithLifecycle(
@@ -21,13 +24,12 @@ fun <T> Flow<T>.collectInLaunchedEffectWithLifecycle(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
     collector: suspend CoroutineScope.(sideEffect: T) -> Unit,
 ) {
-    val flow = this
     val currentCollector by rememberUpdatedState(collector)
 
-    LaunchedEffect(flow, lifecycle, minActiveState, *keys) {
+    LaunchedEffect(this, lifecycle, minActiveState, *keys) {
         withContext(Dispatchers.Main.immediate) {
             lifecycle.repeatOnLifecycle(minActiveState) {
-                flow.collect { currentCollector(it) }
+                this@collectInLaunchedEffectWithLifecycle.collect { currentCollector(it) }
             }
         }
     }
