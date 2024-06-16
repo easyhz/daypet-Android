@@ -11,5 +11,5 @@ sealed class HomeIntent: UiIntent() {
     data class ClickTask(val task: Task): HomeIntent()
     data object ShowMonthCalendar: HomeIntent()
     data object HideMonthCalendar: HomeIntent()
-
+    data class ClickMonthCalendarDay(val localDate: LocalDate): HomeIntent()
 }

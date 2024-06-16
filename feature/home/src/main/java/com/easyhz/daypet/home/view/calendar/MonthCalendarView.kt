@@ -34,7 +34,8 @@ internal fun MonthCalendarBottomSheetContent(
     selection: LocalDate,
     firstDayOfWeek: DayOfWeek = firstDayOfWeekFromLocale(),
     outDateStyle: OutDateStyle = OutDateStyle.EndOfGrid,
-    calendarPadding: Dp = 10.dp
+    calendarPadding: Dp = 10.dp,
+    onClickSelectButton: (LocalDate) -> Unit,
 ) {
     val viewModel: MonthCalendarViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -74,7 +75,7 @@ internal fun MonthCalendarBottomSheetContent(
             text = stringResource(id = R.string.button_select_success),
             modifier = Modifier.padding(horizontal = 20.dp)
         ) {
-
+            onClickSelectButton(uiState.selection)
         }
     }
 }

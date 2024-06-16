@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
@@ -30,6 +31,7 @@ import com.easyhz.daypet.design_system.util.fab.FabButtonItem
 import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 import com.easyhz.daypet.home.contract.HomeIntent
+import com.easyhz.daypet.home.contract.HomeSideEffect
 import com.easyhz.daypet.home.dummy.ARCHIVE_DUMMY
 import com.easyhz.daypet.home.dummy.TASK_DUMMY
 import com.easyhz.daypet.home.util.getCalendarPadding
@@ -42,6 +44,7 @@ import com.easyhz.daypet.home.view.event.ArchiveContent
 import com.easyhz.daypet.home.view.event.Event
 import com.easyhz.daypet.home.view.event.TaskContent
 import com.easyhz.daypet.home.view.event.eventItem
+import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
 
@@ -56,12 +59,12 @@ fun HomeScreen(
     val currentDate = remember { LocalDate.now() }
     val startDate = remember { currentDate.minusDays(500) }
     val endDate = remember { currentDate.plusDays(500) }
-    val state = rememberWeekCalendarState(
+    val weekState = rememberWeekCalendarState(
         startDate = startDate,
         endDate = endDate,
         firstVisibleWeekDate = currentDate,
     )
-    val visibleWeek = rememberFirstVisibleWeekAfterScroll(state)
+    val visibleWeek = rememberFirstVisibleWeekAfterScroll(weekState)
     val fabState = rememberMultiFabState()
 
     DayPetScaffold(
@@ -108,7 +111,7 @@ fun HomeScreen(
                         currentDate = currentDate,
                         selection = uiState.selection,
                         calendarPadding = calendarPadding
-                    )
+                    ) { localDate -> viewModel.postIntent(HomeIntent.ClickMonthCalendarDay(localDate)) }
                 }
             }
             LazyColumn(
@@ -119,7 +122,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .padding(horizontal = calendarPadding)
                             .padding(top = 8.dp, bottom = 12.dp),
-                        weekState = state,
+                        weekState = weekState,
                         currentDate = currentDate,
                         selection = uiState.selection,
                         onChangedDate = { clickedDay ->
@@ -151,6 +154,20 @@ fun HomeScreen(
             }
         }
     }
+
+    viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
+        when(sideEffect) {
+            is HomeSideEffect.ChangeWeekCalendar -> { scrollToSelection(weekState, sideEffect.localDate) }
+        }
+    }
+}
+
+private suspend fun scrollToSelection(weekState: WeekCalendarState, localDate: LocalDate) {
+    val firstVisibleDate = weekState.firstVisibleWeek.days.first().date
+    val lastVisibleDate = weekState.firstVisibleWeek.days.last().date
+
+    if (localDate in firstVisibleDate..lastVisibleDate) return
+    weekState.animateScrollToWeek(localDate)
 }
 
 @Preview(showBackground = true)

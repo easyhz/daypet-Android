@@ -10,16 +10,4 @@ val ARCHIVE_DUMMY = listOf(
 val TASK_DUMMY = listOf(
     Task(title = "목욕 하기", isDone = false),
     Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
-    Task(title = "산책하기", isDone = true),
 )

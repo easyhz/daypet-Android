@@ -21,6 +21,7 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.ClickTask -> { }
             is HomeIntent.ShowMonthCalendar -> { showMonthCalendar() }
             is HomeIntent.HideMonthCalendar -> { hideMonthCalendar() }
+            is HomeIntent.ClickMonthCalendarDay -> { onClickMonthCalendarDay(intent.localDate) }
         }
     }
 
@@ -36,5 +37,10 @@ class HomeViewModel @Inject constructor(
 
     private fun hideMonthCalendar() {
         reduce { copy(showMonthCalendar = false) }
+    }
+
+    private fun onClickMonthCalendarDay(localDate: LocalDate) {
+        reduce { copy(showMonthCalendar = false, selection = localDate) }
+        postSideEffect { HomeSideEffect.ChangeWeekCalendar(localDate) }
     }
 }
