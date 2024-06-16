@@ -1,7 +1,9 @@
 package com.easyhz.daypet.home
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CalendarMonth
@@ -36,7 +38,10 @@ import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
 import com.easyhz.daypet.home.view.HomeTopBar
 import com.easyhz.daypet.home.view.calendar.HomeWeekCalendar
 import com.easyhz.daypet.home.view.calendar.MonthCalendarBottomSheetContent
-import com.easyhz.daypet.home.view.event.EventView
+import com.easyhz.daypet.home.view.event.ArchiveContent
+import com.easyhz.daypet.home.view.event.Event
+import com.easyhz.daypet.home.view.event.TaskContent
+import com.easyhz.daypet.home.view.event.eventItem
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
 
@@ -106,23 +111,43 @@ fun HomeScreen(
                     )
                 }
             }
-            Column(
+            LazyColumn(
                 modifier = Modifier.padding(it)
             ) {
-                HomeWeekCalendar(
-                    modifier = Modifier
-                        .padding(horizontal = calendarPadding).padding(top = 8.dp, bottom = 12.dp),
-                    weekState = state,
-                    currentDate = currentDate,
-                    selection = uiState.selection,
-                    onChangedDate = { clickedDay ->
-                        viewModel.postIntent(HomeIntent.ChangeDate(clickedDay))
-                    }
-                )
-                EventView(
-                    modifier = Modifier.screenHorizonPadding(),
-                    archiveList = ARCHIVE_DUMMY, taskList = TASK_DUMMY
-                )
+                item {
+                    HomeWeekCalendar(
+                        modifier = Modifier
+                            .padding(horizontal = calendarPadding)
+                            .padding(top = 8.dp, bottom = 12.dp),
+                        weekState = state,
+                        currentDate = currentDate,
+                        selection = uiState.selection,
+                        onChangedDate = { clickedDay ->
+                            viewModel.postIntent(HomeIntent.ChangeDate(clickedDay))
+                        }
+                    )
+                }
+                eventItem(
+                    list = ARCHIVE_DUMMY,
+                    event = Event.ARCHIVE,
+                    modifier = Modifier.screenHorizonPadding()
+                ) { archive ->
+                    ArchiveContent(
+                        archive = archive
+                    )
+                }
+                eventItem(
+                    list = TASK_DUMMY,
+                    event = Event.TASK,
+                    modifier = Modifier.screenHorizonPadding()
+                ) { task->
+                    TaskContent(
+                        task = task
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(76.dp)) // FAB 만큼의 space
+                }
             }
         }
     }

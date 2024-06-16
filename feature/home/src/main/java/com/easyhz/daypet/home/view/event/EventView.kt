@@ -2,13 +2,13 @@ package com.easyhz.daypet.home.view.event
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -23,13 +23,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading4
 import com.easyhz.daypet.design_system.theme.SubBody1
-import com.easyhz.daypet.domain.model.event.Archive
-import com.easyhz.daypet.domain.model.event.Task
 import com.easyhz.daypet.home.R
-import com.easyhz.daypet.home.dummy.ARCHIVE_DUMMY
-import com.easyhz.daypet.home.dummy.TASK_DUMMY
 
 enum class Event(
     @StringRes val titleId: Int,
@@ -45,31 +42,46 @@ enum class Event(
     )
 }
 
-@Composable
-internal fun EventView(
+fun<T> LazyListScope.eventItem(
     modifier: Modifier = Modifier,
-    archiveList: List<Archive>,
-    taskList: List<Task>
+    list: List<T>,
+    event: Event,
+    content: @Composable (T) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier,
-    ) {
-        eventItem(list = archiveList, event = Event.ARCHIVE) { archive ->
-            ArchiveContent(archive = archive)
-        }
-        eventItem(list = taskList, event = Event.TASK) { task->
-            TaskContent(task = task)
-        }
-
+    item {
+        Spacer(modifier = Modifier.height(12.dp))
     }
+    item {
+        EventTitle(modifier = modifier, event = event)
+    }
+    if (list.isEmpty()) {
+        item {
+            Text(
+                modifier = Modifier
+                    .height(72.dp)
+                    .padding(top = 12.dp)
+                    .screenHorizonPadding(),
+                text = "${stringResource(id = event.titleId)}${stringResource(id = R.string.need_add)}",
+                style = SubBody1,
+            )
+        }
+    } else {
+        items(list) {type ->
+            Box(modifier = modifier.fillMaxWidth()) {
+                content(type)
+            }
+        }
+    }
+
 }
 
 @Composable
 private fun EventTitle(
+    modifier: Modifier = Modifier,
     event: Event
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -87,50 +99,10 @@ private fun EventTitle(
     }
 }
 
-private fun<T> LazyListScope.eventItem(
-    list: List<T>,
-    event: Event,
-    content: @Composable (T) -> Unit
-) {
-    item {
-        Spacer(modifier = Modifier.height(12.dp))
-    }
-    item {
-        EventTitle(event = event)
-    }
-    if (list.isEmpty()) {
-        item {
-            Text(
-                modifier = Modifier
-                    .height(72.dp)
-                    .padding(top = 10.dp),
-                text = "${stringResource(id = event.titleId)}${stringResource(id = R.string.need_add)}",
-                style = SubBody1,
-            )
-        }
-    } else {
-        items(list) {type ->
-            content(type)
-        }
-    }
-
-}
-
 
 @Preview(showBackground = true)
 @Composable
 private fun EventTitlePrev() {
-    EventTitle(Event.ARCHIVE)
+    EventTitle(event = Event.ARCHIVE)
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun EventViewPrev() {
-    EventView(archiveList = emptyList(), taskList = emptyList())
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun EventViewInItemPrev() {
-    EventView(archiveList = ARCHIVE_DUMMY, taskList = TASK_DUMMY)
-}
