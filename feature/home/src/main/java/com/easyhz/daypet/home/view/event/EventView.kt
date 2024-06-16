@@ -28,6 +28,8 @@ import com.easyhz.daypet.design_system.theme.SubBody1
 import com.easyhz.daypet.domain.model.event.Archive
 import com.easyhz.daypet.domain.model.event.Task
 import com.easyhz.daypet.home.R
+import com.easyhz.daypet.home.dummy.ARCHIVE_DUMMY
+import com.easyhz.daypet.home.dummy.TASK_DUMMY
 
 enum class Event(
     @StringRes val titleId: Int,
@@ -49,7 +51,9 @@ internal fun EventView(
     archiveList: List<Archive>,
     taskList: List<Task>
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+    ) {
         eventItem(list = archiveList, event = Event.ARCHIVE) { archive ->
             ArchiveContent(archive = archive)
         }
@@ -89,7 +93,7 @@ private fun<T> LazyListScope.eventItem(
     content: @Composable (T) -> Unit
 ) {
     item {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
     }
     item {
         EventTitle(event = event)
@@ -109,9 +113,7 @@ private fun<T> LazyListScope.eventItem(
             content(type)
         }
     }
-    item {
-        Spacer(modifier = Modifier.height(16.dp))
-    }
+
 }
 
 
@@ -125,4 +127,10 @@ private fun EventTitlePrev() {
 @Composable
 private fun EventViewPrev() {
     EventView(archiveList = emptyList(), taskList = emptyList())
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun EventViewInItemPrev() {
+    EventView(archiveList = ARCHIVE_DUMMY, taskList = TASK_DUMMY)
 }

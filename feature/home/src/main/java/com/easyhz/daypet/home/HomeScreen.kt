@@ -111,7 +111,7 @@ fun HomeScreen(
             ) {
                 HomeWeekCalendar(
                     modifier = Modifier
-                        .padding(horizontal = calendarPadding, vertical = 8.dp),
+                        .padding(horizontal = calendarPadding).padding(top = 8.dp, bottom = 12.dp),
                     weekState = state,
                     currentDate = currentDate,
                     selection = uiState.selection,
