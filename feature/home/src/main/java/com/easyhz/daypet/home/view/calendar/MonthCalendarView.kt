@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.component.button.MainButton
-import com.easyhz.daypet.home.R
 import com.easyhz.daypet.home.contract.calendar.MonthCalendarIntent
 import com.easyhz.daypet.home.util.displayText
 import com.easyhz.daypet.home.util.rememberFirstMostVisibleMonth

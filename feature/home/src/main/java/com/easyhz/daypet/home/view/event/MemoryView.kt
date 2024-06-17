@@ -21,11 +21,11 @@ import com.easyhz.daypet.design_system.component.image.ImageCircle
 import com.easyhz.daypet.design_system.theme.Body1
 import com.easyhz.daypet.design_system.theme.SubBody2
 import com.easyhz.daypet.design_system.theme.SubTextColor
-import com.easyhz.daypet.domain.model.event.Archive
+import com.easyhz.daypet.domain.model.memory.Memory
 
 @Composable
-internal fun ArchiveContent(
-    archive: Archive
+internal fun MemoryContent(
+    memory: Memory
 ) {
     Box(
         modifier = Modifier
@@ -38,9 +38,9 @@ internal fun ArchiveContent(
         ) {
             ImageCircle(
                 modifier = Modifier.size(56.dp),
-                imageUrl = archive.imageUrl
+                imageUrl = memory.imageUrl
             )
-            ArchiveInfo(archive)
+            MemoryInfo(memory)
         }
         Icon(
             modifier = Modifier.size(24.dp).align(Alignment.CenterEnd),
@@ -51,14 +51,14 @@ internal fun ArchiveContent(
 }
 
 @Composable
-private fun ArchiveInfo(
-    archive: Archive
+private fun MemoryInfo(
+    memory: Memory
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = archive.title,
+            text = memory.title,
             style = Body1,
         )
         Row(
@@ -70,7 +70,7 @@ private fun ArchiveInfo(
                 tint = SubTextColor
             )
             Text(
-                text = archive.time,
+                text = memory.time,
                 style = SubBody2,
             )
         }
@@ -80,7 +80,7 @@ private fun ArchiveInfo(
 
 @Preview(showBackground = true)
 @Composable
-private fun ArchiveContentPrev() {
-    val archive = Archive(title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07")
-    ArchiveContent(archive)
+private fun MemoryContentPrev() {
+    val memory = Memory(title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07")
+    MemoryContent(memory)
 }

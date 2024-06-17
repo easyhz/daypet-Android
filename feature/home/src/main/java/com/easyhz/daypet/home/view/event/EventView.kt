@@ -23,21 +23,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading4
 import com.easyhz.daypet.design_system.theme.SubBody1
-import com.easyhz.daypet.home.R
-
 enum class Event(
     @StringRes val titleId: Int,
     val icon: ImageVector
 ) {
-    ARCHIVE(
-        titleId = R.string.event_archive,
+    MEMORY(
+        titleId = R.string.event_memory,
         icon = Icons.Outlined.CalendarMonth
     ),
-    TASK(
-        titleId = R.string.event_task,
+    TODO(
+        titleId = R.string.event_todo,
         icon = Icons.Outlined.CheckCircle
     )
 }
@@ -103,6 +102,6 @@ private fun EventTitle(
 @Preview(showBackground = true)
 @Composable
 private fun EventTitlePrev() {
-    EventTitle(event = Event.ARCHIVE)
+    EventTitle(event = Event.MEMORY)
 }
 

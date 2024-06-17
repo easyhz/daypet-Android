@@ -24,16 +24,16 @@ import com.easyhz.daypet.design_system.theme.Body1
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubTextColor
 import com.easyhz.daypet.design_system.theme.TextColor
-import com.easyhz.daypet.domain.model.event.Task
+import com.easyhz.daypet.domain.model.todo.Todo
 import com.easyhz.daypet.design_system.R
 
 
 @Composable
-internal fun TaskContent(
-    task: Task
+internal fun TodoContent(
+    todo: Todo
 ) {
-    val textDecoration = if (task.isDone) TextDecoration.LineThrough else TextDecoration.None
-    val textColor = if (task.isDone) SubTextColor else TextColor
+    val textDecoration = if (todo.isDone) TextDecoration.LineThrough else TextDecoration.None
+    val textColor = if (todo.isDone) SubTextColor else TextColor
     Box(
         modifier = Modifier
             .height(36.dp)
@@ -44,9 +44,9 @@ internal fun TaskContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TaskCircle()
+            TodoCircle()
             Text(
-                text = task.title,
+                text = todo.title,
                 style = Body1,
                 color = textColor,
                 textDecoration = textDecoration
@@ -64,27 +64,27 @@ internal fun TaskContent(
 }
 
 @Composable
-private fun TaskCircle() {
+private fun TodoCircle() {
     Box(modifier = Modifier
         .size(16.dp)
         .clip(CircleShape)
         .background(Primary))
 }
 
-@Preview(showBackground = true, name = "taskContent - isNotDone")
+@Preview(showBackground = true, name = "todoContent - isNotDone")
 @Composable
-private fun TaskContentPrev() {
-    val prevTask = Task("초코 낮잠", isDone = false)
+private fun TodoContentPrev() {
+    val prevTodo = Todo("초코 낮잠", isDone = false)
     Column {
-        TaskContent(prevTask)
+        TodoContent(prevTodo)
     }
 }
 
-@Preview(showBackground = true, name = "taskContent - isDone")
+@Preview(showBackground = true, name = "todoContent - isDone")
 @Composable
-private fun TaskContentPrevDone() {
-    val prevTask = Task("초코 낮잠", isDone = true)
+private fun TodoContentPrevDone() {
+    val prevTodo = Todo("초코 낮잠", isDone = true)
     Column {
-        TaskContent(prevTask)
+        TodoContent(prevTodo)
     }
 }

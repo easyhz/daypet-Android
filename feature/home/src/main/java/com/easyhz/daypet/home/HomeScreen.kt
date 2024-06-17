@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
+import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
@@ -32,17 +33,17 @@ import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
-import com.easyhz.daypet.home.dummy.ARCHIVE_DUMMY
-import com.easyhz.daypet.home.dummy.TASK_DUMMY
+import com.easyhz.daypet.home.dummy.MEMORY_DUMMY
+import com.easyhz.daypet.home.dummy.TODO_DUMMY
 import com.easyhz.daypet.home.util.getCalendarPadding
 import com.easyhz.daypet.home.util.getWeekPageTitle
 import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
 import com.easyhz.daypet.home.view.HomeTopBar
 import com.easyhz.daypet.home.view.calendar.HomeWeekCalendar
 import com.easyhz.daypet.home.view.calendar.MonthCalendarBottomSheetContent
-import com.easyhz.daypet.home.view.event.ArchiveContent
+import com.easyhz.daypet.home.view.event.MemoryContent
 import com.easyhz.daypet.home.view.event.Event
-import com.easyhz.daypet.home.view.event.TaskContent
+import com.easyhz.daypet.home.view.event.TodoContent
 import com.easyhz.daypet.home.view.event.eventItem
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
@@ -79,11 +80,11 @@ fun HomeScreen(
                 items = listOf(
                     FabButtonItem(
                         imageVector = Icons.Outlined.CalendarMonth,
-                        label = stringResource(id = R.string.event_archive)
+                        label = stringResource(id = R.string.event_memory)
                     ),
                     FabButtonItem(
                         imageVector = Icons.Outlined.CheckCircleOutline,
-                        label = stringResource(id = R.string.event_task)
+                        label = stringResource(id = R.string.event_todo)
                     ),
                 ),
                 mainMenu = FabButtonItem(
@@ -131,21 +132,21 @@ fun HomeScreen(
                     )
                 }
                 eventItem(
-                    list = ARCHIVE_DUMMY,
-                    event = Event.ARCHIVE,
+                    list = MEMORY_DUMMY,
+                    event = Event.MEMORY,
                     modifier = Modifier.screenHorizonPadding()
-                ) { archive ->
-                    ArchiveContent(
-                        archive = archive
+                ) { memory ->
+                    MemoryContent(
+                        memory = memory
                     )
                 }
                 eventItem(
-                    list = TASK_DUMMY,
-                    event = Event.TASK,
+                    list = TODO_DUMMY,
+                    event = Event.TODO,
                     modifier = Modifier.screenHorizonPadding()
-                ) { task->
-                    TaskContent(
-                        task = task
+                ) { todo->
+                    TodoContent(
+                        todo = todo
                     )
                 }
                 item {

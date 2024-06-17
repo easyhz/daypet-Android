@@ -17,8 +17,8 @@ class HomeViewModel @Inject constructor(
     override fun handleIntent(intent: HomeIntent) {
         when(intent) {
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
-            is HomeIntent.ClickArchive -> { }
-            is HomeIntent.ClickTask -> { }
+            is HomeIntent.ClickMemory -> { }
+            is HomeIntent.ClickTodo -> { }
             is HomeIntent.ShowMonthCalendar -> { showMonthCalendar() }
             is HomeIntent.HideMonthCalendar -> { hideMonthCalendar() }
             is HomeIntent.ClickMonthCalendarDay -> { onClickMonthCalendarDay(intent.localDate) }
