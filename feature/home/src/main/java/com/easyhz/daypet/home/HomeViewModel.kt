@@ -72,6 +72,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onClickMonthCalendarDay(localDate: LocalDate) {
+        fetchMemoires(localDate)
+        fetchTodos(localDate)
         reduce { copy(showMonthCalendar = false, selection = localDate) }
         postSideEffect { HomeSideEffect.ChangeWeekCalendar(localDate) }
     }
