@@ -11,9 +11,9 @@ import javax.inject.Inject
 class MemoryRepositoryImpl @Inject constructor(
     private val memoryDataSource: MemoryDataSource
 ): MemoryRepository {
-    override suspend fun fetchMemoriesOnDate(data: MemoryParam): Result<List<Memory>> {
-        return memoryDataSource.getMemoriesOnDate(data.toRequest()).map { list ->
+    override suspend fun fetchMemoriesOnDate(data: MemoryParam): Result<List<Memory>> =
+        memoryDataSource.getMemoriesOnDate(data.toRequest()).map { list ->
             list.map { res -> res.toEntity() }
         }
-    }
+
 }

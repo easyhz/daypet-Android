@@ -6,6 +6,7 @@ import com.easyhz.daypet.data.util.Collections.MEMORIES
 import com.easyhz.daypet.data.util.Fields.CREATION_TIME
 import com.easyhz.daypet.data.util.collectionHandler
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query.Direction.DESCENDING
 import javax.inject.Inject
 
 class MemoryDataSourceImpl @Inject constructor(
@@ -16,7 +17,7 @@ class MemoryDataSourceImpl @Inject constructor(
         firestore.collection(MEMORIES)
             .whereGreaterThan(CREATION_TIME, data.startDate)
             .whereLessThan(CREATION_TIME, data.endDate)
-            .orderBy(CREATION_TIME).get()
+            .orderBy(CREATION_TIME, DESCENDING).get()
     }
 
 }

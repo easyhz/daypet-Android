@@ -37,8 +37,7 @@ class HomeViewModel @Inject constructor(
         fetchMemoriesUseCase.invoke(param)
             .onSuccess {
                 reduce { copy(selection = selection, memoryList = it) }
-            }
-            .onFailure {
+            }.onFailure {
                 // TODO: Fail 처리 스낵바?
             }
     }
