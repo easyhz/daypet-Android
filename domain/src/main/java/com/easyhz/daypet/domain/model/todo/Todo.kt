@@ -2,5 +2,6 @@ package com.easyhz.daypet.domain.model.todo
 
 data class Todo(
     val title: String,
-    val isDone: Boolean
+    val isDone: Boolean,
+    val todoColor: String
 )

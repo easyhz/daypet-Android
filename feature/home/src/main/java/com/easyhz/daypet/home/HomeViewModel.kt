@@ -3,7 +3,9 @@ package com.easyhz.daypet.home
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.domain.param.memory.MemoryParam
+import com.easyhz.daypet.domain.param.todo.TodoParam
 import com.easyhz.daypet.domain.usecase.memory.FetchMemoriesUseCase
+import com.easyhz.daypet.domain.usecase.todo.FetchTodosUseCase
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
 import com.easyhz.daypet.home.contract.HomeState
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val fetchMemoriesUseCase: FetchMemoriesUseCase
+    private val fetchMemoriesUseCase: FetchMemoriesUseCase,
+    private val fetchTodosUseCase: FetchTodosUseCase,
 ): BaseViewModel<HomeState, HomeIntent, HomeSideEffect>(
     initialState = HomeState.init()
 ) {
@@ -30,6 +33,7 @@ class HomeViewModel @Inject constructor(
     }
     init {
         fetchMemoires(uiState.value.selection)
+        fetchTodos(uiState.value.selection)
     }
 
     private fun fetchMemoires(selection: LocalDate) = viewModelScope.launch {
@@ -42,9 +46,20 @@ class HomeViewModel @Inject constructor(
             }
     }
 
+    private fun fetchTodos(selection: LocalDate) = viewModelScope.launch {
+        val param = TodoParam(startDate = selection, endDate = selection)
+        fetchTodosUseCase.invoke(param)
+            .onSuccess {
+                reduce { copy(selection = selection, todoList = it) }
+            }.onFailure {
+                // TODO: Fail 처리
+            }
+    }
+
     private fun changeDate(clickedDay: LocalDate) {
         if (uiState.value.selection != clickedDay) {
             fetchMemoires(clickedDay)
+            fetchTodos(clickedDay)
         }
     }
 

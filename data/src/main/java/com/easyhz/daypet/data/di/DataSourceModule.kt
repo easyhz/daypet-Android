@@ -2,6 +2,8 @@ package com.easyhz.daypet.data.di
 
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSourceImpl
+import com.easyhz.daypet.data.datasource.todo.TodoDataSource
+import com.easyhz.daypet.data.datasource.todo.TodoDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,8 @@ interface DataSourceModule {
         memoryDataSourceImpl: MemoryDataSourceImpl
     ): MemoryDataSource
 
+    @Binds
+    fun bindTodoDataSource(
+        todoDataSourceImpl: TodoDataSourceImpl
+    ): TodoDataSource
 }

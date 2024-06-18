@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,6 +27,7 @@ import com.easyhz.daypet.design_system.theme.SubTextColor
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.domain.model.todo.Todo
 import com.easyhz.daypet.design_system.R
+import com.easyhz.daypet.home.util.toColor
 
 
 @Composable
@@ -44,7 +46,9 @@ internal fun TodoContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TodoCircle()
+            TodoCircle(
+                color = todo.todoColor.toColor()
+            )
             Text(
                 text = todo.title,
                 style = Body1,
@@ -64,17 +68,19 @@ internal fun TodoContent(
 }
 
 @Composable
-private fun TodoCircle() {
+private fun TodoCircle(
+    color: Color = Primary
+) {
     Box(modifier = Modifier
         .size(16.dp)
         .clip(CircleShape)
-        .background(Primary))
+        .background(color))
 }
 
 @Preview(showBackground = true, name = "todoContent - isNotDone")
 @Composable
 private fun TodoContentPrev() {
-    val prevTodo = Todo("초코 낮잠", isDone = false)
+    val prevTodo = Todo("초코 낮잠", isDone = false, todoColor = "BFA7F0")
     Column {
         TodoContent(prevTodo)
     }
@@ -83,7 +89,7 @@ private fun TodoContentPrev() {
 @Preview(showBackground = true, name = "todoContent - isDone")
 @Composable
 private fun TodoContentPrevDone() {
-    val prevTodo = Todo("초코 낮잠", isDone = true)
+    val prevTodo = Todo("초코 낮잠", isDone = true, todoColor = "BFA7F0")
     Column {
         TodoContent(prevTodo)
     }
