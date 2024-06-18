@@ -33,8 +33,6 @@ import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
-import com.easyhz.daypet.home.dummy.MEMORY_DUMMY
-import com.easyhz.daypet.home.dummy.TODO_DUMMY
 import com.easyhz.daypet.home.util.getCalendarPadding
 import com.easyhz.daypet.home.util.getWeekPageTitle
 import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
@@ -132,7 +130,7 @@ fun HomeScreen(
                     )
                 }
                 eventItem(
-                    list = MEMORY_DUMMY,
+                    list = uiState.memoryList,
                     event = Event.MEMORY,
                     modifier = Modifier.screenHorizonPadding()
                 ) { memory ->
@@ -141,7 +139,7 @@ fun HomeScreen(
                     )
                 }
                 eventItem(
-                    list = TODO_DUMMY,
+                    list = uiState.todoList,
                     event = Event.TODO,
                     modifier = Modifier.screenHorizonPadding()
                 ) { todo->

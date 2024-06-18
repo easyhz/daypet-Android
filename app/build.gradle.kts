@@ -41,7 +41,12 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
     implementation(projects.core.designSystem)
+
+    implementation(projects.data)
+    implementation(projects.domain)
+
     implementation(projects.feature.home)
 
     implementation(libs.androidx.core.ktx)
