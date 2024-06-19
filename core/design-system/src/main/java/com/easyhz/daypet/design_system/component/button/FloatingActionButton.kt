@@ -20,11 +20,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.easyhz.daypet.design_system.extension.shadowEffect
@@ -44,13 +45,6 @@ fun ExpandedFloatingActionButton(
     onFabItemClicked: (fabItem: FabButtonItem) -> Unit,
     stateChanged: (fabState: FabButtonState) -> Unit = {},
 ) {
-    val rotation by animateFloatAsState(
-        if (fabState.value == FabButtonState.Expand) {
-            mainMenu.iconRotate ?: 0f
-        } else {
-            0f
-        }, label = "rotation"
-    )
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.End
@@ -76,12 +70,11 @@ fun ExpandedFloatingActionButton(
             }
         }
         DayPetFloatingActionButton(
+            fabState = fabState,
             imageVector = mainMenu.imageVector,
             label = mainMenu.label,
             fabOption = mainMenu.fapOption,
-            modifier = Modifier
-                .size(32.dp)
-                .rotate(rotation)
+            iconRotate = mainMenu.iconRotate
         ) {
             fabState.value = fabState.value.toggleValue()
             stateChanged(fabState.value)
@@ -90,6 +83,7 @@ fun ExpandedFloatingActionButton(
 
 }
 
+@Stable
 @Composable
 private fun FabSubItem(
     item: FabButtonItem,
@@ -97,21 +91,29 @@ private fun FabSubItem(
     onFabItemClicked: (item: FabButtonItem) -> Unit
 ) {
     DayPetFloatingActionButton(
-        modifier = Modifier.size(32.dp),
         imageVector = item.imageVector,
         label = item.label,
         fabOption = fabOption
     ) { onFabItemClicked(item) }
 }
 
+@Stable
 @Composable
 private fun DayPetFloatingActionButton(
-    modifier: Modifier = Modifier,
+    fabState: MutableState<FabButtonState>? = null,
+    iconRotate: Float? = null,
     imageVector: ImageVector,
     label: String,
     fabOption: FabOption,
     onClick: () -> Unit,
 ) {
+    val rotation by animateFloatAsState(
+        if (fabState?.value == FabButtonState.Expand) {
+            iconRotate ?: 0f
+        } else {
+            0f
+        }, label = "rotation"
+    )
     CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme()) {
         FloatingActionButton(
             onClick = { onClick() },
@@ -135,7 +137,7 @@ private fun DayPetFloatingActionButton(
             contentColor = fabOption.iconColor
         ) {
             Icon(
-                modifier = modifier,
+                modifier = Modifier.size(32.dp).graphicsLayer { rotationZ = rotation },
                 imageVector = imageVector,
                 contentDescription = label,
                 tint = fabOption.iconColor
