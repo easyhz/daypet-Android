@@ -79,17 +79,20 @@ fun HomeScreen(
                 items = listOf(
                     FabButtonItem(
                         imageVector = Icons.Outlined.CalendarMonth,
-                        label = stringResource(id = R.string.event_memory)
+                        label = stringResource(id = R.string.event_memory),
+                        type = SubMenu.Memory
                     ),
                     FabButtonItem(
                         imageVector = Icons.Outlined.CheckCircleOutline,
-                        label = stringResource(id = R.string.event_todo)
+                        label = stringResource(id = R.string.event_todo),
+                        type = SubMenu.Todo
                     ),
                 ),
                 mainMenu = FabButtonItem(
                     imageVector = Icons.Outlined.Add,
                     label = stringResource(id = R.string.menu_add),
-                    fapOption = FabOption()
+                    fapOption = FabOption(),
+                    type = MainMenu
                 ),
                 subMenuOption = FabOption(
                     iconColor = TextColor,
