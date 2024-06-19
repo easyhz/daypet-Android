@@ -12,7 +12,7 @@ class TodoRepositoryImpl @Inject constructor(
     private val todoDataSource: TodoDataSource
 ): TodoRepository {
     override suspend fun fetchTodosOnDate(data: TodoParam): Result<List<Todo>> =
-        todoDataSource.getTodosOnDate(data.toRequest()).map { list ->
+        todoDataSource.fetchTodosOnDate(data.toRequest()).map { list ->
             list.map { res -> res.toEntity() }
         }
 

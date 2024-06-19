@@ -12,7 +12,7 @@ import javax.inject.Inject
 class TodoDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ): TodoDataSource {
-    override suspend fun getTodosOnDate(data: TodoRequest): Result<List<TodoResponse>> = collectionHandler {
+    override suspend fun fetchTodosOnDate(data: TodoRequest): Result<List<TodoResponse>> = collectionHandler {
         firestore.collection(TODOS)
             .whereGreaterThan(CREATION_TIME, data.startDate)
             .whereLessThan(CREATION_TIME, data.endDate)

@@ -5,5 +5,5 @@ import com.easyhz.daypet.data.model.response.todo.TodoResponse
 
 interface TodoDataSource {
 
-    suspend fun getTodosOnDate(data: TodoRequest): Result<List<TodoResponse>>
+    suspend fun fetchTodosOnDate(data: TodoRequest): Result<List<TodoResponse>>
 }

@@ -13,7 +13,7 @@ class MemoryDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ): MemoryDataSource {
 
-    override suspend fun getMemoriesOnDate(data: MemoryRequest): Result<List<MemoryResponse>> = collectionHandler {
+    override suspend fun fetchMemoriesOnDate(data: MemoryRequest): Result<List<MemoryResponse>> = collectionHandler {
         firestore.collection(MEMORIES)
             .whereGreaterThan(CREATION_TIME, data.startDate)
             .whereLessThan(CREATION_TIME, data.endDate)
