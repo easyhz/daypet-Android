@@ -6,7 +6,7 @@ import com.google.firebase.firestore.PropertyName
 data class TodoResponse(
     @PropertyName("creationTime")
     val creationTime: Timestamp = Timestamp.now(),
-    @PropertyName("groupId")
+    @PropertyName("groupID")
     val groupId: String = "",
     @PropertyName("title")
     val title: String = "",

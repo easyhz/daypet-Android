@@ -6,7 +6,7 @@ import com.google.firebase.firestore.PropertyName
 data class MemoryResponse(
     @PropertyName("creationTime")
     val creationTime: Timestamp = Timestamp.now(),
-    @PropertyName("groupId")
+    @PropertyName("groupID")
     val groupId: String = "",
     @PropertyName("imageURLs")
     val imageUrls: List<String> = emptyList(),
