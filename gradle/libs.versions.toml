@@ -27,6 +27,7 @@ desugaring = "2.0.4"
 calendar = "2.6.0-beta01"
 glide = "1.0.0-beta01"
 firebaseFirestoreKtx = "25.0.0"
+serialization = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +65,7 @@ calendar-compose = { group = "com.kizitonwose.calendar", name = "compose", versi
 glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -74,6 +76,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 daypet-android-application = { id = "daypet.android.application", version = "unspecified" }
 daypet-android-application-compose = { id = "daypet.android.application.compose", version = "unspecified" }

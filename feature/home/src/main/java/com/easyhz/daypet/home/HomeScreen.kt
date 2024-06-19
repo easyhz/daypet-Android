@@ -50,7 +50,8 @@ import java.time.LocalDate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToMemoryDetail: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val screenWidth = LocalConfiguration.current.screenWidthDp
@@ -96,6 +97,7 @@ fun HomeScreen(
                 ),
                 onFabItemClicked = {
                     // TODO: navigate to Item Screen
+                    navigateToMemoryDetail("test")
                 },
             )
         }
@@ -172,5 +174,5 @@ private suspend fun scrollToSelection(weekState: WeekCalendarState, localDate: L
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPrev() {
-    HomeScreen()
+    HomeScreen() { }
 }
