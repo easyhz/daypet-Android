@@ -102,6 +102,7 @@ fun HomeScreen(
                     backgroundColor = ButtonShapeColor
                 ),
                 onFabItemClicked = { item ->
+                    fabState.value = fabState.value.toggleValue()
                     when(val type = item.type) {
                         is SubMenu -> viewModel.postIntent(HomeIntent.ClickFabSubMenu(type))
                     }
