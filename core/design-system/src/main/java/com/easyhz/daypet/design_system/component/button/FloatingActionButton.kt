@@ -132,7 +132,6 @@ private fun DayPetFloatingActionButton(
                 focusedElevation = 0.dp,
                 hoveredElevation = 0.dp
             ),
-
             containerColor = fabOption.backgroundColor,
             contentColor = fabOption.iconColor
         ) {
