@@ -5,4 +5,5 @@ import java.time.LocalDate
 
 sealed class HomeSideEffect: UiSideEffect() {
     data class ChangeWeekCalendar(val localDate: LocalDate): HomeSideEffect()
+    data object NavigateToUploadMemory: HomeSideEffect()
 }

@@ -9,6 +9,7 @@ import com.easyhz.daypet.domain.usecase.todo.FetchTodosUseCase
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
 import com.easyhz.daypet.home.contract.HomeState
+import com.easyhz.daypet.home.view.fab.SubMenu
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -29,6 +30,7 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.ShowMonthCalendar -> { showMonthCalendar() }
             is HomeIntent.HideMonthCalendar -> { hideMonthCalendar() }
             is HomeIntent.ClickMonthCalendarDay -> { onClickMonthCalendarDay(intent.localDate) }
+            is HomeIntent.ClickFabSubMenu -> { onClickFabSubMenu(intent.subMenu) }
         }
     }
     init {
@@ -76,5 +78,16 @@ class HomeViewModel @Inject constructor(
         fetchTodos(localDate)
         reduce { copy(showMonthCalendar = false, selection = localDate) }
         postSideEffect { HomeSideEffect.ChangeWeekCalendar(localDate) }
+    }
+
+    private fun onClickFabSubMenu(subMenu: SubMenu) {
+        when(subMenu) {
+            is SubMenu.Memory -> {
+                postSideEffect { HomeSideEffect.NavigateToUploadMemory }
+            }
+            is SubMenu.Todo -> {
+                // TODO: Bottom Sheet
+            }
+        }
     }
 }

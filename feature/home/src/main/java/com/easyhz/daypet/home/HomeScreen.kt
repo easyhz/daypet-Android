@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.common.R
+import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
@@ -39,10 +39,12 @@ import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
 import com.easyhz.daypet.home.view.HomeTopBar
 import com.easyhz.daypet.home.view.calendar.HomeWeekCalendar
 import com.easyhz.daypet.home.view.calendar.MonthCalendarBottomSheetContent
-import com.easyhz.daypet.home.view.event.MemoryContent
 import com.easyhz.daypet.home.view.event.Event
+import com.easyhz.daypet.home.view.event.MemoryContent
 import com.easyhz.daypet.home.view.event.TodoContent
 import com.easyhz.daypet.home.view.event.eventItem
+import com.easyhz.daypet.home.view.fab.MainMenu
+import com.easyhz.daypet.home.view.fab.SubMenu
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
@@ -51,7 +53,8 @@ import java.time.LocalDate
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToMemoryDetail: (String) -> Unit
+    navigateToMemoryDetail: (String) -> Unit,
+    navigateToUploadMemory: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val screenWidth = LocalConfiguration.current.screenWidthDp
@@ -98,9 +101,10 @@ fun HomeScreen(
                     iconColor = TextColor,
                     backgroundColor = ButtonShapeColor
                 ),
-                onFabItemClicked = {
-                    // TODO: navigate to Item Screen
-                    navigateToMemoryDetail("test")
+                onFabItemClicked = { item ->
+                    when(val type = item.type) {
+                        is SubMenu -> viewModel.postIntent(HomeIntent.ClickFabSubMenu(type))
+                    }
                 },
             )
         }
@@ -162,6 +166,7 @@ fun HomeScreen(
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
         when(sideEffect) {
             is HomeSideEffect.ChangeWeekCalendar -> { scrollToSelection(weekState, sideEffect.localDate) }
+            is HomeSideEffect.NavigateToUploadMemory -> { navigateToUploadMemory() }
         }
     }
 }
@@ -177,5 +182,5 @@ private suspend fun scrollToSelection(weekState: WeekCalendarState, localDate: L
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPrev() {
-    HomeScreen() { }
+    HomeScreen( navigateToMemoryDetail = { }) { }
 }
