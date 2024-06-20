@@ -1,7 +1,9 @@
 package com.easyhz.daypet.data.di
 
+import com.easyhz.daypet.data.repository.home.ThumbnailRepositoryImpl
 import com.easyhz.daypet.data.repository.memory.MemoryRepositoryImpl
 import com.easyhz.daypet.data.repository.todo.TodoRepositoryImpl
+import com.easyhz.daypet.domain.repository.home.ThumbnailRepository
 import com.easyhz.daypet.domain.repository.memory.MemoryRepository
 import com.easyhz.daypet.domain.repository.todo.TodoRepository
 import dagger.Binds
@@ -22,4 +24,9 @@ interface RepositoryModule {
     fun bindTodoRepository(
         todoRepositoryImpl: TodoRepositoryImpl
     ): TodoRepository
+
+    @Binds
+    fun bindThumbnailRepository(
+        thumbnailRepositoryImpl: ThumbnailRepositoryImpl
+    ): ThumbnailRepository
 }

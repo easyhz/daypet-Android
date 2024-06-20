@@ -8,25 +8,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.component.image.ImageCircle
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 
 @Composable
-internal fun DayCircle() {
-//    if (false) {
-//                Image(
-//                    modifier = Modifier
-//                        .size(36.dp)
-//                        .clip(CircleShape),
-//                    contentScale = ContentScale.Crop,
-//                    painter = painterResource(id = R.drawable.img1),
-//                    contentDescription = ""
-//                )
-//    } else {
+internal fun DayCircle(
+    thumbnailUrl: String?,
+    isRangeDate: Boolean,
+) {
+    if (thumbnailUrl != null) {
+        val alpha = if (isRangeDate) 1f else 0.5f
+        ImageCircle(
+            modifier = Modifier.size(36.dp),
+            imageUrl = thumbnailUrl,
+            alpha = alpha
+        )
+    } else {
         Box(
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
                 .background(ButtonShapeColor)
         )
-//    }
+    }
 }

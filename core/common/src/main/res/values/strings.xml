@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">home</string>
+    <string name="app_name">daypet</string>
 
     <string name="event_memory">기억</string>
     <string name="event_todo">할 일</string>

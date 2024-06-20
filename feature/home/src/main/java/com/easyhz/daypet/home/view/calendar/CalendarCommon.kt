@@ -30,6 +30,7 @@ import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubHeading1
 import com.easyhz.daypet.design_system.theme.SubTextColor
 import com.easyhz.daypet.design_system.theme.TextColor
+import com.easyhz.daypet.domain.model.home.Thumbnail
 import com.easyhz.daypet.home.util.dateFormatter
 import com.easyhz.daypet.home.util.displayText
 import com.kizitonwose.calendar.core.CalendarDay
@@ -88,6 +89,7 @@ sealed class DayType {
 internal fun Day(
     modifier: Modifier = Modifier,
     dayType: DayType,
+    thumbnail: Thumbnail,
     isSelected: Boolean,
     isCurrentDate: Boolean,
     onClick: (LocalDate) -> Unit
@@ -105,7 +107,11 @@ internal fun Day(
         isCurrentDate -> Primary
         else -> TextColor
     }
-
+    val url = thumbnail.thumbnailUrls[date.toString()]
+    val isRangeDate = when {
+        dayType is DayType.Calendar && dayType.calendarDay.position != DayPosition.MonthDate -> false
+        else -> true
+    }
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -116,7 +122,10 @@ internal fun Day(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            DayCircle()
+            DayCircle(
+                thumbnailUrl = url,
+                isRangeDate = isRangeDate
+            )
             Text(
                 text = dateFormatter.format(date),
                 style = Body2,

@@ -15,7 +15,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.component.button.MainButton
-import com.easyhz.daypet.home.contract.calendar.MonthCalendarIntent
+import com.easyhz.daypet.domain.model.home.Thumbnail
+import com.easyhz.daypet.home.HomeViewModel
+import com.easyhz.daypet.home.contract.HomeIntent
+import com.easyhz.daypet.home.util.collectMonthChange
 import com.easyhz.daypet.home.util.displayText
 import com.easyhz.daypet.home.util.rememberFirstMostVisibleMonth
 import com.kizitonwose.calendar.compose.CalendarState
@@ -30,6 +33,7 @@ import java.time.LocalDate
 const val RANGE_MONTH = 500L
 @Composable
 internal fun MonthCalendarBottomSheetContent(
+    viewModel: HomeViewModel = hiltViewModel(),
     currentDate: LocalDate,
     selection: LocalDate,
     firstDayOfWeek: DayOfWeek = firstDayOfWeekFromLocale(),
@@ -37,7 +41,6 @@ internal fun MonthCalendarBottomSheetContent(
     calendarPadding: Dp = 10.dp,
     onClickSelectButton: (LocalDate) -> Unit,
 ) {
-    val viewModel: MonthCalendarViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val startMonth = remember { currentDate.yearMonth.minusMonths(RANGE_MONTH) }
     val endMonth = remember { currentDate.yearMonth.plusMonths(RANGE_MONTH) }
@@ -51,7 +54,7 @@ internal fun MonthCalendarBottomSheetContent(
     val title = rememberFirstMostVisibleMonth(state = monthState)
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.postIntent(MonthCalendarIntent.ChangeDate(selection))
+        viewModel.postIntent(HomeIntent.ChangeDateOnMonth(selection))
     }
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -65,18 +68,23 @@ internal fun MonthCalendarBottomSheetContent(
         HomeMonthCalendar(
             modifier = Modifier.padding(horizontal = calendarPadding),
             monthState = monthState,
-            selection = uiState.selection,
+            selection = uiState.monthSelection,
             currentDate = currentDate,
+            thumbnail = uiState.thumbnail,
             onChangeDate = { clickedDay ->
-                viewModel.postIntent(MonthCalendarIntent.ChangeDate(clickedDay))
+                viewModel.postIntent(HomeIntent.ChangeDateOnMonth(clickedDay))
             }
         )
         MainButton(
             text = stringResource(id = R.string.button_select_success),
             modifier = Modifier.padding(horizontal = 20.dp)
         ) {
-            onClickSelectButton(uiState.selection)
+            onClickSelectButton(uiState.monthSelection)
         }
+    }
+
+    collectMonthChange(state = monthState) { start, last ->
+        viewModel.postIntent(HomeIntent.ScrollMonth(start, last))
     }
 }
 
@@ -87,6 +95,7 @@ private fun HomeMonthCalendar(
     monthState: CalendarState,
     currentDate: LocalDate,
     selection: LocalDate,
+    thumbnail: Thumbnail,
     onChangeDate: (LocalDate) -> Unit,
 ) {
     HorizontalCalendar(
@@ -97,7 +106,8 @@ private fun HomeMonthCalendar(
                 dayType = DayType.Calendar(day),
                 isSelected = selection == day.date,
                 isCurrentDate = currentDate == day.date,
-                modifier = Modifier.padding(bottom = 12.dp)
+                thumbnail = thumbnail,
+                modifier = Modifier.padding(bottom = 12.dp),
             ) { clickedDay ->
                 onChangeDate(clickedDay)
             }

@@ -33,6 +33,7 @@ import com.easyhz.daypet.design_system.util.fab.FabOption
 import com.easyhz.daypet.design_system.util.fab.rememberMultiFabState
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
+import com.easyhz.daypet.home.util.collectWeekChange
 import com.easyhz.daypet.home.util.getCalendarPadding
 import com.easyhz.daypet.home.util.getWeekPageTitle
 import com.easyhz.daypet.home.util.rememberFirstVisibleWeekAfterScroll
@@ -134,6 +135,7 @@ fun HomeScreen(
                         weekState = weekState,
                         currentDate = currentDate,
                         selection = uiState.selection,
+                        thumbnail = uiState.thumbnail,
                         onChangedDate = { clickedDay ->
                             viewModel.postIntent(HomeIntent.ChangeDate(clickedDay))
                         }
@@ -162,6 +164,10 @@ fun HomeScreen(
                 }
             }
         }
+    }
+
+    collectWeekChange(weekState) { first, last ->
+         viewModel.postIntent(HomeIntent.ScrollWeek(first, last))
     }
 
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->

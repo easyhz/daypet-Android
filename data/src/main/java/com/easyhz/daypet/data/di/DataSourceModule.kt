@@ -1,5 +1,7 @@
 package com.easyhz.daypet.data.di
 
+import com.easyhz.daypet.data.datasource.home.ThumbnailDataSource
+import com.easyhz.daypet.data.datasource.home.ThumbnailDataSourceImpl
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSourceImpl
 import com.easyhz.daypet.data.datasource.todo.TodoDataSource
@@ -22,4 +24,9 @@ interface DataSourceModule {
     fun bindTodoDataSource(
         todoDataSourceImpl: TodoDataSourceImpl
     ): TodoDataSource
+
+    @Binds
+    fun bindThumbnailDataSource(
+        thumbnailDataSourceImpl: ThumbnailDataSourceImpl
+    ): ThumbnailDataSource
 }

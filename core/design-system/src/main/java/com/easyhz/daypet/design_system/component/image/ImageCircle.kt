@@ -17,7 +17,8 @@ import com.easyhz.daypet.design_system.theme.Primary
 @Composable
 fun ImageCircle(
     modifier: Modifier = Modifier,
-    imageUrl: String
+    imageUrl: String,
+    alpha: Float = 1f
 ) {
     GlideImage(
         modifier = modifier
@@ -27,6 +28,7 @@ fun ImageCircle(
         loading = placeholder(ColorPainter(ButtonShapeColor)),
         failure = placeholder(ColorPainter(Primary)),
         contentScale = ContentScale.Crop,
-        transition = CrossFade
+        transition = CrossFade,
+        alpha = alpha
     )
 }

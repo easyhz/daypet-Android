@@ -8,10 +8,13 @@ import java.time.LocalDate
 
 sealed class HomeIntent: UiIntent() {
     data class ChangeDate(val clickedDay: LocalDate): HomeIntent()
+    data class ChangeDateOnMonth(val clickedDay: LocalDate): HomeIntent()
     data class ClickMemory(val memory: Memory): HomeIntent()
     data class ClickTodo(val todo: Todo): HomeIntent()
     data object ShowMonthCalendar: HomeIntent()
     data object HideMonthCalendar: HomeIntent()
     data class ClickMonthCalendarDay(val localDate: LocalDate): HomeIntent()
     data class ClickFabSubMenu(val subMenu: SubMenu): HomeIntent()
+    data class ScrollWeek(val firstDate: LocalDate, val lastDate: LocalDate): HomeIntent()
+    data class ScrollMonth(val firstDate: LocalDate, val lastDate: LocalDate): HomeIntent()
 }
