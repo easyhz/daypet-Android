@@ -3,9 +3,11 @@ package com.easyhz.daypet.data.di
 import com.easyhz.daypet.data.repository.home.ThumbnailRepositoryImpl
 import com.easyhz.daypet.data.repository.memory.MemoryRepositoryImpl
 import com.easyhz.daypet.data.repository.todo.TodoRepositoryImpl
+import com.easyhz.daypet.data.repository.upload.MemoryImageRepositoryImpl
 import com.easyhz.daypet.domain.repository.home.ThumbnailRepository
 import com.easyhz.daypet.domain.repository.memory.MemoryRepository
 import com.easyhz.daypet.domain.repository.todo.TodoRepository
+import com.easyhz.daypet.domain.repository.upload.MemoryImageRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,4 +31,9 @@ interface RepositoryModule {
     fun bindThumbnailRepository(
         thumbnailRepositoryImpl: ThumbnailRepositoryImpl
     ): ThumbnailRepository
+
+    @Binds
+    fun bindMemoryImageRepository(
+        memoryImageRepositoryImpl: MemoryImageRepositoryImpl
+    ): MemoryImageRepository
 }

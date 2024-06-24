@@ -27,4 +27,11 @@ val DimColor = Color(0xFF000000).copy(0.25f)
 @Stable
 val ModalDimColor = Color(0xFF000000).copy(0.4f)
 
+@Stable
+val FadeColor = Color(0xFFF0F0F2).copy(0.5f)
 
+@Stable
+val ImageFadeColor = Color(0xFF000000).copy(0.35f)
+
+@Stable
+val ImageFadeBackgroundColor = Color(0xFF000000).copy(0.1f)

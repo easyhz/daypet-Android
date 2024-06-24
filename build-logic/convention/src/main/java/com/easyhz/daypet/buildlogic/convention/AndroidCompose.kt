@@ -28,6 +28,7 @@ internal fun Project.configureAndroidCompose(
             add("implementation", libs.findLibrary("androidx.material3").get())
             add("implementation", libs.findLibrary("androidx.material.icons").get())
             add("implementation", libs.findLibrary("androidx.navigation.compose").get())
+            add("implementation", libs.findLibrary("androidx.activity.compose").get())
         }
     }
 }

@@ -73,6 +73,19 @@ val Heading4 = TextStyle(
     )
 )
 
+val Heading5 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.SemiBold,
+    color = TextColor,
+    fontSize = 16.sp,
+    lineHeight = 16.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
 val Body1 = TextStyle(
     fontFamily = AppleSDGothicNeo,
     fontWeight = FontWeight.Medium,
@@ -90,7 +103,34 @@ val Body2 = TextStyle(
     fontWeight = FontWeight.SemiBold,
     color = TextColor,
     fontSize = 14.sp,
-    letterSpacing = LetterSpacing
+    letterSpacing = LetterSpacing,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val Body3 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Normal,
+    color = TextColor,
+    fontSize = 18.sp,
+    letterSpacing = LetterSpacing,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val Body4 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Normal,
+    color = TextColor,
+    fontSize = 20.sp,
+    lineHeight = 20.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
 )
 
 
@@ -99,7 +139,7 @@ val SubHeading1 = TextStyle(
     fontWeight = FontWeight.Normal,
     color = TextColor,
     fontSize = 14.sp,
-    lineHeight = 20.sp,
+    lineHeight = 14.sp,
     letterSpacing = LetterSpacing,
     textAlign = TextAlign.Justify,
     platformStyle = PlatformTextStyle(
@@ -128,6 +168,17 @@ val SubBody2 = TextStyle(
     lineHeight = 12.sp,
     letterSpacing = LetterSpacing,
     textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val SubBody3 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Normal,
+    color = SubTextColor,
+    fontSize = 18.sp,
+    letterSpacing = LetterSpacing,
     platformStyle = PlatformTextStyle(
         includeFontPadding = false,
     )

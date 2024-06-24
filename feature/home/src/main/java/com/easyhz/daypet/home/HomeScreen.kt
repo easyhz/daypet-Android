@@ -19,13 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.easyhz.daypet.common.R
 import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.main.DimScreenProvider
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
+import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.fab.FabButtonItem

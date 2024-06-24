@@ -8,6 +8,6 @@ import com.easyhz.daypet.memory_detail.MemoryDetailScreen
 fun NavGraphBuilder.memoryDetailScreen() {
     composable<MemoryDetail> { navBackStackEntry ->
         val args = navBackStackEntry.toRoute<MemoryDetail>()
-        MemoryDetailScreen(args.title)
+        MemoryDetailScreen(title = args.title)
     }
 }

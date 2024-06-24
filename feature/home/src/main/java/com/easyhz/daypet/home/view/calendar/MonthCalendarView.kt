@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.component.button.MainButton
+import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.domain.model.home.Thumbnail
 import com.easyhz.daypet.home.HomeViewModel
 import com.easyhz.daypet.home.contract.HomeIntent

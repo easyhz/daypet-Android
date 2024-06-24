@@ -114,7 +114,7 @@ private fun DayPetFloatingActionButton(
             0f
         }, label = "rotation"
     )
-    CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme()) {
+    CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme) {
         FloatingActionButton(
             onClick = { onClick() },
             shape = CircleShape,

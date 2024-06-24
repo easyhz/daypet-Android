@@ -59,3 +59,21 @@ fun Modifier.shadowEffect(
         }
     }
 )
+
+/**
+ * top 에 border 주는 확장 함수
+ *
+ * @param color border color
+ * @param width border width
+ *
+ * @return [Modifier]
+ */
+fun Modifier.borderTop(color: Color, width: Dp): Modifier = this.drawBehind {
+    val strokeWidth = width.toPx()
+    drawLine(
+        color = color,
+        start = androidx.compose.ui.geometry.Offset(0f, strokeWidth / 2),
+        end = androidx.compose.ui.geometry.Offset(size.width, strokeWidth / 2),
+        strokeWidth = strokeWidth
+    )
+}

@@ -10,8 +10,8 @@ import com.bumptech.glide.integration.compose.CrossFade
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
-import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.Primary
+import com.easyhz.daypet.design_system.theme.SubTextColor
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -24,8 +24,8 @@ fun ImageCircle(
         modifier = modifier
             .clip(CircleShape),
         model = imageUrl,
-        contentDescription = null,
-        loading = placeholder(ColorPainter(ButtonShapeColor)),
+        contentDescription = imageUrl,
+        loading = placeholder(ColorPainter(SubTextColor)),
         failure = placeholder(ColorPainter(Primary)),
         contentScale = ContentScale.Crop,
         transition = CrossFade,

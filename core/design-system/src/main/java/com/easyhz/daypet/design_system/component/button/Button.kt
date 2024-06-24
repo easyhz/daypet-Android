@@ -29,7 +29,7 @@ fun MainButton(
     containerColor: Color = Primary,
     onClick: () -> Unit
 ) {
-    CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme()) {
+    CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme) {
         Button(
             modifier = Modifier
                 .height(52.dp)

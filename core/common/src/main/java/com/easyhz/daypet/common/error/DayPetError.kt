@@ -7,7 +7,7 @@ sealed class DayPetError: Exception() {
         private fun readResolve(): Any = UnexpectedError
     }
 
-    /* 잘못된 형식으로 결과값 반환 X */
+    /* 결과값 반환 X */
     data object NoResultError : DayPetError() {
         @JvmStatic
         private fun readResolve(): Any = NoResultError

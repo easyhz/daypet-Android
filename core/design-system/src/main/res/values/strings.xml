@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">daypet</string>
+
+    <string name="event_memory">기억</string>
+    <string name="title_upload_memory">새 기억</string>
+    <string name="event_todo">할 일</string>
+    <string name="menu_add">추가</string>
+
+    <string name="need_add">을 추가해 주세요.</string>
+    <string name="button_select_success">선택 완료</string>
+
+    <string name="upload_title">제목</string>
+    <string name="upload_title_placeholder">제목을 입력하세요.</string>
+    <string name="upload_image">사진</string>
+    <string name="upload_image_placeholder">사진을 추가해 주세요.</string>
+    <string name="upload_member">함께한 가족</string>
+    <string name="upload_member_select">함께한 가족 선택하기</string>
+    <string name="upload_content">내용</string>
+</resources>

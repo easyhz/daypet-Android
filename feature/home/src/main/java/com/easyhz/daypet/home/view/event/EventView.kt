@@ -23,10 +23,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.easyhz.daypet.common.R
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading4
 import com.easyhz.daypet.design_system.theme.SubBody1
+import com.easyhz.daypet.design_system.R
+
 enum class Event(
     @StringRes val titleId: Int,
     val icon: ImageVector

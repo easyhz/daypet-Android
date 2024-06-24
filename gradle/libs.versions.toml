@@ -28,9 +28,11 @@ calendar = "2.6.0-beta01"
 glide = "1.0.0-beta01"
 firebaseFirestoreKtx = "25.0.0"
 serialization = "1.6.3"
+wheelpickercomposeVersion = "1.1.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+commandiron-wheelpickercompose = { module = "com.github.commandiron:WheelPickerCompose", version.ref = "wheelpickercomposeVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

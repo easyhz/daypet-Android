@@ -1,16 +1,21 @@
 package com.easyhz.daypet.design_system.theme
 
 import android.app.Activity
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DayPetTheme(
     content: @Composable () -> Unit
@@ -24,14 +29,18 @@ fun DayPetTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
-
-    MaterialTheme(
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalRippleTheme provides NoRippleTheme,
+        LocalOverscrollConfiguration provides null,
+    ) {
+        MaterialTheme(
+            content = content
+        )
+    }
 }
 
 // no ripple
-class NoRippleTheme : RippleTheme {
+object NoRippleTheme : RippleTheme {
     @Composable
     override fun defaultColor(): Color = Color.Unspecified
 

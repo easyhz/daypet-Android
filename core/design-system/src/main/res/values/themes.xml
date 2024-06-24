@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CalenderViewCustom" >
+        <item name="android:colorControlActivated">@color/primary</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+    </style>
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText">
+        <item name="android:textColor">@drawable/selector_calendar_date</item>
+    </style>
+
+    <style name="TimePicker">
+        <item name="android:headerBackground">@color/subTextColor</item>
+        <item name="android:textColor">@color/subTextColor</item>
+        <item name="android:colorAccent">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:colorControlNormal">@color/primary</item>
+    </style>
+</resources>
