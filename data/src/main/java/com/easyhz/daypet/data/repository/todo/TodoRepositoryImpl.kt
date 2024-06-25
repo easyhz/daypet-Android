@@ -1,7 +1,7 @@
 package com.easyhz.daypet.data.repository.todo
 
 import com.easyhz.daypet.data.datasource.todo.TodoDataSource
-import com.easyhz.daypet.data.mapper.todo.toEntity
+import com.easyhz.daypet.data.mapper.todo.toModel
 import com.easyhz.daypet.data.mapper.todo.toRequest
 import com.easyhz.daypet.domain.model.todo.Todo
 import com.easyhz.daypet.domain.param.todo.TodoParam
@@ -13,7 +13,7 @@ class TodoRepositoryImpl @Inject constructor(
 ): TodoRepository {
     override suspend fun fetchTodosOnDate(param: TodoParam): Result<List<Todo>> =
         todoDataSource.fetchTodosOnDate(param.toRequest()).map { list ->
-            list.map { res -> res.toEntity() }
+            list.map { res -> res.toModel() }
         }
 
 }

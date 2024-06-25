@@ -1,15 +1,15 @@
 package com.easyhz.daypet.data.mapper.home
 
 import com.easyhz.daypet.common.extension.toHashMap
+import com.easyhz.daypet.common.extension.toLocalDate
+import com.easyhz.daypet.common.extension.toTimeStamp
 import com.easyhz.daypet.data.model.request.home.ThumbnailRequest
 import com.easyhz.daypet.data.model.response.home.ThumbnailResponse
-import com.easyhz.daypet.data.util.toLocalDate
-import com.easyhz.daypet.data.util.toTimeStamp
 import com.easyhz.daypet.domain.model.home.Thumbnail
 import com.easyhz.daypet.domain.param.home.ThumbnailParam
 
 
-fun List<ThumbnailResponse>.toEntity(): Thumbnail {
+fun List<ThumbnailResponse>.toModel(): Thumbnail {
     val monthSet = mutableSetOf<String>()
     val thumbnailUrls = mutableMapOf<String, String>()
 

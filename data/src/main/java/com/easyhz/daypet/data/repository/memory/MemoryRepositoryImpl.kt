@@ -1,7 +1,7 @@
 package com.easyhz.daypet.data.repository.memory
 
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
-import com.easyhz.daypet.data.mapper.memory.toEntity
+import com.easyhz.daypet.data.mapper.memory.toModel
 import com.easyhz.daypet.data.mapper.memory.toRequest
 import com.easyhz.daypet.domain.model.memory.Memory
 import com.easyhz.daypet.domain.param.memory.MemoryParam
@@ -13,7 +13,7 @@ class MemoryRepositoryImpl @Inject constructor(
 ): MemoryRepository {
     override suspend fun fetchMemoriesOnDate(param: MemoryParam): Result<List<Memory>> =
         memoryDataSource.fetchMemoriesOnDate(param.toRequest()).map { list ->
-            list.map { res -> res.toEntity() }
+            list.map { res -> res.toModel() }
         }
 
 }
