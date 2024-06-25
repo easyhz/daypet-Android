@@ -11,8 +11,8 @@ import javax.inject.Inject
 class TodoRepositoryImpl @Inject constructor(
     private val todoDataSource: TodoDataSource
 ): TodoRepository {
-    override suspend fun fetchTodosOnDate(data: TodoParam): Result<List<Todo>> =
-        todoDataSource.fetchTodosOnDate(data.toRequest()).map { list ->
+    override suspend fun fetchTodosOnDate(param: TodoParam): Result<List<Todo>> =
+        todoDataSource.fetchTodosOnDate(param.toRequest()).map { list ->
             list.map { res -> res.toEntity() }
         }
 

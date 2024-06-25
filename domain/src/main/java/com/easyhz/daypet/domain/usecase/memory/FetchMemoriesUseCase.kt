@@ -9,6 +9,6 @@ import javax.inject.Inject
 class FetchMemoriesUseCase @Inject constructor(
     private val memoryRepository: MemoryRepository
 ): BaseUseCase<MemoryParam, List<Memory>>() {
-    override suspend fun invoke(data: MemoryParam): Result<List<Memory>> =
-        memoryRepository.fetchMemoriesOnDate(data)
+    override suspend fun invoke(param: MemoryParam): Result<List<Memory>> =
+        memoryRepository.fetchMemoriesOnDate(param)
 }

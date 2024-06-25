@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ThumbnailRepositoryImpl @Inject constructor(
     private val thumbnailDataSource: ThumbnailDataSource
 ): ThumbnailRepository {
-    override suspend fun fetchMonthlyThumbnail(data: ThumbnailParam): Result<Thumbnail> =
-        thumbnailDataSource.fetchMonthlyThumbnail(data.toRequest()).map { it.toEntity() }
+    override suspend fun fetchMonthlyThumbnail(param: ThumbnailParam): Result<Thumbnail> =
+        thumbnailDataSource.fetchMonthlyThumbnail(param.toRequest()).map { it.toEntity() }
 
 }

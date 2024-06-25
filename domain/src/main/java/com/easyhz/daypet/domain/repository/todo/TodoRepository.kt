@@ -4,5 +4,5 @@ import com.easyhz.daypet.domain.model.todo.Todo
 import com.easyhz.daypet.domain.param.todo.TodoParam
 
 interface TodoRepository {
-    suspend fun fetchTodosOnDate(data: TodoParam): Result<List<Todo>>
+    suspend fun fetchTodosOnDate(param: TodoParam): Result<List<Todo>>
 }

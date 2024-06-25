@@ -3,6 +3,8 @@ package com.easyhz.daypet.upload_memory
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.domain.param.member.GroupMemberParam
+import com.easyhz.daypet.domain.usecase.member.FetchGroupMember
 import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUri
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadMemoryViewModel @Inject constructor(
-    private val getTakePictureUri: GetTakePictureUri
+    private val getTakePictureUri: GetTakePictureUri,
+    private val fetchGroupMember: FetchGroupMember,
 ): BaseViewModel<UploadState, UploadIntent, UploadSideEffect>(
     initialState = UploadState.init()
 ) {
@@ -75,7 +78,11 @@ class UploadMemoryViewModel @Inject constructor(
     private fun deleteImage(image: Uri) {
         reduce { deleteImage(image = image) }
     }
-    private fun showMemberBottomSheet() {
+    private fun showMemberBottomSheet() = viewModelScope.launch {
+        val param = GroupMemberParam("groupID")
+        fetchGroupMember.invoke(param).onSuccess {
+            println("success > $it")
+        }.onFailure { println("falie > $it") }
         reduce { copy(showMemberBottomSheet = true) }
     }
 

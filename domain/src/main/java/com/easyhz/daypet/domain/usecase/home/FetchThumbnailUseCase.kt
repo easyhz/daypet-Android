@@ -9,6 +9,6 @@ import javax.inject.Inject
 class FetchThumbnailUseCase @Inject constructor(
     private val thumbnailRepository: ThumbnailRepository
 ): BaseUseCase<ThumbnailParam, Thumbnail>() {
-    override suspend fun invoke(data: ThumbnailParam): Result<Thumbnail> =
-        thumbnailRepository.fetchMonthlyThumbnail(data)
+    override suspend fun invoke(param: ThumbnailParam): Result<Thumbnail> =
+        thumbnailRepository.fetchMonthlyThumbnail(param)
 }

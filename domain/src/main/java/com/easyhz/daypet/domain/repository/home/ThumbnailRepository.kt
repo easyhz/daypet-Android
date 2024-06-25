@@ -4,5 +4,5 @@ import com.easyhz.daypet.domain.model.home.Thumbnail
 import com.easyhz.daypet.domain.param.home.ThumbnailParam
 
 interface ThumbnailRepository {
-    suspend fun fetchMonthlyThumbnail(data: ThumbnailParam): Result<Thumbnail>
+    suspend fun fetchMonthlyThumbnail(param: ThumbnailParam): Result<Thumbnail>
 }

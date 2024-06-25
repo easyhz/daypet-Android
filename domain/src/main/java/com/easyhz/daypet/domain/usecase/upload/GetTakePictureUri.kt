@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetTakePictureUri @Inject constructor(
     private val memoryImageRepository: MemoryImageRepository
 ): BaseUseCase<Unit, String>() {
-    override suspend fun invoke(data: Unit): Result<String> = memoryImageRepository.getTakePictureUri()
+    override suspend fun invoke(param: Unit): Result<String> = memoryImageRepository.getTakePictureUri()
 }

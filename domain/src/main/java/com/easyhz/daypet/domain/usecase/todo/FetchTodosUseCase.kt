@@ -9,6 +9,6 @@ import javax.inject.Inject
 class FetchTodosUseCase @Inject constructor(
     private val todoRepository: TodoRepository
 ): BaseUseCase<TodoParam, List<Todo>>() {
-    override suspend fun invoke(data: TodoParam): Result<List<Todo>> =
-        todoRepository.fetchTodosOnDate(data)
+    override suspend fun invoke(param: TodoParam): Result<List<Todo>> =
+        todoRepository.fetchTodosOnDate(param)
 }
