@@ -22,7 +22,6 @@ class GroupMemberDatabaseDataSourceImpl @Inject constructor(
 
     }
 
-    @Transaction
     override suspend fun updateGroupMembers(
         group: GroupEntity,
         groupUsers: List<GroupUserEntity>,
@@ -30,17 +29,26 @@ class GroupMemberDatabaseDataSourceImpl @Inject constructor(
     ) {
         withContext(dispatcher) {
             runCatching {
-                groupDao.deleteAll()
-                groupUserDao.deleteAll()
-                petDao.deleteAll()
-
-                groupDao.insertGroup(group)
-                groupUserDao.insertGroupUsers(groupUsers)
-                petDao.insertPets(pets)
+                updateGroupMemberTransaction(group, groupUsers, pets)
             }.onFailure { e ->
                 // TODO: 예외 처리
-                println(">> 안됨 $e")
+                println("확인용 삭제필요 >> $e")
             }
         }
+    }
+
+    @Transaction
+    private suspend fun updateGroupMemberTransaction(
+        group: GroupEntity,
+        groupUsers: List<GroupUserEntity>,
+        pets: List<PetEntity>
+    ) {
+        groupDao.deleteAll()
+        groupUserDao.deleteAll()
+        petDao.deleteAll()
+
+        groupDao.insertGroup(group)
+        groupUserDao.insertGroupUsers(groupUsers)
+        petDao.insertPets(pets)
     }
 }
