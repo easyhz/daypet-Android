@@ -81,9 +81,8 @@ class UploadMemoryViewModel @Inject constructor(
     private fun showMemberBottomSheet() = viewModelScope.launch {
         val param = GroupMemberParam("groupID")
         fetchGroupMember.invoke(param).onSuccess {
-            println("success > $it")
-        }.onFailure { println("falie > $it") }
-        reduce { copy(showMemberBottomSheet = true) }
+            reduce { copy(pets = it.pets, users = it.groupUsers, showMemberBottomSheet = true) }
+        }.onFailure { println("fail > > $it") }
     }
 
     private fun hideMemberBottomSheet() {

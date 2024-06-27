@@ -19,8 +19,9 @@ import com.easyhz.daypet.design_system.component.image.MemberSelectType
 import com.easyhz.daypet.design_system.component.main.DayPetRow
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody2
+import com.easyhz.daypet.domain.model.member.GroupUser
+import com.easyhz.daypet.domain.model.member.Pet
 import com.easyhz.daypet.domain.model.upload.Member
-import kotlin.random.Random
 
 @Composable
 fun UploadMemberView(
@@ -44,7 +45,7 @@ fun UploadMemberView(
                     selectType = MemberSelectType.DELETE,
                     imageUrl = it.thumbnail,
                     name = it.name,
-                    isChecked = Random.nextBoolean()
+                    isChecked = true
                 ) {
                     println("it > $it")
                 }
@@ -64,8 +65,8 @@ fun UploadMemberView(
 @Composable
 internal fun MemberSelectView(
     modifier: Modifier = Modifier,
-    pets: List<String>,
-    members: List<String>,
+    pets: List<Pet>,
+    members: List<GroupUser>,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -82,9 +83,9 @@ internal fun MemberSelectView(
             items(pets) {
                 MemberImage(
                     selectType = MemberSelectType.CHECK,
-                    imageUrl = it,
-                    name = it,
-                    isChecked = Random.nextBoolean()
+                    imageUrl = it.thumbnailUrl,
+                    name = it.name,
+                    isChecked = false
                 ) {
                     println("it > $it")
                 }
@@ -94,9 +95,9 @@ internal fun MemberSelectView(
             items(members) {
                 MemberImage(
                     selectType = MemberSelectType.CHECK,
-                    imageUrl = it,
-                    name = it,
-                    isChecked = Random.nextBoolean()
+                    imageUrl = it.thumbnailUrl,
+                    name = it.name,
+                    isChecked = false
                 ) {
                     println("it > $it")
                 }
