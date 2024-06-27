@@ -2,6 +2,10 @@ package com.easyhz.daypet.data.di
 
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSource
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSourceImpl
+import com.easyhz.daypet.data.datasource.member.GroupDataSource
+import com.easyhz.daypet.data.datasource.member.GroupDataSourceImpl
+import com.easyhz.daypet.data.datasource.member.GroupUserDataSource
+import com.easyhz.daypet.data.datasource.member.GroupUserDataSourceImpl
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSourceImpl
 import com.easyhz.daypet.data.datasource.todo.TodoDataSource
@@ -29,4 +33,14 @@ interface DataSourceModule {
     fun bindThumbnailDataSource(
         thumbnailDataSourceImpl: ThumbnailDataSourceImpl
     ): ThumbnailDataSource
+
+    @Binds
+    fun bindGroupDataSource(
+        groupDataSourceImpl: GroupDataSourceImpl
+    ): GroupDataSource
+
+    @Binds
+    fun bindGroupUserDataSource(
+        groupUserDataSourceImpl: GroupUserDataSourceImpl
+    ): GroupUserDataSource
 }

@@ -36,8 +36,8 @@ internal fun UploadView(
     if (uiState.showMemberBottomSheet) {
         BottomSheet(onDismissRequest = { viewModel.postIntent(UploadIntent.HideMemberBottomSheet) }) {
             MemberSelectView(
-                pets = listOf("보리", "누리"),
-                members = listOf("엄마", "아빠")
+                pets = listOf(),
+                members = listOf()
             )
         }
     }

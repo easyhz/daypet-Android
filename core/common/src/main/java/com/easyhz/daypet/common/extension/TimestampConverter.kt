@@ -1,4 +1,4 @@
-package com.easyhz.daypet.data.util
+package com.easyhz.daypet.common.extension
 
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat

@@ -11,6 +11,7 @@ android {
 
 dependencies {
     implementation(projects.core.common)
+    implementation(projects.core.database)
     implementation(projects.domain)
 
     implementation(libs.androidx.core.ktx)
