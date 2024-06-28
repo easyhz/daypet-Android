@@ -2,8 +2,8 @@
 <paths>
     <files-path
         name="upload_take"
-        path="images/" />
+        path="camera_images/" />
     <cache-path
         name="upload_take"
-        path="images/" />
+        path="camera_images/" />
 </paths>

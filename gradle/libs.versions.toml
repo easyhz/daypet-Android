@@ -29,6 +29,7 @@ glide = "1.0.0-beta01"
 firebaseFirestoreKtx = "25.0.0"
 serialization = "1.6.3"
 room = "2.6.1"
+work = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +71,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
