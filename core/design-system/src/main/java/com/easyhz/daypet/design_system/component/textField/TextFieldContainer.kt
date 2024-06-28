@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,14 @@ import com.easyhz.daypet.design_system.theme.SubBody2
 import com.easyhz.daypet.design_system.theme.SubBody3
 import com.easyhz.daypet.design_system.theme.SubTextColor
 
+enum class TextFieldType(
+    val hasDivider: Boolean,
+    val verticalAlignment: Alignment.Vertical,
+    val placeholderAlignment: Alignment,
+) {
+    ONE_LINE(hasDivider = true, verticalAlignment = Alignment.Bottom, placeholderAlignment = Alignment.BottomStart),
+    CONTENT(hasDivider = false, verticalAlignment = Alignment.Top, placeholderAlignment = Alignment.TopStart)
+}
 
 @Composable
 internal fun TextFieldContainer(
@@ -30,7 +39,6 @@ internal fun TextFieldContainer(
     spacing: Dp = 4.dp,
     innerTextField: @Composable () -> Unit
 ) {
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacing)
@@ -41,12 +49,41 @@ internal fun TextFieldContainer(
             )
         }
         TextFieldContainerContent(
+            modifier = Modifier.height(34.dp),
+            type = TextFieldType.ONE_LINE,
             state = state,
             placeholder = placeholder,
-            innerTextField = innerTextField
+            innerTextField = innerTextField,
         )
     }
+}
 
+@Composable
+internal fun ContentTextFieldContainer(
+    modifier: Modifier = Modifier,
+    state: TextFieldState,
+    title: String?,
+    placeholder: String,
+    spacing: Dp = 12.dp,
+    innerTextField: @Composable () -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxHeight(),
+        verticalArrangement = Arrangement.spacedBy(spacing)
+    ) {
+        title?.let {
+            TextFieldContainerTitle(
+                title = title,
+            )
+        }
+        TextFieldContainerContent(
+            modifier = Modifier.fillMaxHeight(),
+            type = TextFieldType.CONTENT,
+            state = state,
+            placeholder = placeholder,
+            innerTextField = innerTextField,
+        )
+    }
 }
 
 @Composable
@@ -62,32 +99,36 @@ private fun TextFieldContainerTitle(
 
 @Composable
 private fun TextFieldContainerContent(
+    modifier: Modifier = Modifier,
+    type: TextFieldType,
     state: TextFieldState,
     placeholder: String,
     innerTextField: @Composable () -> Unit
 ) {
     Row(
-        modifier = Modifier.height(34.dp).fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = type.verticalAlignment
     ) {
         Box(modifier = Modifier.weight(1f)) {
             innerTextField()
             if (state == TextFieldState.Default) {
                 Text(
-                    modifier = Modifier.align(Alignment.BottomStart),
+                    modifier = Modifier.align(type.placeholderAlignment),
                     text = placeholder,
                     style = SubBody3
                 )
             }
         }
     }
-    HorizontalDivider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 7.dp)
-            .height(1.dp),
-        color = SubTextColor
-    )
+    if (type.hasDivider) {
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 7.dp)
+                .height(1.dp),
+            color = SubTextColor
+        )
+    }
 }
 
 @Preview
@@ -95,6 +136,15 @@ private fun TextFieldContainerContent(
 private fun TextFieldContainerPrev() {
     val state = getTextFieldState("", false)
     TextFieldContainer(state = state, title = "제목", placeholder = "제목을 입력하세요.") {
+
+    }
+}
+
+@Preview
+@Composable
+private fun ContentTextFieldContainerPrev() {
+    val state = getTextFieldState("", false)
+    ContentTextFieldContainer(state = state, title = "내용", placeholder = "내용을 입력하세요.") {
 
     }
 

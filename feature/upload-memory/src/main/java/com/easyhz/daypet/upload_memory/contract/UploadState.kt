@@ -10,6 +10,7 @@ import java.time.LocalTime
 
 data class UploadState(
     val title: String,
+    val content: String,
     val date: LocalDate,
     val time: LocalTime,
     val selectedImages: List<Uri>,
@@ -22,6 +23,7 @@ data class UploadState(
     companion object {
         fun init() = UploadState(
             title = "",
+            content = "",
             date = LocalDate.now(),
             time = LocalTime.now(),
             selectedImages = emptyList(),
@@ -29,7 +31,7 @@ data class UploadState(
             pets = emptyList(),
             users = emptyList(),
             showMemberBottomSheet = false,
-            takePictureUri = ""
+            takePictureUri = "",
         )
     }
 

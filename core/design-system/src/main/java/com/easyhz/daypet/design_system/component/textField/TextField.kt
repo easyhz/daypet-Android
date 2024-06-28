@@ -47,6 +47,43 @@ fun BaseTextField(
     )
 }
 
+@Composable
+fun ContentTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    title: String,
+    placeholder: String,
+    singleLine: Boolean,
+    isFilled: Boolean,
+    minLines: Int = 1,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+) {
+    val state = getTextFieldState(text = value, isFilled = isFilled)
+    BasicTextField(
+        value = value,
+        onValueChange = { onValueChange(it) },
+        modifier = modifier
+            .fillMaxWidth(),
+        textStyle = Body3,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        singleLine = singleLine,
+        minLines = minLines,
+        visualTransformation = visualTransformation,
+        decorationBox = { innerTextField ->
+            ContentTextFieldContainer(
+                state = state,
+                title = title,
+                placeholder = placeholder,
+                innerTextField = innerTextField
+            )
+        }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun BaseTextFieldPrev() {
@@ -58,5 +95,17 @@ private fun BaseTextFieldPrev() {
         singleLine = true,
         isFilled = false
     )
+}
 
+@Preview(showBackground = true)
+@Composable
+private fun ContentTextFieldPrev() {
+    ContentTextField(
+        value = "내용을 입력해\n내용을 입력해\n내용을 입력해",
+        onValueChange = { },
+        title = "내용",
+        placeholder = "내용을 입력하세요.",
+        singleLine = false,
+        isFilled = false
+    )
 }

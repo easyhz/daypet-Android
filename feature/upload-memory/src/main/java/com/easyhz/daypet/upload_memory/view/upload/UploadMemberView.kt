@@ -24,7 +24,7 @@ import com.easyhz.daypet.domain.model.member.Pet
 import com.easyhz.daypet.domain.model.upload.Member
 
 @Composable
-fun UploadMemberView(
+internal fun UploadMemberView(
     modifier: Modifier = Modifier,
     members: List<Member>,
     onAddClick: () -> Unit

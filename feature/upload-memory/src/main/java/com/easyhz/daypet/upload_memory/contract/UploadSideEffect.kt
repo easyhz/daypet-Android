@@ -6,5 +6,10 @@ import com.easyhz.daypet.common.base.UiSideEffect
 sealed class UploadSideEffect: UiSideEffect() {
     data object NavigateToGallery: UploadSideEffect()
     data class NavigateToCamera(val uri: Uri): UploadSideEffect()
+    data object ScrollToBottom: UploadSideEffect()
+    data class ChangeFocus(val focusType: FocusType): UploadSideEffect()
+}
 
+enum class FocusType {
+    NONE, TITLE, CONTENT
 }

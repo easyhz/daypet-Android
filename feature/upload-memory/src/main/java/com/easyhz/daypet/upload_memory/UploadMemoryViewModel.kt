@@ -6,6 +6,7 @@ import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.usecase.member.FetchGroupMember
 import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUri
+import com.easyhz.daypet.upload_memory.contract.FocusType
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
 import com.easyhz.daypet.upload_memory.contract.UploadState
@@ -26,7 +27,8 @@ class UploadMemoryViewModel @Inject constructor(
         when (intent) {
             is UploadIntent.ClickToGallery -> { onClickGallery() }
             is UploadIntent.ClickToCamera -> { onClickCamera() }
-            is UploadIntent.ChangeText -> { onChangeTitleValue(intent.newText) }
+            is UploadIntent.ChangeTitleText -> { onChangeTitleValue(intent.newText) }
+            is UploadIntent.ChangeContentText -> { onChangeContentValue(intent.newText) }
             is UploadIntent.ChangeDate -> { onChangeDateValue(intent.newDate) }
             is UploadIntent.ChangeTime -> { onChangeTimeValue(intent.newTime) }
             is UploadIntent.PickImages -> { updatedSelectedImages(intent.images) }
@@ -34,6 +36,8 @@ class UploadMemoryViewModel @Inject constructor(
             is UploadIntent.DeleteImage -> { deleteImage(intent.image)}
             is UploadIntent.ShowMemberBottomSheet -> { showMemberBottomSheet() }
             is UploadIntent.HideMemberBottomSheet -> { hideMemberBottomSheet() }
+            is UploadIntent.ChangeTitleFocus -> { changeTitleFocus(intent.isFocused) }
+            is UploadIntent.ChangeContentFocus -> { changeContentFocus(intent.isFocused) }
         }
     }
 
@@ -55,6 +59,11 @@ class UploadMemoryViewModel @Inject constructor(
 
     private fun onChangeTitleValue(newText: String) {
         reduce { copy(title = newText) }
+    }
+
+    private fun onChangeContentValue(newText: String) {
+        reduce { copy(content = newText) }
+        postSideEffect { UploadSideEffect.ScrollToBottom }
     }
 
     private fun onChangeDateValue(newDate: LocalDate) {
@@ -87,6 +96,18 @@ class UploadMemoryViewModel @Inject constructor(
 
     private fun hideMemberBottomSheet() {
         reduce { copy(showMemberBottomSheet = false) }
+    }
+
+    private fun changeTitleFocus(isFocused: Boolean) {
+        if (isFocused) {
+            postSideEffect { UploadSideEffect.ChangeFocus(FocusType.TITLE) }
+        }
+    }
+
+    private fun changeContentFocus(isFocused: Boolean) {
+        if (isFocused) {
+            postSideEffect { UploadSideEffect.ChangeFocus(FocusType.CONTENT) }
+        }
     }
 
 }

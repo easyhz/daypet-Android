@@ -3,7 +3,10 @@ package com.easyhz.daypet.upload_memory
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,6 +36,7 @@ fun UploadMemoryScreen(
             contract = ActivityResultContracts.TakePicture(),
             onResult = { viewModel.postIntent(UploadIntent.TakePicture(it)) }
         )
+    val scrollState = rememberScrollState()
 
     DayPetScaffold(
         topBar = {
@@ -52,6 +56,8 @@ fun UploadMemoryScreen(
         UploadView(
             modifier = Modifier
                 .padding(it)
+                .fillMaxSize()
+                .verticalScroll(scrollState)
         )
     }
 
@@ -64,9 +70,29 @@ fun UploadMemoryScreen(
             is UploadSideEffect.NavigateToCamera -> {
                 cameraLauncher.launch(sideEffect.uri)
             }
+
+            is UploadSideEffect.ScrollToBottom -> {
+                scrollState.animateScrollTo(scrollState.maxValue)
+            }
+            is UploadSideEffect.ChangeFocus -> {
+//                handleChangeFocus(sideEffect.focusType, scrollState)
+            }
         }
     }
 }
+
+//private suspend fun handleChangeFocus(focusType: FocusType, scrollState: ScrollState) {
+//    when(focusType) {
+//        FocusType.NONE -> { println("none")
+//        }
+//        FocusType.TITLE -> { println("title") }
+//        FocusType.CONTENT -> {
+////            println("maxVlaue > ${scrollState.maxValue}")
+////            scrollState.animateScrollTo(scrollState.maxValue)
+//        }
+//    }
+//
+//}
 
 
 @Preview(showBackground = true)

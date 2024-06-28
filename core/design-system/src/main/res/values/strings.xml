@@ -16,4 +16,5 @@
     <string name="upload_member">함께한 가족</string>
     <string name="upload_member_select">함께한 가족 선택하기</string>
     <string name="upload_content">내용</string>
+    <string name="upload_content_placeholder">내용을 입력하세요.</string>
 </resources>

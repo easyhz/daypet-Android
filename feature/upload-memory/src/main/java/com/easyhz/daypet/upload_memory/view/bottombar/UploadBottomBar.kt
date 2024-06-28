@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.easyhz.daypet.design_system.component.main.DayPetIcon
 import com.easyhz.daypet.design_system.R
+import com.easyhz.daypet.design_system.component.main.DayPetIcon
 import com.easyhz.daypet.design_system.component.main.IconDefault
 import com.easyhz.daypet.design_system.extension.borderTop
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
@@ -20,16 +20,16 @@ import com.easyhz.daypet.design_system.theme.Primary
 
 @Composable
 fun UploadBottomBar(
+    modifier: Modifier = Modifier,
     onClickGallery: () -> Unit,
     onClickCamera: () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .height(48.dp)
             .fillMaxWidth()
             .borderTop(color = ButtonShapeColor, width = 1.dp)
             .padding(horizontal = 16.dp)
-
     ) {
         Row(
             modifier = Modifier.align(Alignment.CenterStart),
