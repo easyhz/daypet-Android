@@ -8,14 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.topbar.TopBar
+import com.easyhz.daypet.design_system.util.topbar.TopBarType
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
 import com.easyhz.daypet.upload_memory.view.bottombar.UploadBottomBar
@@ -41,9 +42,18 @@ fun UploadMemoryScreen(
     DayPetScaffold(
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.title_upload_memory),
-                navigateToBefore = { /* TODO: Navigate TO Back */ },
-                navigateToNext = { /* TODO: Navigate TO Next */ }
+                left = TopBarType.TopBarIconButton(
+                    iconId = R.drawable.ic_keyboard_arrow_left,
+                    iconAlignment = Alignment.CenterStart,
+                    onClick = { /* TODO: Navigate To Back */}
+                ),
+                title = TopBarType.TopBarTitle(
+                    stringId = R.string.title_upload_memory
+                ),
+                right = TopBarType.TopBarTextButton(
+                    stringId = R.string.title_upload_success,
+                    onClick = { /* TODO: Navigate TO Next */}
+                )
             )
         },
         bottomBar = {
