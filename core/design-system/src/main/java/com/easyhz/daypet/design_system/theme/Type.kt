@@ -183,3 +183,42 @@ val SubBody3 = TextStyle(
         includeFontPadding = false,
     )
 )
+
+
+val Caption1 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Normal,
+    color = SubTextColor,
+    fontSize = 10.sp,
+    letterSpacing = LetterSpacing,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+val Title = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Bold,
+    color = TextColor,
+    fontSize = 24.sp,
+    lineHeight = 24.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
+
+
+val SubTitle = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.SemiBold,
+    color = TextColor,
+    fontSize = 18.sp,
+    lineHeight = 18.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)

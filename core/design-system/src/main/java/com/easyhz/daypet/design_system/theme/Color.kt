@@ -35,3 +35,15 @@ val ImageFadeColor = Color(0xFF000000).copy(0.35f)
 
 @Stable
 val ImageFadeBackgroundColor = Color(0xFF000000).copy(0.1f)
+
+@Stable
+val GoogleContainerColor = Color(0xFFFFFFFF)
+
+@Stable
+val GoogleContentColor = Color(0xFF000000)
+
+@Stable
+val AppleContainerColor = Color(0xFF050708)
+
+@Stable
+val AppleContentColor = Color(0xFFFFFFFF)

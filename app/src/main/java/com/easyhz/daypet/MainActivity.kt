@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.easyhz.daypet.design_system.theme.DayPetTheme
+import com.easyhz.daypet.sign.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -12,7 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DayPetTheme {
-                DayPetApp()
+//                DayPetApp()
+                LoginScreen()
             }
         }
     }

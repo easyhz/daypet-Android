@@ -61,6 +61,57 @@ fun Modifier.shadowEffect(
 )
 
 /**
+ * 그림자 효과 [Modifier] 확장 함수 - 버튼 기준
+ *
+ * @param shadowColor 그림자 색
+ * @param borderRadius 버튼 radius
+ * @param blurRadius 블러 radius
+ * @param offsetY y 오프셋
+ * @param offsetX x 오프셋
+ * @param spread 얼마나 퍼질건지
+ * @param modifier Modifier
+ *
+ * @return [Modifier]
+ */
+fun Modifier.buttonShadowEffect(
+    shadowColor: Color = Color.Black,
+    borderRadius: Dp = 0.dp,
+    blurRadius: Dp = 0.dp,
+    offsetY: Dp = 0.dp,
+    offsetX: Dp = 0.dp,
+    spread: Dp = 0f.dp,
+    modifier: Modifier = Modifier
+) = this.then(
+    modifier.drawBehind {
+        this.drawIntoCanvas {
+            val paint = Paint()
+            val frameworkPaint = paint.asFrameworkPaint()
+            val spreadPixel = spread.toPx()
+            val leftPixel = (0f - spreadPixel) + offsetX.toPx()
+            val topPixel = (0f - spreadPixel) + offsetY.toPx()
+            val rightPixel = (this.size.width + spreadPixel)
+            val bottomPixel = (this.size.height + spreadPixel)
+
+            if (blurRadius != 0.dp) {
+                frameworkPaint.maskFilter =
+                    (BlurMaskFilter(blurRadius.toPx(), BlurMaskFilter.Blur.NORMAL))
+            }
+
+            frameworkPaint.color = shadowColor.toArgb()
+            it.drawRoundRect(
+                left = leftPixel,
+                top = topPixel,
+                right = rightPixel,
+                bottom = bottomPixel,
+                radiusX = borderRadius.toPx(),
+                radiusY = borderRadius.toPx(),
+                paint
+            )
+        }
+    }
+)
+
+/**
  * top 에 border 주는 확장 함수
  *
  * @param color border color

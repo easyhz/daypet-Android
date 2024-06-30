@@ -75,6 +75,7 @@ fun UploadMemoryScreen(
                 scrollState.animateScrollTo(scrollState.maxValue)
             }
             is UploadSideEffect.ChangeFocus -> {
+                //FIXME: 고치기
 //                handleChangeFocus(sideEffect.focusType, scrollState)
             }
         }

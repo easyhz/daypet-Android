@@ -52,6 +52,7 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.memoryDetail)
     implementation(projects.feature.uploadMemory)
+    implementation(projects.feature.sign)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
