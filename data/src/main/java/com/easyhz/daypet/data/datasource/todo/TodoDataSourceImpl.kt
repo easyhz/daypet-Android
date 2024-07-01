@@ -17,6 +17,5 @@ class TodoDataSourceImpl @Inject constructor(
             .whereGreaterThan(CREATION_TIME, data.startDate)
             .whereLessThan(CREATION_TIME, data.endDate)
             .orderBy(CREATION_TIME, DESCENDING).get()
-
     }
 }
