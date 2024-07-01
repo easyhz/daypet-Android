@@ -178,6 +178,7 @@ val SubBody3 = TextStyle(
     fontWeight = FontWeight.Normal,
     color = SubTextColor,
     fontSize = 18.sp,
+    lineHeight = 18.sp,
     letterSpacing = LetterSpacing,
     platformStyle = PlatformTextStyle(
         includeFontPadding = false,

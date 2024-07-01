@@ -49,7 +49,7 @@ internal fun TextFieldContainer(
             )
         }
         TextFieldContainerContent(
-            modifier = Modifier.height(34.dp),
+            modifier = Modifier.height(25.dp),
             type = TextFieldType.ONE_LINE,
             state = state,
             placeholder = placeholder,

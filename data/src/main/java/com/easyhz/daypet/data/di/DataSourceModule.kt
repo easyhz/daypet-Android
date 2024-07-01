@@ -8,6 +8,8 @@ import com.easyhz.daypet.data.datasource.member.GroupUserDataSource
 import com.easyhz.daypet.data.datasource.member.GroupUserDataSourceImpl
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSourceImpl
+import com.easyhz.daypet.data.datasource.sign.AuthDataSource
+import com.easyhz.daypet.data.datasource.sign.AuthDataSourceImpl
 import com.easyhz.daypet.data.datasource.todo.TodoDataSource
 import com.easyhz.daypet.data.datasource.todo.TodoDataSourceImpl
 import dagger.Binds
@@ -43,4 +45,9 @@ interface DataSourceModule {
     fun bindGroupUserDataSource(
         groupUserDataSourceImpl: GroupUserDataSourceImpl
     ): GroupUserDataSource
+
+    @Binds
+    fun bindAuthDataSource(
+        authDataSourceImpl: AuthDataSourceImpl
+    ): AuthDataSource
 }

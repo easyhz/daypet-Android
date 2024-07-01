@@ -31,10 +31,9 @@ fun MainButton(
 ) {
     CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme) {
         Button(
-            modifier = Modifier
+            modifier = modifier
                 .height(52.dp)
-                .fillMaxWidth()
-                .then(modifier),
+                .fillMaxWidth(),
             onClick = onClick,
             enabled = enabled,
             shape = RoundedCornerShape(8.dp),

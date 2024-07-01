@@ -29,4 +29,10 @@
         \n개인정보처리방침을 읽고 이해했으며 그에 동의하는 것으로 간주됩니다.</string>
 
     <string name="title_profile">프로필 설정</string>
+    <string name="profile_name">이름</string>
+    <string name="profile_name_placeholder">이름을 입력하세요.</string>
+    <string name="profile_name_caption">사진과 이름은 나중에 수정할 수 있어요.</string>
+    <string name="profile_name_next">다음</string>
+
+    <string name="title_group">그룹 설정</string>
 </resources>

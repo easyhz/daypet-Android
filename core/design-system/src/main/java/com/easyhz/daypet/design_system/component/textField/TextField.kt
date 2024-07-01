@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.easyhz.daypet.design_system.theme.Body3
 
 @Composable
@@ -20,6 +22,7 @@ fun BaseTextField(
     singleLine: Boolean,
     isFilled: Boolean,
     minLines: Int = 1,
+    spacing: Dp = 4.dp,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -41,7 +44,8 @@ fun BaseTextField(
                 state = state,
                 title = title,
                 placeholder = placeholder,
-                innerTextField = innerTextField
+                innerTextField = innerTextField,
+                spacing = spacing
             )
         }
     )
