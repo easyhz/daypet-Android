@@ -38,6 +38,7 @@ internal fun NavController.navigateToProfile() {
 }
 
 internal fun NavController.navigateToGroup() {
-    // TODO: BackStack 다 지워
-    navigate(Group)
+    navigate(Group) {
+        popUpTo(this@navigateToGroup.graph.id) { inclusive = true }
+    }
 }
