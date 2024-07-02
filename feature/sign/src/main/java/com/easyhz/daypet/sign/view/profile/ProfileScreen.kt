@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.button.MainButton
 import com.easyhz.daypet.design_system.component.image.ProfileImage
@@ -29,6 +30,7 @@ import com.easyhz.daypet.design_system.theme.SubBody2
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
 import com.easyhz.daypet.sign.AuthViewModel
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
+import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 
 @Composable
 fun ProfileScreen(
@@ -90,11 +92,18 @@ fun ProfileScreen(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 20.dp)
                     .imePadding(),
+                enabled = uiState.isProfileButtonEnabled,
                 text = stringResource(id = R.string.profile_name_next),
                 contentColor = MainBackground,
                 containerColor = Primary
             ) {
-                println("gogo")
+                viewModel.postIntent(AuthIntent.ClickProfileNextButton)
+            }
+        }
+    }
+    viewModel.sideEffect.collectInLaunchedEffectWithLifecycle {sideEffect ->
+        when(sideEffect) {
+            is AuthSideEffect.NavigateToGroup -> {
                 navigateToGroup()
             }
         }

@@ -8,6 +8,8 @@ import androidx.credentials.GetCredentialResponse
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.common.base.UiSideEffect
+import com.easyhz.daypet.domain.param.sign.UserInfoParam
+import com.easyhz.daypet.domain.usecase.sign.SaveUserInfoUseCase
 import com.easyhz.daypet.domain.usecase.sign.SignInWithGoogleUseCase
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
 import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
@@ -21,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val signInWithGoogleUseCase: SignInWithGoogleUseCase
+    private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
+    private val saveUserInfoUseCase: SaveUserInfoUseCase
 ): BaseViewModel<AuthState, AuthIntent, UiSideEffect>(
     initialState = AuthState.init()
 ) {
@@ -29,6 +32,7 @@ class AuthViewModel @Inject constructor(
         when(intent) {
             is AuthIntent.ClickSignInWithGoogle -> { onClickSignInWithGoogle(intent.context) }
             is AuthIntent.ChangeNameText -> { onChangeNameText(intent.newText) }
+            is AuthIntent.ClickProfileNextButton -> { onClickProfileNextButton() }
         }
     }
 
@@ -49,7 +53,17 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun onChangeNameText(newText: String) {
-        reduce { copy(name = newText) }
+        val isProfileButtonEnabled = newText.isNotBlank()
+        reduce { copy(name = newText, isProfileButtonEnabled = isProfileButtonEnabled) }
+    }
+
+    private fun onClickProfileNextButton() = viewModelScope.launch {
+        val param = UserInfoParam(name = uiState.value.name)
+        saveUserInfoUseCase.invoke(param).onSuccess {
+            postSideEffect { AuthSideEffect.NavigateToGroup }
+        }.onFailure {
+            // TODO Fail 처리
+        }
     }
 
     private suspend fun showOneTapGoogleLogin(context: Context): String? {
