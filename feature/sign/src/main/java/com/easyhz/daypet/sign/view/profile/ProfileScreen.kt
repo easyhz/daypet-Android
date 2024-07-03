@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,10 +36,11 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 @Composable
 fun ProfileScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    navigateToGroup: () -> Unit,
+    navigateToGroup: (String) -> Unit,
     navigateToBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val focusManager = LocalFocusManager.current
 
     DayPetScaffold(
         topBar = {
@@ -94,8 +95,7 @@ fun ProfileScreen(
                 MainButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 20.dp)
-                        .imePadding(),
+                        .padding(bottom = 20.dp),
                     enabled = uiState.isProfileButtonEnabled,
                     text = stringResource(id = R.string.profile_name_next),
                     contentColor = MainBackground,
@@ -108,9 +108,8 @@ fun ProfileScreen(
     }
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle {sideEffect ->
         when(sideEffect) {
-            is AuthSideEffect.NavigateToGroup -> {
-                navigateToGroup()
-            }
+            is AuthSideEffect.NavigateToGroup -> { navigateToGroup(uiState.name) }
+            is AuthSideEffect.ClearFocus -> { focusManager.clearFocus() }
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.easyhz.daypet.navigation.sign.screen.Group
 import com.easyhz.daypet.navigation.sign.screen.Login
 import com.easyhz.daypet.navigation.sign.screen.Profile
@@ -34,8 +35,10 @@ internal fun NavGraphBuilder.signScreen(
             navigateToBack = navController::navigateUp
         )
     }
-    composable<Group> {
+    composable<Group> {navBackStackEntry ->
+        val args = navBackStackEntry.toRoute<Group>()
         GroupScreen(
+            name = args.name,
             navigateToBack = navController::navigateUp
         )
     }
@@ -45,8 +48,8 @@ internal fun NavController.navigateToProfile() {
     navigate(Profile)
 }
 
-internal fun NavController.navigateToGroup() {
-    navigate(Group) {
+internal fun NavController.navigateToGroup(name: String) {
+    navigate(Group(name = name)) {
         popUpTo(this@navigateToGroup.graph.id) { inclusive = true }
     }
 }

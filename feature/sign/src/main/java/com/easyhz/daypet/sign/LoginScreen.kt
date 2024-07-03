@@ -51,8 +51,7 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 
 /**
  * TODO : Login Screen
- * TODO : Email Screen
- * TODO : SignUp Screen
+ * TODO : Kakao Button
  * TODO : Profile Screen
  * TODO : Group Screen
  *
@@ -61,7 +60,7 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     navigateToProfile: () -> Unit,
-    navigateToGroup: () -> Unit
+    navigateToGroup: (String) -> Unit
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -142,7 +141,7 @@ fun LoginScreen(
                 navigateToProfile()
             }
             is AuthSideEffect.NavigateToGroup -> {
-                navigateToGroup()
+                navigateToGroup(sideEffect.name)
             }
         }
     }

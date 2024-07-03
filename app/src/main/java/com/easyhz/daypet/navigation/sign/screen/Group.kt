@@ -3,4 +3,6 @@ package com.easyhz.daypet.navigation.sign.screen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object Group
+data class Group(
+    val name: String
+)

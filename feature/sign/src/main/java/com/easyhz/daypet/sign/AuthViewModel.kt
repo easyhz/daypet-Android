@@ -35,7 +35,10 @@ class AuthViewModel @Inject constructor(
         when (intent) {
             is AuthIntent.ClickSignInWithGoogle -> { onClickSignInWithGoogle(intent.context) }
             is AuthIntent.ChangeNameText -> { onChangeNameText(intent.newText) }
-            is AuthIntent.ClickProfileNextButton -> { onClickProfileNextButton() }
+            is AuthIntent.ClickProfileNextButton -> {
+                onClickProfileNextButton()
+                postSideEffect { AuthSideEffect.ClearFocus }
+            }
         }
     }
 
@@ -66,7 +69,7 @@ class AuthViewModel @Inject constructor(
         setLoading(true)
         saveUserInfoUseCase.invoke(param)
             .onSuccess {
-                postSideEffect { AuthSideEffect.NavigateToGroup }
+                postSideEffect { AuthSideEffect.NavigateToGroup(uiState.value.name) }
             }.onFailure {
                 // TODO Fail 처리
             }.also {
@@ -131,8 +134,8 @@ class AuthViewModel @Inject constructor(
         checkUserInfoUseCase(uid).onSuccess { loginStep ->
             val sideEffect = when(loginStep) {
                 is LoginStep.NewUser -> AuthSideEffect.NavigateToProfile
-                is LoginStep.NoGroup -> AuthSideEffect.NavigateToGroup
-                is LoginStep.ExistUser -> AuthSideEffect.NavigateToGroup // FIXME 홈으로 이동
+                is LoginStep.NoGroup -> AuthSideEffect.NavigateToGroup(loginStep.name)
+                is LoginStep.ExistUser -> AuthSideEffect.NavigateToGroup("민지") // FIXME 홈으로 이동
             }
             postSideEffect { sideEffect }
         }.onFailure {

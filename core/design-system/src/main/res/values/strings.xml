@@ -35,4 +35,17 @@
     <string name="profile_name_next">다음</string>
 
     <string name="title_group">그룹 설정</string>
+    <string name="group_title_text">
+        %1$s님과 함께
+        \n추억을 만들 그룹을 만들어요.
+    </string>
+    <string name="group_caption_text">
+        만약 초대받으셨다면,
+        \n하단의 그룹 들어가기 버튼을 클릭해주세요.
+    </string>
+    <string name="group_name">그룹 이름</string>
+    <string name="group_name_placeholder">새 그룹 이름을 입력하세요.</string>
+    <string name="group_name_caption">그룹 이름은 나중에 수정할 수 있어요.</string>
+    <string name="group_success">그룹 만들기</string>
+    <string name="group_enter">그룹 들어가기</string>
 </resources>

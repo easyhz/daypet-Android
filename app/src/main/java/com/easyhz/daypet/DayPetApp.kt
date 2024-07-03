@@ -2,7 +2,10 @@ package com.easyhz.daypet
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.easyhz.daypet.navigation.home.homeScreen
@@ -19,6 +22,7 @@ const val DURATION = 500
 fun DayPetApp() {
     val navController = rememberNavController()
     NavHost(
+        modifier = Modifier.statusBarsPadding().navigationBarsPadding(),
         navController = navController,
         startDestination = Login,
         enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(DURATION)) },

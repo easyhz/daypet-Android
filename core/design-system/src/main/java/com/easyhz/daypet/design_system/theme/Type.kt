@@ -210,6 +210,18 @@ val Title = TextStyle(
     )
 )
 
+val Title1 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.SemiBold,
+    color = TextColor,
+    fontSize = 22.sp,
+    lineHeight = 22.sp,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    )
+)
 
 val SubTitle = TextStyle(
     fontFamily = AppleSDGothicNeo,
