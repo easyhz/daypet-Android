@@ -63,11 +63,14 @@ class AuthViewModel @Inject constructor(
 
     private fun onClickProfileNextButton() = viewModelScope.launch {
         val param = UserInfoParam(uid = uiState.value.uid, name = uiState.value.name)
+        setLoading(true)
         saveUserInfoUseCase.invoke(param)
             .onSuccess {
                 postSideEffect { AuthSideEffect.NavigateToGroup }
             }.onFailure {
                 // TODO Fail 처리
+            }.also {
+                setLoading(false)
             }
     }
 

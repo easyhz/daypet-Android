@@ -20,6 +20,7 @@ import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.button.MainButton
 import com.easyhz.daypet.design_system.component.image.ProfileImage
 import com.easyhz.daypet.design_system.component.image.ProfileImageType
+import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.textField.BaseTextField
 import com.easyhz.daypet.design_system.component.topbar.TopBar
@@ -55,49 +56,53 @@ fun ProfileScreen(
             )
         }
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .screenHorizonPadding()
+        LoadingScreenProvider(
+            isLoading = uiState.isLoading
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+                    .screenHorizonPadding()
             ) {
-                ProfileImage(
-                    type = ProfileImageType.User,
-                    modifier = Modifier
-                        .padding(24.dp)
-                        .align(Alignment.CenterHorizontally)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    println("click!")
+                    ProfileImage(
+                        type = ProfileImageType.User,
+                        modifier = Modifier
+                            .padding(24.dp)
+                            .align(Alignment.CenterHorizontally)
+                    ) {
+                        println("click!")
+                    }
+
+                    BaseTextField(
+                        value = uiState.name,
+                        onValueChange = { newText -> viewModel.postIntent(AuthIntent.ChangeNameText(newText)) },
+                        title = stringResource(id = R.string.profile_name),
+                        placeholder = stringResource(id = R.string.profile_name_placeholder),
+                        singleLine = true,
+                        isFilled = false,
+                    )
+                    Text(
+                        text = stringResource(id = R.string.profile_name_caption),
+                        style = SubBody2
+                    )
                 }
 
-                BaseTextField(
-                    value = uiState.name,
-                    onValueChange = { newText -> viewModel.postIntent(AuthIntent.ChangeNameText(newText)) },
-                    title = stringResource(id = R.string.profile_name),
-                    placeholder = stringResource(id = R.string.profile_name_placeholder),
-                    singleLine = true,
-                    isFilled = false,
-                )
-                Text(
-                    text = stringResource(id = R.string.profile_name_caption),
-                    style = SubBody2
-                )
-            }
-
-            MainButton(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 20.dp)
-                    .imePadding(),
-                enabled = uiState.isProfileButtonEnabled,
-                text = stringResource(id = R.string.profile_name_next),
-                contentColor = MainBackground,
-                containerColor = Primary
-            ) {
-                viewModel.postIntent(AuthIntent.ClickProfileNextButton)
+                MainButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 20.dp)
+                        .imePadding(),
+                    enabled = uiState.isProfileButtonEnabled,
+                    text = stringResource(id = R.string.profile_name_next),
+                    contentColor = MainBackground,
+                    containerColor = Primary
+                ) {
+                    viewModel.postIntent(AuthIntent.ClickProfileNextButton)
+                }
             }
         }
     }
