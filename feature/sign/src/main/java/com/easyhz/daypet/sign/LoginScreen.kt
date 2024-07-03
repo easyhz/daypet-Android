@@ -60,7 +60,8 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    navigateToGroup: () -> Unit
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -139,6 +140,9 @@ fun LoginScreen(
         when (sideEffect) {
             is AuthSideEffect.NavigateToProfile -> {
                 navigateToProfile()
+            }
+            is AuthSideEffect.NavigateToGroup -> {
+                navigateToGroup()
             }
         }
     }

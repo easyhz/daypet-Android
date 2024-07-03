@@ -1,7 +1,10 @@
 package com.easyhz.daypet.data.datasource.sign
 
 import com.easyhz.daypet.data.model.request.sign.UserInfoRequest
+import com.easyhz.daypet.data.model.response.sign.UserInfoResponse
 import com.easyhz.daypet.data.util.Collections.USERS
+import com.easyhz.daypet.data.util.documentHandler
+import com.easyhz.daypet.data.util.existHandler
 import com.easyhz.daypet.data.util.writeHandler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -18,7 +21,7 @@ class AuthDataSourceImpl @Inject constructor(
         try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             val result = firebaseAuth.signInWithCredential(credential).await()
-            result?.user?.let {
+            result.user?.let {
                 Result.success(it)
             } ?: throw Exception()
         } catch (e: Exception) {
@@ -27,5 +30,13 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun saveUserInfo(uid: String, userInfoRequest: UserInfoRequest): Result<Unit> = writeHandler {
         firestore.collection(USERS).document(uid).set(userInfoRequest)
+    }
+
+    override suspend fun fetchUserInfo(uid: String): Result<UserInfoResponse> = documentHandler {
+        firestore.collection(USERS).document(uid).get()
+    }
+
+    override suspend fun hasUserInfo(uid: String): Result<Boolean> = existHandler {
+        firestore.collection(USERS).document(uid).get()
     }
 }

@@ -8,7 +8,9 @@ import androidx.credentials.GetCredentialResponse
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.common.base.UiSideEffect
+import com.easyhz.daypet.domain.model.sign.LoginStep
 import com.easyhz.daypet.domain.param.sign.UserInfoParam
+import com.easyhz.daypet.domain.usecase.sign.CheckUserInfoUseCase
 import com.easyhz.daypet.domain.usecase.sign.SaveUserInfoUseCase
 import com.easyhz.daypet.domain.usecase.sign.SignInWithGoogleUseCase
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
-    private val saveUserInfoUseCase: SaveUserInfoUseCase
+    private val saveUserInfoUseCase: SaveUserInfoUseCase,
+    private val checkUserInfoUseCase: CheckUserInfoUseCase,
 ) : BaseViewModel<AuthState, AuthIntent, UiSideEffect>(
     initialState = AuthState.init()
 ) {
@@ -37,19 +40,19 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun onClickSignInWithGoogle(context: Context) = viewModelScope.launch {
-        reduce { copy(isLoading = true) }
+        setLoading(true)
         val result = showOneTapGoogleLogin(context = context)
         result?.let {
             signInWithGoogleUseCase.invoke(it)
-                .onSuccess {
-                    reduce { copy(uid = it.uid) }
-                    postSideEffect { AuthSideEffect.NavigateToProfile }
+                .onSuccess { user ->
+                    reduce { copy(uid = user.uid) }
+                    checkUserInfo(uid = user.uid)
                 }
                 .onFailure {
                     // TODO: Fail 처리
                 }
         }.also {
-            reduce { copy(isLoading = false) }
+            setLoading(false)
         }
     }
 
@@ -116,5 +119,21 @@ class AuthViewModel @Inject constructor(
             }
         }
         return null
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        reduce { copy(isLoading = isLoading) }
+    }
+    private fun checkUserInfo(uid: String) = viewModelScope.launch {
+        checkUserInfoUseCase(uid).onSuccess { loginStep ->
+            val sideEffect = when(loginStep) {
+                is LoginStep.NewUser -> AuthSideEffect.NavigateToProfile
+                is LoginStep.NoGroup -> AuthSideEffect.NavigateToGroup
+                is LoginStep.ExistUser -> AuthSideEffect.NavigateToGroup // FIXME 홈으로 이동
+            }
+            postSideEffect { sideEffect }
+        }.onFailure {
+            // TODO: Fail 처리
+        }
     }
 }
