@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class SaveUserInfoUseCase @Inject constructor(
     private val authRepository: AuthRepository
-): BaseUseCase<UserInfoParam, String>() {
-    override suspend fun invoke(param: UserInfoParam): Result<String> {
+): BaseUseCase<UserInfoParam, Unit>() {
+    override suspend fun invoke(param: UserInfoParam): Result<Unit> {
         return authRepository.saveUserInfo(param)
     }
 }

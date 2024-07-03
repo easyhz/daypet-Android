@@ -25,7 +25,7 @@ class AuthDataSourceImpl @Inject constructor(
             Result.failure(e)
         }
 
-    override suspend fun saveUserInfo(userInfoRequest: UserInfoRequest): Result<String> = writeHandler {
-        firestore.collection(USERS).add(userInfoRequest)
+    override suspend fun saveUserInfo(uid: String, userInfoRequest: UserInfoRequest): Result<Unit> = writeHandler {
+        firestore.collection(USERS).document(uid).set(userInfoRequest)
     }
 }

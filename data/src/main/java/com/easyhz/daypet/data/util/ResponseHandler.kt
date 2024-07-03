@@ -4,7 +4,6 @@ import android.util.Log
 import com.easyhz.daypet.common.error.DayPetError
 import com.easyhz.daypet.common.error.getErrorByCode
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -53,11 +52,11 @@ internal suspend inline fun <reified T> documentHandler(
 
 internal suspend inline fun writeHandler(
     dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    crossinline execute: () -> Task<DocumentReference>
-): Result<String> = withContext(dispatcher) {
+    crossinline execute: () -> Task<Void>
+): Result<Unit> = withContext(dispatcher) {
     try {
         val result = execute().await()
-        Result.success(result.id)
+        Result.success(Unit)
     }catch (e: FirebaseFirestoreException) {
         Log.e(TAG, "In handler - FireStore: ${e.message}")
         Result.failure(getErrorByCode(e.code))

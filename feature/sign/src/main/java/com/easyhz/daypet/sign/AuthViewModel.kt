@@ -25,11 +25,11 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val saveUserInfoUseCase: SaveUserInfoUseCase
-): BaseViewModel<AuthState, AuthIntent, UiSideEffect>(
+) : BaseViewModel<AuthState, AuthIntent, UiSideEffect>(
     initialState = AuthState.init()
 ) {
     override fun handleIntent(intent: AuthIntent) {
-        when(intent) {
+        when (intent) {
             is AuthIntent.ClickSignInWithGoogle -> { onClickSignInWithGoogle(intent.context) }
             is AuthIntent.ChangeNameText -> { onChangeNameText(intent.newText) }
             is AuthIntent.ClickProfileNextButton -> { onClickProfileNextButton() }
@@ -42,6 +42,7 @@ class AuthViewModel @Inject constructor(
         result?.let {
             signInWithGoogleUseCase.invoke(it)
                 .onSuccess {
+                    reduce { copy(uid = it.uid) }
                     postSideEffect { AuthSideEffect.NavigateToProfile }
                 }
                 .onFailure {
@@ -58,12 +59,13 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun onClickProfileNextButton() = viewModelScope.launch {
-        val param = UserInfoParam(name = uiState.value.name)
-        saveUserInfoUseCase.invoke(param).onSuccess {
-            postSideEffect { AuthSideEffect.NavigateToGroup }
-        }.onFailure {
-            // TODO Fail 처리
-        }
+        val param = UserInfoParam(uid = uiState.value.uid, name = uiState.value.name)
+        saveUserInfoUseCase.invoke(param)
+            .onSuccess {
+                postSideEffect { AuthSideEffect.NavigateToGroup }
+            }.onFailure {
+                // TODO Fail 처리
+            }
     }
 
     private suspend fun showOneTapGoogleLogin(context: Context): String? {
@@ -80,7 +82,8 @@ class AuthViewModel @Inject constructor(
 
         try {
             val result =
-                CredentialManager.create(context).getCredential(context = context, request = request)
+                CredentialManager.create(context)
+                    .getCredential(context = context, request = request)
             return handleGoogleSignIn(result)
         } catch (e: Exception) {
             e.printStackTrace()

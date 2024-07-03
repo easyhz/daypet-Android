@@ -14,7 +14,10 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signInWithGoogle(idToken: String): Result<AuthUser> =
         authDataSource.signInWithGoogle(idToken).map { it.toModel() }
 
-    override suspend fun saveUserInfo(userInfoParam: UserInfoParam): Result<String> =
-        authDataSource.saveUserInfo(userInfoParam.toRequest())
+    override suspend fun saveUserInfo(userInfoParam: UserInfoParam): Result<Unit> =
+        authDataSource.saveUserInfo(
+            uid = userInfoParam.uid,
+            userInfoRequest = userInfoParam.toRequest()
+        )
 
 }
