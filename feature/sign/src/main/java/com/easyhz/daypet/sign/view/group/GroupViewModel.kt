@@ -47,13 +47,13 @@ class GroupViewModel @Inject constructor(
     }
 
     private fun onClickDialogPositiveButton() {
-        postSideEffect { GroupSideEffect.NavigateToPet }
         reduce { copy(isOpenPetDialog = false) }
+        postSideEffect { GroupSideEffect.NavigateToPet }
     }
 
     private fun onClickDialogNegativeButton() {
-        postSideEffect { GroupSideEffect.NavigateToHome }
         reduce { copy(isOpenPetDialog = false) }
+        postSideEffect { GroupSideEffect.NavigateToHome }
     }
 
 }
