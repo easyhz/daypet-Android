@@ -7,8 +7,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.Primary
 
@@ -17,8 +19,10 @@ fun LoadingScreenProvider(
     isLoading: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().noRippleClickable { focusManager.clearFocus() }
     ) {
         content()
         if (isLoading) {
