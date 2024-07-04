@@ -5,7 +5,7 @@ import com.easyhz.daypet.data.model.response.sign.UserInfoResponse
 import com.easyhz.daypet.data.util.Collections.USERS
 import com.easyhz.daypet.data.util.documentHandler
 import com.easyhz.daypet.data.util.existHandler
-import com.easyhz.daypet.data.util.writeHandler
+import com.easyhz.daypet.data.util.setHandler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -28,7 +28,7 @@ class AuthDataSourceImpl @Inject constructor(
             Result.failure(e)
         }
 
-    override suspend fun saveUserInfo(uid: String, userInfoRequest: UserInfoRequest): Result<Unit> = writeHandler {
+    override suspend fun saveUserInfo(uid: String, userInfoRequest: UserInfoRequest): Result<Unit> = setHandler {
         firestore.collection(USERS).document(uid).set(userInfoRequest)
     }
 
