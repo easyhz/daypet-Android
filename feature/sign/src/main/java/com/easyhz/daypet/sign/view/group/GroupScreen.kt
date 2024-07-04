@@ -83,7 +83,7 @@ fun GroupScreen(
                     TopView(
                         name = name,
                         text = uiState.groupName,
-                        onValueChange = { newText -> viewModel.postIntent(GroupIntent.ChangeNameText(newText)) }
+                        onValueChange = { newText -> viewModel.postIntent(GroupIntent.ChangeGroupNameText(newText)) }
                     )
                     Box(
                         modifier = Modifier

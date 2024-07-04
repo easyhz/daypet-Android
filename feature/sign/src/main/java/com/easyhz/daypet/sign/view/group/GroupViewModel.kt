@@ -15,9 +15,13 @@ class GroupViewModel @Inject constructor(
 ) {
     override fun handleIntent(intent: GroupIntent) {
         when(intent) {
-            is GroupIntent.ChangeNameText -> { /* TODO */}
+            is GroupIntent.ChangeGroupNameText -> { onChangeGroupNameText(intent.newText) }
             is GroupIntent.ClickCreateGroup -> { /* TODO */}
             is GroupIntent.ClickEnterGroup -> { /* TODO */}
         }
+    }
+
+    private fun onChangeGroupNameText(nexText: String) {
+        reduce { copy(groupName = nexText) }
     }
 }
