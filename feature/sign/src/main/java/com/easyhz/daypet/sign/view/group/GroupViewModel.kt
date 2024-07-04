@@ -22,6 +22,8 @@ class GroupViewModel @Inject constructor(
             is GroupIntent.ChangeGroupNameText -> { onChangeGroupNameText(intent.newText) }
             is GroupIntent.ClickCreateGroup -> { createGroup(intent.ownerId) }
             is GroupIntent.ClickEnterGroup -> { /* TODO */}
+            is GroupIntent.ClickDialogPositiveButton -> { onClickDialogPositiveButton() }
+            is GroupIntent.ClickDialogNegativeButton -> { onClickDialogNegativeButton() }
         }
     }
 
@@ -35,7 +37,6 @@ class GroupViewModel @Inject constructor(
             ownerId = ownerId,
             groupName = uiState.value.groupName
         )
-        println(">> $param")
         saveGroupInfoUseCase.invoke(param)
             .onSuccess {
                 reduce { copy(isOpenPetDialog = true) }
@@ -44,4 +45,15 @@ class GroupViewModel @Inject constructor(
                 // TODO: Fail 처리
             }
     }
+
+    private fun onClickDialogPositiveButton() {
+        postSideEffect { GroupSideEffect.NavigateToPet }
+        reduce { copy(isOpenPetDialog = false) }
+    }
+
+    private fun onClickDialogNegativeButton() {
+        postSideEffect { GroupSideEffect.NavigateToHome }
+        reduce { copy(isOpenPetDialog = false) }
+    }
+
 }

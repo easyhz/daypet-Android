@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.easyhz.daypet.navigation.home.Home
 import com.easyhz.daypet.navigation.sign.screen.Group
 import com.easyhz.daypet.navigation.sign.screen.Login
 import com.easyhz.daypet.navigation.sign.screen.Profile
@@ -21,6 +22,7 @@ internal fun NavGraphBuilder.signScreen(
         val viewModel: AuthViewModel = hiltViewModel()
         LoginScreen(
             viewModel = viewModel,
+            navigateToHome = navController::navigateToHome,
             navigateToProfile = navController::navigateToProfile,
             navigateToGroup = navController::navigateToGroup
         )
@@ -40,7 +42,9 @@ internal fun NavGraphBuilder.signScreen(
         GroupScreen(
             name = args.name,
             ownerId = args.ownerId,
-            navigateToBack = navController::navigateUp
+            navigateToEnterGroup = navController::navigateUp,
+            navigateToHome = navController::navigateToHome,
+            navigateToPet = navController::navigateUp
         )
     }
 }
@@ -52,5 +56,11 @@ internal fun NavController.navigateToProfile() {
 internal fun NavController.navigateToGroup(name: String, ownerId: String) {
     navigate(Group(name = name, ownerId = ownerId)) {
         popUpTo(this@navigateToGroup.graph.id) { inclusive = true }
+    }
+}
+
+internal fun NavController.navigateToHome() {
+    navigate(Home) {
+        popUpTo(this@navigateToHome.graph.id) { inclusive = true }
     }
 }

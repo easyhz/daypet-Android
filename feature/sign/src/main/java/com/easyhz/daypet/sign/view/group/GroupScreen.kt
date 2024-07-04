@@ -27,8 +27,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.button.MainButton
+import com.easyhz.daypet.design_system.component.dialog.DayPetDialog
+import com.easyhz.daypet.design_system.component.dialog.DialogButton
 import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.textField.BaseTextField
@@ -36,6 +39,7 @@ import com.easyhz.daypet.design_system.component.topbar.TopBar
 import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Body1
+import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.MainBackground
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody1
@@ -45,13 +49,16 @@ import com.easyhz.daypet.design_system.theme.Title1
 import com.easyhz.daypet.design_system.util.keyboard.keyboardOpenAsState
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
 import com.easyhz.daypet.sign.contract.group.GroupIntent
+import com.easyhz.daypet.sign.contract.group.GroupSideEffect
 
 @Composable
 fun GroupScreen(
     viewModel: GroupViewModel = hiltViewModel(),
     name: String,
     ownerId: String,
-    navigateToBack: () -> Unit
+    navigateToEnterGroup: () -> Unit,
+    navigateToHome: () -> Unit,
+    navigateToPet: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     DayPetScaffold(
@@ -117,8 +124,31 @@ fun GroupScreen(
                 }
             }
             if (uiState.isOpenPetDialog) {
-                Text(text = "그룹이 만들어졌어요.........")
+                DayPetDialog(
+                    title = stringResource(id = R.string.pet_add_dialog_title),
+                    content = stringResource(id = R.string.pet_add_dialog_content),
+                    negativeButton = DialogButton(
+                        text = stringResource(id = R.string.pet_add_dialog_negative),
+                        contentColor = TextColor,
+                        containerColor = ButtonShapeColor,
+                        onClick = { viewModel.postIntent(GroupIntent.ClickDialogNegativeButton) }
+                    ),
+                    positiveButton = DialogButton(
+                        text = stringResource(id = R.string.pet_add_dialog_positive),
+                        contentColor = MainBackground,
+                        containerColor = Primary,
+                        onClick = { viewModel.postIntent(GroupIntent.ClickDialogPositiveButton) }
+                    ),
+                )
             }
+        }
+    }
+
+    viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
+        when(sideEffect) {
+            is GroupSideEffect.NavigateToEnterGroup -> { navigateToEnterGroup() }
+            is GroupSideEffect.NavigateToHome -> { navigateToHome() }
+            is GroupSideEffect.NavigateToPet -> { navigateToPet() }
         }
     }
 }

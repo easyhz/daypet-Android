@@ -48,4 +48,11 @@
     <string name="group_name_caption">그룹 이름은 나중에 수정할 수 있어요.</string>
     <string name="group_success">그룹 만들기</string>
     <string name="group_enter">초대 받은 그룹이 있어요</string>
+    <string name="pet_add_dialog_title">
+        그룹이 만들어졌어요!
+        \n반려동물 정보를 추가할까요?
+    </string>
+    <string name="pet_add_dialog_content">나중에 마이페이지에서 추가할 수 있어요.</string>
+    <string name="pet_add_dialog_positive">확인</string>
+    <string name="pet_add_dialog_negative">취소</string>
 </resources>

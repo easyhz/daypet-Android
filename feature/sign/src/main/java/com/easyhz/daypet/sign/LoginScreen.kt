@@ -59,6 +59,7 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
+    navigateToHome: () -> Unit,
     navigateToProfile: () -> Unit,
     navigateToGroup: (String, String) -> Unit
 ) {
@@ -142,6 +143,9 @@ fun LoginScreen(
             }
             is AuthSideEffect.NavigateToGroup -> {
                 navigateToGroup(sideEffect.name, sideEffect.uid)
+            }
+            is AuthSideEffect.NavigateToHome -> {
+                navigateToHome()
             }
         }
     }

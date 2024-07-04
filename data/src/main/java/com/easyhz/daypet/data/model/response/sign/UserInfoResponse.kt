@@ -10,7 +10,7 @@ data class UserInfoResponse(
     val commentCount: Int = 0,
     @PropertyName("creationTime")
     val creationTime: Timestamp = Timestamp.now(),
-    @get:PropertyName("groupID")
+    @PropertyName("groupID")
     val groupId: String = "",
     @PropertyName("uploadedMemoryCount")
     val uploadedMemoryCount: Int = 0,
