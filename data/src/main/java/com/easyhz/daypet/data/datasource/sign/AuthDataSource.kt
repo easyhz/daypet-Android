@@ -9,4 +9,5 @@ interface AuthDataSource {
     suspend fun saveUserInfo(uid: String, userInfoRequest: UserInfoRequest): Result<Unit>
     suspend fun fetchUserInfo(uid: String): Result<UserInfoResponse>
     suspend fun hasUserInfo(uid: String): Result<Boolean>
+    suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit>
 }

@@ -60,7 +60,7 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     navigateToProfile: () -> Unit,
-    navigateToGroup: (String) -> Unit
+    navigateToGroup: (String, String) -> Unit
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -141,7 +141,7 @@ fun LoginScreen(
                 navigateToProfile()
             }
             is AuthSideEffect.NavigateToGroup -> {
-                navigateToGroup(sideEffect.name)
+                navigateToGroup(sideEffect.name, sideEffect.uid)
             }
         }
     }

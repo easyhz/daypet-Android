@@ -4,6 +4,6 @@ import com.easyhz.daypet.common.base.UiIntent
 
 sealed class GroupIntent: UiIntent() {
     data class ChangeGroupNameText(val newText: String): GroupIntent()
-    data object ClickCreateGroup: GroupIntent()
+    data class ClickCreateGroup(val ownerId: String): GroupIntent()
     data object ClickEnterGroup: GroupIntent()
 }

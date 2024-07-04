@@ -5,13 +5,15 @@ import com.easyhz.daypet.common.base.UiState
 data class GroupState(
     val isLoading: Boolean,
     val groupName: String,
-    val isButtonEnabled: Boolean
+    val isButtonEnabled: Boolean,
+    val isOpenPetDialog: Boolean,
 ): UiState() {
     companion object {
         fun init() = GroupState(
             isLoading = false,
             groupName = "",
-            isButtonEnabled = false
+            isButtonEnabled = false,
+            isOpenPetDialog = false
         )
     }
 }

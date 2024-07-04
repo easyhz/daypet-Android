@@ -36,7 +36,7 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 @Composable
 fun ProfileScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    navigateToGroup: (String) -> Unit,
+    navigateToGroup: (String, String) -> Unit,
     navigateToBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -108,7 +108,7 @@ fun ProfileScreen(
     }
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle {sideEffect ->
         when(sideEffect) {
-            is AuthSideEffect.NavigateToGroup -> { navigateToGroup(uiState.name) }
+            is AuthSideEffect.NavigateToGroup -> { navigateToGroup(uiState.name, uiState.uid) }
             is AuthSideEffect.ClearFocus -> { focusManager.clearFocus() }
         }
     }

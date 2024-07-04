@@ -42,4 +42,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit> =
+        authDataSource.updateUserGroupId(userId, groupId)
 }

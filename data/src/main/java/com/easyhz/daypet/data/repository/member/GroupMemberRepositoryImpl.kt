@@ -7,8 +7,10 @@ import com.easyhz.daypet.data.di.IoDispatcher
 import com.easyhz.daypet.data.mapper.member.GroupMemberMapper
 import com.easyhz.daypet.data.mapper.member.toEntity
 import com.easyhz.daypet.data.mapper.member.toPairEntity
+import com.easyhz.daypet.data.mapper.member.toRequest
 import com.easyhz.daypet.database.datasource.member.GroupMemberDatabaseDataSource
 import com.easyhz.daypet.domain.model.member.GroupMember
+import com.easyhz.daypet.domain.param.member.GroupInfoParam
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.repository.member.GroupMemberRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -66,4 +68,7 @@ class GroupMemberRepositoryImpl @Inject constructor(
                 onFailure = { Result.failure(it) },
             )
         }
+
+    override suspend fun createGroup(param: GroupInfoParam): Result<String> =
+        groupDataSource.createGroup(param.toRequest())
 }

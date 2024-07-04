@@ -63,7 +63,7 @@ internal suspend inline fun setHandler(
         execute().await()
     }.fold(
         onSuccess = { Result.success(Unit) },
-        onFailure = { e -> handleException(e, "write") }
+        onFailure = { e -> handleException(e, "set") }
     )
 }
 
@@ -99,6 +99,18 @@ internal suspend inline fun existHandler(
     }.fold(
         onSuccess = { Result.success(it) },
         onFailure = { e -> handleException(e, "exist") }
+    )
+}
+
+internal suspend inline fun transactionHandler(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    noinline execute: () -> Task<Unit>
+): Result<Unit> = withContext(dispatcher) {
+    runCatching {
+        execute().await()
+    }.fold(
+        onSuccess = { Result.success(it) },
+        onFailure = { e -> handleException(e, "transaction") }
     )
 }
 

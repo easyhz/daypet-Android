@@ -10,4 +10,5 @@ interface AuthRepository {
     suspend fun saveUserInfo(userInfoParam: UserInfoParam): Result<Unit>
     suspend fun fetchUserInfo(uid: String): Result<UserInfo>
     suspend fun checkUserStep(uid: String): Result<LoginStep>
+    suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit>
 }

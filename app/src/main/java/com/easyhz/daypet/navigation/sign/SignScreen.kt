@@ -39,6 +39,7 @@ internal fun NavGraphBuilder.signScreen(
         val args = navBackStackEntry.toRoute<Group>()
         GroupScreen(
             name = args.name,
+            ownerId = args.ownerId,
             navigateToBack = navController::navigateUp
         )
     }
@@ -48,8 +49,8 @@ internal fun NavController.navigateToProfile() {
     navigate(Profile)
 }
 
-internal fun NavController.navigateToGroup(name: String) {
-    navigate(Group(name = name)) {
+internal fun NavController.navigateToGroup(name: String, ownerId: String) {
+    navigate(Group(name = name, ownerId = ownerId)) {
         popUpTo(this@navigateToGroup.graph.id) { inclusive = true }
     }
 }

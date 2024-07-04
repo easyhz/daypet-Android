@@ -3,6 +3,7 @@ package com.easyhz.daypet.data.datasource.sign
 import com.easyhz.daypet.data.model.request.sign.UserInfoRequest
 import com.easyhz.daypet.data.model.response.sign.UserInfoResponse
 import com.easyhz.daypet.data.util.Collections.USERS
+import com.easyhz.daypet.data.util.Fields.GROUP_ID
 import com.easyhz.daypet.data.util.documentHandler
 import com.easyhz.daypet.data.util.existHandler
 import com.easyhz.daypet.data.util.setHandler
@@ -38,5 +39,13 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun hasUserInfo(uid: String): Result<Boolean> = existHandler {
         firestore.collection(USERS).document(uid).get()
+    }
+
+    override suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit> = setHandler {
+        val ref = firestore.collection(USERS).document(userId)
+        firestore.runTransaction { transaction ->
+            transaction.update(ref, GROUP_ID, groupId)
+            null
+        }
     }
 }

@@ -50,6 +50,7 @@ import com.easyhz.daypet.sign.contract.group.GroupIntent
 fun GroupScreen(
     viewModel: GroupViewModel = hiltViewModel(),
     name: String,
+    ownerId: String,
     navigateToBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -112,8 +113,11 @@ fun GroupScreen(
                     contentColor = MainBackground,
                     containerColor = Primary
                 ) {
-                    viewModel.postIntent(GroupIntent.ClickCreateGroup)
+                    viewModel.postIntent(GroupIntent.ClickCreateGroup(ownerId))
                 }
+            }
+            if (uiState.isOpenPetDialog) {
+                Text(text = "그룹이 만들어졌어요.........")
             }
         }
     }
