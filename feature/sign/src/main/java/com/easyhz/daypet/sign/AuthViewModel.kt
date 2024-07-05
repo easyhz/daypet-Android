@@ -1,6 +1,7 @@
 package com.easyhz.daypet.sign
 
 import android.content.Context
+import android.util.Log
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -8,6 +9,8 @@ import androidx.credentials.GetCredentialResponse
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.common.base.UiSideEffect
+import com.easyhz.daypet.common.error.getMessageStringRes
+import com.easyhz.daypet.common.R
 import com.easyhz.daypet.domain.model.sign.LoginStep
 import com.easyhz.daypet.domain.param.sign.UserInfoParam
 import com.easyhz.daypet.domain.usecase.sign.CheckUserInfoUseCase
@@ -31,6 +34,7 @@ class AuthViewModel @Inject constructor(
 ) : BaseViewModel<AuthState, AuthIntent, UiSideEffect>(
     initialState = AuthState.init()
 ) {
+    private val tag = this.javaClass.name
     override fun handleIntent(intent: AuthIntent) {
         when (intent) {
             is AuthIntent.ClickSignInWithGoogle -> { onClickSignInWithGoogle(intent.context) }
@@ -51,8 +55,9 @@ class AuthViewModel @Inject constructor(
                     reduce { copy(uid = user.uid) }
                     checkUserInfo(uid = user.uid)
                 }
-                .onFailure {
-                    // TODO: Fail 처리
+                .onFailure { e ->
+                    showErrorLog(e.message)
+                    postSideEffect { AuthSideEffect.ShowSnackBar(e.getMessageStringRes()) }
                 }
         }.also {
             setLoading(false)
@@ -70,8 +75,9 @@ class AuthViewModel @Inject constructor(
         saveUserInfoUseCase.invoke(param)
             .onSuccess {
                 postSideEffect { AuthSideEffect.NavigateToGroup(uiState.value.name, uid = uiState.value.uid) }
-            }.onFailure {
-                // TODO Fail 처리
+            }.onFailure { e ->
+                showErrorLog(e.message)
+                postSideEffect { AuthSideEffect.ShowSnackBar(e.getMessageStringRes()) }
             }.also {
                 setLoading(false)
             }
@@ -95,8 +101,8 @@ class AuthViewModel @Inject constructor(
                     .getCredential(context = context, request = request)
             return handleGoogleSignIn(result)
         } catch (e: Exception) {
-            e.printStackTrace()
-            // TODO 예외 처리
+            showErrorLog(e.message)
+            postSideEffect { AuthSideEffect.ShowSnackBar(e.getMessageStringRes()) }
         }
         return null
     }
@@ -110,18 +116,17 @@ class AuthViewModel @Inject constructor(
                             .createFrom(credential.data)
                         return googleIdTokenCredential.idToken
                     } catch (e: GoogleIdTokenParsingException) {
-                        // TODO: 예외 처리
-                        println("Received an invalid google id token response")
+                        showErrorLog("Received an invalid google id token response.")
+                        postSideEffect { AuthSideEffect.ShowSnackBar(R.string.google_login_error) }
                     }
                 } else {
-                    // TODO: 예외 처리
-                    // Catch any unrecognized custom credential type here.
-                    println("Unexpected type of credential")
+                    showErrorLog("Unexpected type of credential (custom).")
+                    postSideEffect { AuthSideEffect.ShowSnackBar(R.string.google_login_unexpected_error) }
                 }
             }
             else -> {
-                println("Unexpected type of credential")
-                //TODO: 예외 처리
+                showErrorLog("Unexpected type of credential (not custom).")
+                postSideEffect { AuthSideEffect.ShowSnackBar(R.string.google_login_unexpected_error) }
             }
         }
         return null
@@ -130,6 +135,7 @@ class AuthViewModel @Inject constructor(
     private fun setLoading(isLoading: Boolean) {
         reduce { copy(isLoading = isLoading) }
     }
+
     private fun checkUserInfo(uid: String) = viewModelScope.launch {
         checkUserInfoUseCase(uid).onSuccess { loginStep ->
             val sideEffect = when(loginStep) {
@@ -138,8 +144,12 @@ class AuthViewModel @Inject constructor(
                 is LoginStep.ExistUser -> AuthSideEffect.NavigateToHome
             }
             postSideEffect { sideEffect }
-        }.onFailure {
-            // TODO: Fail 처리
+        }.onFailure { e ->
+            postSideEffect { AuthSideEffect.ShowSnackBar(e.getMessageStringRes()) }
         }
+    }
+
+    private fun showErrorLog(message: String?) {
+        Log.e(tag, message ?: "Unexpected.")
     }
 }

@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +37,7 @@ import com.easyhz.daypet.design_system.component.dialog.DayPetDialog
 import com.easyhz.daypet.design_system.component.dialog.DialogButton
 import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
+import com.easyhz.daypet.design_system.component.snackBar.DayPetSnackBarHost
 import com.easyhz.daypet.design_system.component.textField.BaseTextField
 import com.easyhz.daypet.design_system.component.topbar.TopBar
 import com.easyhz.daypet.design_system.extension.noRippleClickable
@@ -47,6 +51,8 @@ import com.easyhz.daypet.design_system.theme.SubTextColor
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.theme.Title1
 import com.easyhz.daypet.design_system.util.keyboard.keyboardOpenAsState
+import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
+import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
 import com.easyhz.daypet.sign.contract.group.GroupIntent
 import com.easyhz.daypet.sign.contract.group.GroupSideEffect
@@ -61,6 +67,9 @@ fun GroupScreen(
     navigateToPet: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackBarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+
     DayPetScaffold(
         topBar = {
             TopBar(
@@ -69,6 +78,14 @@ fun GroupScreen(
                     stringId = R.string.title_group
                 ),
                 right = null
+            )
+        },
+        snackbarHost = {
+            DayPetSnackBarHost(
+                hostState = snackBarHostState,
+                modifier = Modifier
+                    .snackBarPadding(SnackBarType.ButtonTop)
+                    .imePadding()
             )
         }
     ) {
@@ -149,6 +166,12 @@ fun GroupScreen(
             is GroupSideEffect.NavigateToEnterGroup -> { navigateToEnterGroup() }
             is GroupSideEffect.NavigateToHome -> { navigateToHome() }
             is GroupSideEffect.NavigateToPet -> { navigateToPet() }
+            is GroupSideEffect.ShowSnackBar -> {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(sideEffect.stringId),
+                    withDismissAction = true
+                )
+            }
         }
     }
 }

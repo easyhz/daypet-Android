@@ -6,4 +6,7 @@
 
     <string name="firestore_not_found_error">요청하신 결과를 찾지 못했어요.</string>
     <string name="firestore_permission_denied_error">권한 문제가 발생했어요.</string>
+
+    <string name="google_login_error">Google 로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="google_login_unexpected_error">잠시 후 다시 시도해 주세요.</string>
 </resources>

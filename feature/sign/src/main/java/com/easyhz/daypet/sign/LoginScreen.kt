@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +35,7 @@ import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
+import com.easyhz.daypet.design_system.component.snackBar.DayPetSnackBarHost
 import com.easyhz.daypet.design_system.extension.buttonShadowEffect
 import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
@@ -46,6 +49,8 @@ import com.easyhz.daypet.design_system.theme.SubBody1
 import com.easyhz.daypet.design_system.theme.SubTitle
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.theme.Title
+import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
+import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
 import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 
@@ -65,8 +70,17 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackBarHostState = remember { SnackbarHostState() }
 
-    DayPetScaffold {
+    DayPetScaffold(
+        snackbarHost = {
+            DayPetSnackBarHost(
+                hostState = snackBarHostState,
+                modifier = Modifier
+                    .snackBarPadding(SnackBarType.Default)
+            )
+        }
+    ) {
         LoadingScreenProvider(
             isLoading = uiState.isLoading
         ) {
@@ -120,7 +134,7 @@ fun LoginScreen(
                             }
 
                             override fun onClickApple() {
-                                println("apple")
+
                             }
                         },
                         onClickEmail = { println("email") }
@@ -147,6 +161,13 @@ fun LoginScreen(
             is AuthSideEffect.NavigateToHome -> {
                 navigateToHome()
             }
+            is AuthSideEffect.ShowSnackBar -> {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(sideEffect.stringId),
+                    withDismissAction = true
+                )
+            }
+
         }
     }
 }

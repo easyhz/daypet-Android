@@ -4,12 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,12 +26,15 @@ import com.easyhz.daypet.design_system.component.image.ProfileImage
 import com.easyhz.daypet.design_system.component.image.ProfileImageType
 import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
+import com.easyhz.daypet.design_system.component.snackBar.DayPetSnackBarHost
 import com.easyhz.daypet.design_system.component.textField.BaseTextField
 import com.easyhz.daypet.design_system.component.topbar.TopBar
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.MainBackground
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody2
+import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
+import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
 import com.easyhz.daypet.sign.AuthViewModel
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
@@ -41,6 +48,8 @@ fun ProfileScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
+    val snackBarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     DayPetScaffold(
         topBar = {
@@ -54,6 +63,14 @@ fun ProfileScreen(
                     stringId = R.string.title_profile
                 ),
                 right = null
+            )
+        },
+        snackbarHost = {
+            DayPetSnackBarHost(
+                hostState = snackBarHostState,
+                modifier = Modifier
+                    .snackBarPadding(SnackBarType.ButtonTop)
+                    .imePadding()
             )
         }
     ) {
@@ -75,7 +92,6 @@ fun ProfileScreen(
                             .padding(24.dp)
                             .align(Alignment.CenterHorizontally)
                     ) {
-                        println("click!")
                     }
 
                     BaseTextField(
@@ -110,6 +126,12 @@ fun ProfileScreen(
         when(sideEffect) {
             is AuthSideEffect.NavigateToGroup -> { navigateToGroup(uiState.name, uiState.uid) }
             is AuthSideEffect.ClearFocus -> { focusManager.clearFocus() }
+            is AuthSideEffect.ShowSnackBar -> {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(sideEffect.stringId),
+                    withDismissAction = true
+                )
+            }
         }
     }
 }

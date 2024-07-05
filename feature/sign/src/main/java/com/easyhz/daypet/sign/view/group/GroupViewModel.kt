@@ -2,6 +2,7 @@ package com.easyhz.daypet.sign.view.group
 
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.common.error.getMessageStringRes
 import com.easyhz.daypet.domain.param.member.GroupInfoParam
 import com.easyhz.daypet.domain.usecase.sign.SaveGroupInfoUseCase
 import com.easyhz.daypet.sign.contract.group.GroupIntent
@@ -40,9 +41,8 @@ class GroupViewModel @Inject constructor(
         saveGroupInfoUseCase.invoke(param)
             .onSuccess {
                 reduce { copy(isOpenPetDialog = true) }
-            }.onFailure {
-                println("실패 ㅋㅋㅋ")
-                // TODO: Fail 처리
+            }.onFailure { e ->
+                postSideEffect { GroupSideEffect.ShowSnackBar(e.getMessageStringRes()) }
             }
     }
 
