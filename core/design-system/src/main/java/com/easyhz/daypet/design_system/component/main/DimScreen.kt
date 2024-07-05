@@ -48,7 +48,7 @@ fun DimScreenProvider(
 }
 
 @Composable
-private fun Dim(
+internal fun Dim(
     isDim: Boolean,
     dimColor: Color,
     statusBarColor: Color?,
