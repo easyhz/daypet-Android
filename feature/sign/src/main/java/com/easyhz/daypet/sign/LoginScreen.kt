@@ -71,7 +71,7 @@ fun LoginScreen(
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-
+//    PetScreen()
     DayPetScaffold(
         snackbarHost = {
             DayPetSnackBarHost(

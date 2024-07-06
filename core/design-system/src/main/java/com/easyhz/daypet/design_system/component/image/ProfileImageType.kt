@@ -37,7 +37,7 @@ fun ProfileImage(
     /* TODO : icon 바꾸기 */
     val painterId = when(type) {
         is ProfileImageType.User -> { R.drawable.ic_profile }
-        is ProfileImageType.Pet -> { R.drawable.ic_profile }
+        is ProfileImageType.Pet -> { R.drawable.ic_pet_profile }
         is UpdateImageType.Pet -> { R.drawable.ic_profile }
     }
     val (cameraBackground, cameraIconColor) = when (type) {

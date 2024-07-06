@@ -55,4 +55,14 @@
     <string name="pet_add_dialog_content">나중에 마이페이지에서 추가할 수 있어요.</string>
     <string name="pet_add_dialog_positive">확인</string>
     <string name="pet_add_dialog_negative">취소</string>
+
+    <string name="title_pet_profile">반려동물 등록</string>
+    <string name="pet_info_heading">%1$s에 대해서 알려주세요.</string>
+    <string name="pet_info_breed">품종</string>
+    <string name="pet_info_breed_placeholder">품종을 입력하세요.</string>
+    <string name="pet_info_birth">생일</string>
+    <string name="pet_info_gender">성별</string>
+    <string name="pet_info_male">남아</string>
+    <string name="pet_info_female">여아</string>
+
 </resources>
