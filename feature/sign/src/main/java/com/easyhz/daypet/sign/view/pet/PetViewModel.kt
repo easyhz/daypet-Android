@@ -16,11 +16,16 @@ class PetViewModel @Inject constructor(
 ) {
     override fun handleIntent(intent: PetIntent) {
         when(intent) {
+            is PetIntent.InitPetScreen -> { initPetScreen() }
             is PetIntent.ChangePetNameText -> { onChangePetNameText(intent.newText) }
             is PetIntent.ClickNextButton -> { onClickNextButton() }
             is PetIntent.ChangeBreedText -> { onChangeBreedText(intent.newText)}
+            is PetIntent.ClickBackButton -> { onClickBackButton() }
         }
+    }
 
+    private fun initPetScreen() {
+        reduce { copy(progress = PetStep.firstProgress) }
     }
     private fun onChangePetNameText(newText: String) {
         val isButtonEnabled = newText.isNotBlank()
@@ -33,18 +38,19 @@ class PetViewModel @Inject constructor(
     }
 
     private fun onClickNextButton() {
-        val currentStep = currentState.currentStep
-        if(currentStep == PetStep.entries.last()) {
-            savePetProfile()
-            return
-        }
+        currentState.step.currentStep.nextStep()?.let { nextStep ->
+            reduce { updateProgressAndStep(currentStep = nextStep, progress = progress + PetStep.stepProgress) }
+        } ?: savePetProfile()
+    }
 
-        currentStep.nextStep()?.let { nextStep ->
-            reduce { copy(currentStep = nextStep, progress = progress + PetStep.stepProgress) }
-        }
+    private fun onClickBackButton() {
+        currentState.step.currentStep.beforeStep()?.let { beforeStep ->
+            reduce { updateProgressAndStep(currentStep = beforeStep, progress = progress - PetStep.stepProgress) }
+        } ?: savePetProfile()
     }
 
     private fun savePetProfile() {
-        // 저장 로직
+        // save Pet Profile
+        println("save Pet")
     }
 }

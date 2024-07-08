@@ -1,6 +1,8 @@
 package com.easyhz.daypet.sign.view.pet
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,6 +18,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,9 +35,9 @@ import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
 import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
+import com.easyhz.daypet.sign.contract.pet.PetIntent
 import com.easyhz.daypet.sign.util.PetStep
 
-// FIXME : 뒤로가기 물리 버튼, 뒤로가기 버튼 눌럿을때 전 단계 돌아 가기
 @Composable
 fun PetScreen(
     viewModel: PetViewModel = hiltViewModel()
@@ -46,13 +49,21 @@ fun PetScreen(
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec, label = "screenProgress"
     )
 
+    LaunchedEffect(Unit) {
+        viewModel.postIntent(PetIntent.InitPetScreen)
+    }
+
+    BackHandler(onBack = {
+        viewModel.postIntent(PetIntent.ClickBackButton)
+    })
+
     DayPetScaffold(
         topBar = {
             TopBar(
                 left = TopBarType.TopBarIconButton(
                     iconId = R.drawable.ic_keyboard_arrow_left,
                     iconAlignment = Alignment.CenterStart,
-                    onClick = { }
+                    onClick = { viewModel.postIntent(PetIntent.ClickBackButton) }
                 ),
                 title = TopBarType.TopBarTitle(
                     stringId = R.string.title_pet_profile
@@ -80,10 +91,15 @@ fun PetScreen(
         )
         AnimatedContent(
             modifier = Modifier.fillMaxSize().padding(it),
-            targetState = uiState.currentStep,
+            targetState = uiState.step.currentStep,
             transitionSpec = {
-                (slideInHorizontally { width -> width } + fadeIn()).togetherWith(
-                    slideOutHorizontally { width -> -width } + fadeOut())
+                if (uiState.step.currentStep.ordinal >= (uiState.step.previousStep?.ordinal ?: 0)) {
+                    (slideInHorizontally { width -> width } + fadeIn()).togetherWith(
+                        slideOutHorizontally { width -> -width } + fadeOut())
+                } else {
+                    (slideInHorizontally { width -> -width } + fadeIn()).togetherWith(
+                        slideOutHorizontally { width -> width } + fadeOut())
+                }.using(SizeTransform(clip = false))
             }, label = "pet"
         ) { targetScreen ->
             when (targetScreen) {

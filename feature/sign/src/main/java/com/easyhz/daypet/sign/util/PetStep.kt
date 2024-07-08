@@ -7,7 +7,9 @@ enum class PetStep {
         val stepProgress = (1f / PetStep.entries.size)
     }
 
-    fun nextStep(): PetStep? {
-        return entries.getOrNull(this.ordinal + 1)
-    }
+    fun nextStep(): PetStep? =
+        entries.getOrNull(this.ordinal + 1)
+
+    fun beforeStep(): PetStep? =
+        entries.getOrNull(this.ordinal - 1)
 }
