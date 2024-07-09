@@ -8,4 +8,5 @@ sealed class PetIntent: UiIntent() {
     data class ChangeBreedText(val newText: String) : PetIntent()
     data object ClickNextButton : PetIntent()
     data object ClickBackButton : PetIntent()
+    data class ClickChipButton(val clickIndex: Int) : PetIntent()
 }

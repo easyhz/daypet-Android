@@ -21,10 +21,12 @@ class PetViewModel @Inject constructor(
             is PetIntent.ClickNextButton -> { onClickNextButton() }
             is PetIntent.ChangeBreedText -> { onChangeBreedText(intent.newText)}
             is PetIntent.ClickBackButton -> { onClickBackButton() }
+            is PetIntent.ClickChipButton -> { onClickChipButton(intent.clickIndex) }
         }
     }
 
     private fun initPetScreen() {
+        if (currentState.progress != 0f) return
         reduce { copy(progress = PetStep.firstProgress) }
     }
     private fun onChangePetNameText(newText: String) {
@@ -52,5 +54,9 @@ class PetViewModel @Inject constructor(
     private fun savePetProfile() {
         // save Pet Profile
         println("save Pet")
+    }
+
+    private fun onClickChipButton(clickIndex: Int) {
+        reduce { updateChipTags(clickIndex = clickIndex) }
     }
 }

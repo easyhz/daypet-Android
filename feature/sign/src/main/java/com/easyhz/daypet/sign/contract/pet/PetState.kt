@@ -1,7 +1,11 @@
 package com.easyhz.daypet.sign.contract.pet
 
+import androidx.compose.runtime.mutableStateOf
 import com.easyhz.daypet.common.base.UiState
+import com.easyhz.daypet.design_system.util.button.ChipState
+import com.easyhz.daypet.design_system.util.button.toChipState
 import com.easyhz.daypet.sign.util.PetStep
+import com.easyhz.daypet.sign.util.chipTags
 
 data class PetState(
     val isLoading: Boolean,
@@ -9,7 +13,8 @@ data class PetState(
     val step: Step,
     val petName: String,
     val isButtonEnabled: Boolean,
-    val breed: String
+    val breed: String,
+    val chipTags: List<ChipState>
 ): UiState() {
     companion object {
         fun init() = PetState(
@@ -18,7 +23,8 @@ data class PetState(
             step = Step(currentStep = PetStep.PROFILE, previousStep = null),
             petName = "",
             isButtonEnabled = false,
-            breed = ""
+            breed = "",
+            chipTags = chipTags.toChipState()
         )
     }
     fun PetState.updateProgressAndStep(currentStep: PetStep, progress: Float): PetState {
@@ -30,6 +36,17 @@ data class PetState(
             step = updatedStepState,
             progress = progress
         )
+    }
+
+    fun PetState.updateChipTags(clickIndex: Int): PetState {
+        val updatedChipTags = chipTags.mapIndexed { index, chipState ->
+            if (index == clickIndex) {
+                chipState.copy(isSelected = mutableStateOf(!chipState.isSelected.value))
+            } else {
+                chipState
+            }
+        }
+        return this.copy(chipTags = updatedChipTags)
     }
 }
 

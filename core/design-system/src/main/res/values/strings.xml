@@ -65,4 +65,6 @@
     <string name="pet_info_male">남아</string>
     <string name="pet_info_female">여아</string>
 
+    <string name="pet_attribute_heading">%1$s의 특징을 선택해 주세요.</string>
+
 </resources>
