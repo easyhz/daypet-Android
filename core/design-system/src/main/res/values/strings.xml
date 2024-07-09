@@ -66,5 +66,8 @@
     <string name="pet_info_female">여아</string>
 
     <string name="pet_attribute_heading">%1$s의 특징을 선택해 주세요.</string>
+    <string name="pet_memo_heading">특이사항을 메모해 주세요.</string>
+    <string name="pet_memo_header">메모 </string>
+    <string name="pet_memo_placeholder">메모를 입력해 주세요.</string>
 
 </resources>

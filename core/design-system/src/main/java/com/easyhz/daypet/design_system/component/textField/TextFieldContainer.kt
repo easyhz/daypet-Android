@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -61,6 +60,7 @@ internal fun TextFieldContainer(
 @Composable
 internal fun ContentTextFieldContainer(
     modifier: Modifier = Modifier,
+    innerFieldModifier:Modifier = Modifier,
     state: TextFieldState,
     title: String?,
     placeholder: String,
@@ -68,7 +68,7 @@ internal fun ContentTextFieldContainer(
     innerTextField: @Composable () -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxHeight(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacing)
     ) {
         title?.let {
@@ -77,7 +77,7 @@ internal fun ContentTextFieldContainer(
             )
         }
         TextFieldContainerContent(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = innerFieldModifier,
             type = TextFieldType.CONTENT,
             state = state,
             placeholder = placeholder,
@@ -113,7 +113,7 @@ private fun TextFieldContainerContent(
             innerTextField()
             if (state == TextFieldState.Default) {
                 Text(
-                    modifier = Modifier.align(type.placeholderAlignment),
+                    modifier = Modifier.fillMaxWidth().align(type.placeholderAlignment),
                     text = placeholder,
                     style = SubBody3
                 )

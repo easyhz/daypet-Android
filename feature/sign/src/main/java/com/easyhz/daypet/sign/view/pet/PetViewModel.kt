@@ -4,6 +4,7 @@ import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.sign.contract.pet.PetIntent
 import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.contract.pet.PetState
+import com.easyhz.daypet.sign.contract.pet.PetState.Companion.MEMO_MAX
 import com.easyhz.daypet.sign.util.PetStep
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,6 +23,9 @@ class PetViewModel @Inject constructor(
             is PetIntent.ChangeBreedText -> { onChangeBreedText(intent.newText)}
             is PetIntent.ClickBackButton -> { onClickBackButton() }
             is PetIntent.ClickChipButton -> { onClickChipButton(intent.clickIndex) }
+            is PetIntent.ChangeMemoText -> { onChangeMemoText(intent.newText) }
+            is PetIntent.ClickField -> { onClickField() }
+            is PetIntent.FocusMemoField -> { onFocusMemoField(intent.isFocused) }
         }
     }
 
@@ -58,5 +62,22 @@ class PetViewModel @Inject constructor(
 
     private fun onClickChipButton(clickIndex: Int) {
         reduce { updateChipTags(clickIndex = clickIndex) }
+    }
+
+    private fun onChangeMemoText(newText: String) {
+        if (newText.length > MEMO_MAX) return
+        reduce { copy(memo = newText) }
+        postSideEffect { PetSideEffect.ScrollToBottom }
+    }
+
+    private fun onClickField() {
+        if(currentState.isFocusedMemo) {
+            postSideEffect { PetSideEffect.OpenKeyboard }
+        } else {
+            postSideEffect { PetSideEffect.RequestFocus }
+        }
+    }
+    private fun onFocusMemoField(isFocused: Boolean) {
+        reduce { copy(isFocusedMemo = isFocused) }
     }
 }

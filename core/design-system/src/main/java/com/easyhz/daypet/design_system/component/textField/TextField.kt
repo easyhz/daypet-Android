@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -54,13 +55,16 @@ fun BaseTextField(
 @Composable
 fun ContentTextField(
     modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
+    innerFieldModifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    title: String,
+    title: String?,
     placeholder: String,
     singleLine: Boolean,
     isFilled: Boolean,
     minLines: Int = 1,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -76,9 +80,12 @@ fun ContentTextField(
         keyboardActions = keyboardActions,
         singleLine = singleLine,
         minLines = minLines,
+        onTextLayout = onTextLayout,
         visualTransformation = visualTransformation,
         decorationBox = { innerTextField ->
             ContentTextFieldContainer(
+                modifier = containerModifier,
+                innerFieldModifier = innerFieldModifier,
                 state = state,
                 title = title,
                 placeholder = placeholder,

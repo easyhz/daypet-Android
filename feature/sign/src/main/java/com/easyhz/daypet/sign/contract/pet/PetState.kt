@@ -14,9 +14,12 @@ data class PetState(
     val petName: String,
     val isButtonEnabled: Boolean,
     val breed: String,
-    val chipTags: List<ChipState>
+    val chipTags: List<ChipState>,
+    val memo: String,
+    val isFocusedMemo: Boolean
 ): UiState() {
     companion object {
+        const val MEMO_MAX = 500
         fun init() = PetState(
             isLoading = false,
             progress = 0f,
@@ -24,7 +27,9 @@ data class PetState(
             petName = "",
             isButtonEnabled = false,
             breed = "",
-            chipTags = chipTags.toChipState()
+            chipTags = chipTags.toChipState(),
+            memo = "",
+            isFocusedMemo = false
         )
     }
     fun PetState.updateProgressAndStep(currentStep: PetStep, progress: Float): PetState {

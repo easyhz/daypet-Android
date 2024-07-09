@@ -9,4 +9,7 @@ sealed class PetIntent: UiIntent() {
     data object ClickNextButton : PetIntent()
     data object ClickBackButton : PetIntent()
     data class ClickChipButton(val clickIndex: Int) : PetIntent()
+    data class ChangeMemoText(val newText: String) : PetIntent()
+    data object ClickField : PetIntent()
+    data class FocusMemoField(val isFocused: Boolean) : PetIntent()
 }
