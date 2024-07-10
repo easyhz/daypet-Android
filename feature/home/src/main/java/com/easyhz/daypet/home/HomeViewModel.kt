@@ -28,6 +28,7 @@ class HomeViewModel @Inject constructor(
 ) {
     override fun handleIntent(intent: HomeIntent) {
         when (intent) {
+            is HomeIntent.InitScreen -> { initScreen(intent.groupId) }
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
             is HomeIntent.ChangeDateOnMonth -> { changeDateOnMonth(intent.clickedDay) }
             is HomeIntent.ClickMemory -> {}
@@ -45,14 +46,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    init {
+    private fun initScreen(groupId: String) {
+        reduce { copy(groupId = groupId) }
         fetchMemoires(uiState.value.selection)
         fetchTodos(uiState.value.selection)
         fetchThumbnail(uiState.value.selection)
     }
-
     private fun fetchMemoires(selection: LocalDate) = viewModelScope.launch {
-        val param = MemoryParam(startDate = selection, endDate = selection)
+        val param = MemoryParam(startDate = selection, endDate = selection, groupId = currentState.groupId)
         fetchMemoriesUseCase.invoke(param)
             .onSuccess {
                 reduce { copy(selection = selection, memoryList = it) }
@@ -62,7 +63,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchTodos(selection: LocalDate) = viewModelScope.launch {
-        val param = TodoParam(startDate = selection, endDate = selection)
+        val param = TodoParam(startDate = selection, endDate = selection, groupId = currentState.groupId)
         fetchTodosUseCase.invoke(param)
             .onSuccess {
                 reduce { copy(selection = selection, todoList = it) }
@@ -74,7 +75,8 @@ class HomeViewModel @Inject constructor(
     private fun fetchThumbnail(date: LocalDate) = viewModelScope.launch {
         val param = ThumbnailParam(
             startDate = date.withDayOfMonth(1),
-            endDate = date.withDayOfMonth(date.lengthOfMonth())
+            endDate = date.withDayOfMonth(date.lengthOfMonth()),
+            groupId = currentState.groupId
         )
         fetchThumbnailUseCase.invoke(param)
             .onSuccess {

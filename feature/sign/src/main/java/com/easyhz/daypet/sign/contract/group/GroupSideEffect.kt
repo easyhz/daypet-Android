@@ -5,7 +5,7 @@ import com.easyhz.daypet.common.base.UiSideEffect
 
 sealed class GroupSideEffect: UiSideEffect() {
     data object NavigateToEnterGroup: GroupSideEffect()
-    data object NavigateToHome: GroupSideEffect()
-    data object NavigateToPet: GroupSideEffect()
+    data class NavigateToHome(val groupId: String): GroupSideEffect()
+    data class NavigateToPet(val groupId: String): GroupSideEffect()
     data class ShowSnackBar(@StringRes val stringId: Int): GroupSideEffect()
 }

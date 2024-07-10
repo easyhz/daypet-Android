@@ -6,7 +6,7 @@ import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.repository.member.GroupMemberRepository
 import javax.inject.Inject
 
-class FetchGroupMember @Inject constructor(
+class FetchGroupMemberUseCase @Inject constructor(
     private val groupMemberRepository: GroupMemberRepository
 ): BaseUseCase<GroupMemberParam, GroupMember>() {
     override suspend fun invoke(param: GroupMemberParam): Result<GroupMember> =

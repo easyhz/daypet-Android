@@ -6,6 +6,8 @@ data class Pet(
     val birthTime: LocalDate,
     val breed: String,
     val name: String,
+    val gender: String,
+    val attributes: List<String>,
     val thumbnailUrl: String,
-    val memo: String
+    val memo: String,
 )

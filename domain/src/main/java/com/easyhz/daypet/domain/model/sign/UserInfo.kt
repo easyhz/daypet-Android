@@ -16,5 +16,5 @@ sealed class LoginStep {
     data class NoGroup(val name: String): LoginStep()
 
     /* 전부 설정 완료 */
-    data object ExistUser: LoginStep()
+    data class ExistUser(val groupId: String): LoginStep()
 }

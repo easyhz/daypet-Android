@@ -63,8 +63,8 @@ fun GroupScreen(
     name: String,
     ownerId: String,
     navigateToEnterGroup: () -> Unit,
-    navigateToHome: () -> Unit,
-    navigateToPet: () -> Unit,
+    navigateToHome: (String) -> Unit,
+    navigateToPet: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -164,8 +164,8 @@ fun GroupScreen(
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
         when(sideEffect) {
             is GroupSideEffect.NavigateToEnterGroup -> { navigateToEnterGroup() }
-            is GroupSideEffect.NavigateToHome -> { navigateToHome() }
-            is GroupSideEffect.NavigateToPet -> { navigateToPet() }
+            is GroupSideEffect.NavigateToHome -> { navigateToHome(sideEffect.groupId) }
+            is GroupSideEffect.NavigateToPet -> { navigateToPet(sideEffect.groupId) }
             is GroupSideEffect.ShowSnackBar -> {
                 snackBarHostState.showSnackbar(
                     message = context.getString(sideEffect.stringId),

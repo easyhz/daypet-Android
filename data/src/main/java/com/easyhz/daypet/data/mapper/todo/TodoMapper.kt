@@ -14,5 +14,6 @@ fun TodoResponse.toModel(): Todo = Todo(
 
 fun TodoParam.toRequest(): TodoRequest = TodoRequest(
     startDate = this.startDate.toTimeStamp(),
-    endDate = this.startDate.toTimeStamp(1)
+    endDate = this.startDate.toTimeStamp(1),
+    groupId = this.groupId
 )

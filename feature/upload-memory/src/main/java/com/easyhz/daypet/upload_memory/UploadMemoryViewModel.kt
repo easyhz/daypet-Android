@@ -4,8 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
-import com.easyhz.daypet.domain.usecase.member.FetchGroupMember
-import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUri
+import com.easyhz.daypet.domain.usecase.member.FetchGroupMemberUseCase
+import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUriUseCase
 import com.easyhz.daypet.upload_memory.contract.FocusType
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadMemoryViewModel @Inject constructor(
-    private val getTakePictureUri: GetTakePictureUri,
-    private val fetchGroupMember: FetchGroupMember,
+    private val getTakePictureUriUseCase: GetTakePictureUriUseCase,
+    private val fetchGroupMemberUseCase: FetchGroupMemberUseCase,
 ): BaseViewModel<UploadState, UploadIntent, UploadSideEffect>(
     initialState = UploadState.init()
 ) {
@@ -46,7 +46,7 @@ class UploadMemoryViewModel @Inject constructor(
     }
 
     private fun onClickCamera() = viewModelScope.launch {
-        getTakePictureUri.invoke(Unit)
+        getTakePictureUriUseCase.invoke(Unit)
             .onSuccess {
                 val uri = Uri.parse(it)
                 reduce { copy(takePictureUri = it) }
@@ -88,8 +88,8 @@ class UploadMemoryViewModel @Inject constructor(
         reduce { deleteImage(image = image) }
     }
     private fun showMemberBottomSheet() = viewModelScope.launch {
-        val param = GroupMemberParam("groupID")
-        fetchGroupMember.invoke(param).onSuccess {
+        val param = GroupMemberParam("groupId") // FIXME
+        fetchGroupMemberUseCase.invoke(param).onSuccess {
             reduce { copy(pets = it.pets, users = it.groupUsers, showMemberBottomSheet = true) }
         }.onFailure { println("fail > > $it") }
     }

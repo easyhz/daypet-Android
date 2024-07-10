@@ -13,4 +13,5 @@ object Fields {
     const val CREATION_TIME = "creationTime"
     const val MONTH_DATE = "monthDate"
     const val GROUP_ID = "groupID"
+    const val PETS = "pets"
 }

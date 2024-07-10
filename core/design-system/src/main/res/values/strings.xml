@@ -53,7 +53,7 @@
         \n반려동물 정보를 추가할까요?
     </string>
     <string name="pet_add_dialog_content">나중에 마이페이지에서 추가할 수 있어요.</string>
-    <string name="pet_add_dialog_positive">확인</string>
+    <string name="pet_add_dialog_positive">추가</string>
     <string name="pet_add_dialog_negative">취소</string>
 
     <string name="title_pet_profile">반려동물 등록</string>
@@ -70,4 +70,13 @@
     <string name="pet_memo_header">메모 </string>
     <string name="pet_memo_placeholder">메모를 입력해 주세요.</string>
 
+    <string name="pet_group_invite_dialog_title">
+        모든 준비가 끝났어요!
+        \n함께할 가족을 초대할까요?
+    </string>
+    <string name="pet_group_invite_dialog_content">
+        [마이페이지 - 우리 아이]에서
+        \n반려동물을 더 등록할 수 있어요.
+    </string>
+    <string name="pet_group_invite_positive">초대</string>
 </resources>

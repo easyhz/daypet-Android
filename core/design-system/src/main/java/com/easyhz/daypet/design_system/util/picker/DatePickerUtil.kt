@@ -5,9 +5,10 @@ import java.time.format.DateTimeFormatter
 
 object DatePickerUtil {
     val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-    fun toString(year: Int, month: Int, dayOfMonth: Int): String =
-        "$year.${month.toString().padStart(2, '0')}.${dayOfMonth.toString().padStart(2, '0')}"
-
+    fun toString(year: Int, month: Int, dayOfMonth: Int): String {
+        val date = LocalDate.of(year, month, dayOfMonth)
+        return date.format(dateFormatter)
+    }
     fun toLocalDate(date: String): LocalDate =
         LocalDate.parse(date, dateFormatter)
 }

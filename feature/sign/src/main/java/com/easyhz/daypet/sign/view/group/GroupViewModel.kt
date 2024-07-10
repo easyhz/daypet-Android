@@ -40,7 +40,7 @@ class GroupViewModel @Inject constructor(
         )
         saveGroupInfoUseCase.invoke(param)
             .onSuccess {
-                reduce { copy(isOpenPetDialog = true) }
+                reduce { copy(isOpenPetDialog = true, groupId = it) }
             }.onFailure { e ->
                 postSideEffect { GroupSideEffect.ShowSnackBar(e.getMessageStringRes()) }
             }
@@ -48,12 +48,12 @@ class GroupViewModel @Inject constructor(
 
     private fun onClickDialogPositiveButton() {
         reduce { copy(isOpenPetDialog = false) }
-        postSideEffect { GroupSideEffect.NavigateToPet }
+        postSideEffect { GroupSideEffect.NavigateToPet(currentState.groupId) }
     }
 
     private fun onClickDialogNegativeButton() {
         reduce { copy(isOpenPetDialog = false) }
-        postSideEffect { GroupSideEffect.NavigateToHome }
+        postSideEffect { GroupSideEffect.NavigateToHome(currentState.groupId) }
     }
 
 }

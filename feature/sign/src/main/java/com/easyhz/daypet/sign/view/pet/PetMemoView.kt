@@ -111,6 +111,7 @@ internal fun PetMemoView(
             is PetSideEffect.OpenKeyboard -> {
                 keyboardController?.show()
             }
+            else -> { }
         }
     }
 }

@@ -1,8 +1,8 @@
-package com.easyhz.daypet.navigation.home
+package com.easyhz.daypet.navigation.sign.screen
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Home(
+data class Pet(
     val groupId: String
 )

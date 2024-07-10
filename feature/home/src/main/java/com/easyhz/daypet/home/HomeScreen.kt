@@ -10,6 +10,7 @@ import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -54,6 +55,7 @@ import java.time.LocalDate
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    groupId: String,
     navigateToMemoryDetail: (String) -> Unit,
     navigateToUploadMemory: () -> Unit
 ) {
@@ -71,6 +73,9 @@ fun HomeScreen(
     val visibleWeek = rememberFirstVisibleWeekAfterScroll(weekState)
     val fabState = rememberMultiFabState()
 
+    LaunchedEffect(Unit) {
+        viewModel.postIntent(HomeIntent.InitScreen(groupId))
+    }
     DayPetScaffold(
         topBar = {
             HomeTopBar(
@@ -189,5 +194,8 @@ private suspend fun scrollToSelection(weekState: WeekCalendarState, localDate: L
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPrev() {
-    HomeScreen( navigateToMemoryDetail = { }) { }
+    HomeScreen(
+        groupId = "",
+        navigateToMemoryDetail = { }
+    ) { }
 }

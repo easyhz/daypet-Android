@@ -8,6 +8,7 @@ data class GroupInfoRequest(
     val name: String,
     @PropertyName("creationTime")
     val creationTime: Timestamp,
-    @PropertyName("ownerID")
-    val ownerId: String,
+    @get:PropertyName("ownerID")
+    @set:PropertyName("ownerID")
+    var ownerId: String,
 )

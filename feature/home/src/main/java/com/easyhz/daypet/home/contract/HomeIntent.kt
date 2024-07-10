@@ -7,6 +7,7 @@ import com.easyhz.daypet.home.view.fab.SubMenu
 import java.time.LocalDate
 
 sealed class HomeIntent: UiIntent() {
+    data class InitScreen(val groupId: String): HomeIntent()
     data class ChangeDate(val clickedDay: LocalDate): HomeIntent()
     data class ChangeDateOnMonth(val clickedDay: LocalDate): HomeIntent()
     data class ClickMemory(val memory: Memory): HomeIntent()

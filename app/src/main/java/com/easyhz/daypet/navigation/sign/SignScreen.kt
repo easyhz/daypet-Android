@@ -9,10 +9,12 @@ import androidx.navigation.toRoute
 import com.easyhz.daypet.navigation.home.Home
 import com.easyhz.daypet.navigation.sign.screen.Group
 import com.easyhz.daypet.navigation.sign.screen.Login
+import com.easyhz.daypet.navigation.sign.screen.Pet
 import com.easyhz.daypet.navigation.sign.screen.Profile
 import com.easyhz.daypet.sign.AuthViewModel
 import com.easyhz.daypet.sign.LoginScreen
 import com.easyhz.daypet.sign.view.group.GroupScreen
+import com.easyhz.daypet.sign.view.pet.PetScreen
 import com.easyhz.daypet.sign.view.profile.ProfileScreen
 
 internal fun NavGraphBuilder.signScreen(
@@ -44,7 +46,14 @@ internal fun NavGraphBuilder.signScreen(
             ownerId = args.ownerId,
             navigateToEnterGroup = navController::navigateUp,
             navigateToHome = navController::navigateToHome,
-            navigateToPet = navController::navigateUp
+            navigateToPet = navController::navigateToPet
+        )
+    }
+    composable<Pet> {navBackStackEntry ->
+        val args = navBackStackEntry.toRoute<Pet>()
+        PetScreen(
+            groupId = args.groupId,
+            navigateToHome = navController::navigateToHome,
         )
     }
 }
@@ -59,8 +68,14 @@ internal fun NavController.navigateToGroup(name: String, ownerId: String) {
     }
 }
 
-internal fun NavController.navigateToHome() {
-    navigate(Home) {
+internal fun NavController.navigateToPet(groupId: String) {
+    navigate(Pet(groupId = groupId)) {
+        popUpTo(this@navigateToPet.graph.id) { inclusive = true }
+    }
+}
+
+internal fun NavController.navigateToHome(groupId: String) {
+    navigate(Home(groupId = groupId)) {
         popUpTo(this@navigateToHome.graph.id) { inclusive = true }
     }
 }

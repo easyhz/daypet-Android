@@ -25,5 +25,6 @@ fun List<ThumbnailResponse>.toModel(): Thumbnail {
 }
 fun ThumbnailParam.toRequest(): ThumbnailRequest = ThumbnailRequest(
     startDate = this.startDate.toTimeStamp(),
-    endDate = this.endDate.toTimeStamp(1)
+    endDate = this.endDate.toTimeStamp(1),
+    groupId = this.groupId
 )

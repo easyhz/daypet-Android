@@ -10,6 +10,10 @@ data class PetResponse(
     val breed: String = "",
     @PropertyName("name")
     val name: String = "",
+    @PropertyName("attributes")
+    val attributes: List<String> = emptyList(),
+    @PropertyName("gender")
+    val gender: String = "",
     @PropertyName("thumbnailURL")
     val thumbnailUrl: String = "",
     @PropertyName("memo")

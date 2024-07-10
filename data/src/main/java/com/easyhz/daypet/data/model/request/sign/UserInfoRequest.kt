@@ -10,8 +10,9 @@ data class UserInfoRequest(
     val commentCount: Int,
     @PropertyName("creationTime")
     val creationTime: Timestamp,
-    @PropertyName("groupID")
-    val groupId: String,
+    @set:PropertyName("groupID")
+    @get:PropertyName("groupID")
+    var groupId: String,
     @PropertyName("uploadedMemoryCount")
     val uploadedMemoryCount: Int,
     @PropertyName("visitCount")

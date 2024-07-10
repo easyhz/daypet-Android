@@ -15,5 +15,6 @@ fun MemoryResponse.toModel(): Memory = Memory(
 
 fun MemoryParam.toRequest(): MemoryRequest = MemoryRequest(
     startDate = this.startDate.toTimeStamp(),
-    endDate = this.startDate.toTimeStamp(1)
+    endDate = this.startDate.toTimeStamp(1),
+    groupId = this.groupId
 )

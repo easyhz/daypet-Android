@@ -9,11 +9,12 @@ import javax.inject.Inject
 class SaveGroupInfoUseCase @Inject constructor(
     private val groupMemberRepository: GroupMemberRepository,
     private val authRepository: AuthRepository,
-): BaseUseCase<GroupInfoParam, Unit>() {
-    override suspend fun invoke(param: GroupInfoParam): Result<Unit> =
+): BaseUseCase<GroupInfoParam, String>() {
+    override suspend fun invoke(param: GroupInfoParam): Result<String> =
         runCatching {
             val groupId = groupMemberRepository.createGroup(param).getOrThrow()
             authRepository.updateUserGroupId(userId = param.ownerId, groupId = groupId).getOrThrow()
+            return@runCatching groupId
         }
 
 }

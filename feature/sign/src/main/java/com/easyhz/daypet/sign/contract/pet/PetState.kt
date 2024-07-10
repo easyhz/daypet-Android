@@ -6,30 +6,40 @@ import com.easyhz.daypet.design_system.util.button.ChipState
 import com.easyhz.daypet.design_system.util.button.toChipState
 import com.easyhz.daypet.sign.util.PetStep
 import com.easyhz.daypet.sign.util.chipTags
+import com.easyhz.daypet.sign.view.pet.Gender
+import java.time.LocalDate
 
 data class PetState(
+    val groupId: String,
     val isLoading: Boolean,
     val progress: Float,
     val step: Step,
     val petName: String,
     val isButtonEnabled: Boolean,
     val breed: String,
+    val birthTime: LocalDate,
+    val gender: Gender,
     val chipTags: List<ChipState>,
     val memo: String,
-    val isFocusedMemo: Boolean
+    val isFocusedMemo: Boolean,
+    val isOpenPetDialog: Boolean,
 ): UiState() {
     companion object {
         const val MEMO_MAX = 500
         fun init() = PetState(
+            groupId = "",
             isLoading = false,
             progress = 0f,
             step = Step(currentStep = PetStep.PROFILE, previousStep = null),
             petName = "",
             isButtonEnabled = false,
             breed = "",
+            birthTime = LocalDate.now(),
+            gender = Gender.MALE,
             chipTags = chipTags.toChipState(),
             memo = "",
-            isFocusedMemo = false
+            isFocusedMemo = false,
+            isOpenPetDialog = false
         )
     }
     fun PetState.updateProgressAndStep(currentStep: PetStep, progress: Float): PetState {

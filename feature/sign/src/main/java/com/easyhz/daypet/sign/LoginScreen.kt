@@ -64,14 +64,13 @@ import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    navigateToHome: () -> Unit,
+    navigateToHome: (String) -> Unit,
     navigateToProfile: () -> Unit,
     navigateToGroup: (String, String) -> Unit
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-//    PetScreen()
     DayPetScaffold(
         snackbarHost = {
             DayPetSnackBarHost(
@@ -159,7 +158,7 @@ fun LoginScreen(
                 navigateToGroup(sideEffect.name, sideEffect.uid)
             }
             is AuthSideEffect.NavigateToHome -> {
-                navigateToHome()
+                navigateToHome(sideEffect.groupId)
             }
             is AuthSideEffect.ShowSnackBar -> {
                 snackBarHostState.showSnackbar(

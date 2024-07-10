@@ -12,6 +12,7 @@ import com.easyhz.daypet.database.datasource.member.GroupMemberDatabaseDataSourc
 import com.easyhz.daypet.domain.model.member.GroupMember
 import com.easyhz.daypet.domain.param.member.GroupInfoParam
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
+import com.easyhz.daypet.domain.param.member.PetInsertParam
 import com.easyhz.daypet.domain.repository.member.GroupMemberRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -71,4 +72,7 @@ class GroupMemberRepositoryImpl @Inject constructor(
 
     override suspend fun createGroup(param: GroupInfoParam): Result<String> =
         groupDataSource.createGroup(param.toRequest())
+
+    override suspend fun insertPetInGroup(param: PetInsertParam): Result<Unit> =
+        groupDataSource.insertPetInGroup(param.toRequest())
 }

@@ -3,6 +3,7 @@ package com.easyhz.daypet.navigation.home
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.easyhz.daypet.home.HomeScreen
 import com.easyhz.daypet.navigation.memory_detail.MemoryDetail
 import com.easyhz.daypet.navigation.upload_memory.UploadMemory
@@ -18,8 +19,10 @@ internal fun NavGraphBuilder.homeScreen(
     navigateToMemoryDetail: (String) -> Unit,
     navigateToUploadMemory: () -> Unit
 ) {
-    composable<Home> {
+    composable<Home> {navBackStackEntry ->
+        val args = navBackStackEntry.toRoute<Home>()
         HomeScreen(
+            groupId = args.groupId,
             navigateToMemoryDetail = navigateToMemoryDetail,
             navigateToUploadMemory = navigateToUploadMemory
         )

@@ -47,8 +47,12 @@ internal fun PetInfoView(
             InfoField(
                 breed = uiState.breed,
                 onValueChange = { newText -> viewModel.postIntent(PetIntent.ChangeBreedText(newText)) },
-                onDateChange = { println(it) },
-                onClickSegmented = { println(it) }
+                onDateChange = { localDate ->
+                    viewModel.postIntent(PetIntent.ChangeDate(localDate))
+                },
+                onClickSegmented = { gender ->
+                    viewModel.postIntent(PetIntent.ChangeGender(gender))
+                }
             )
         }
 
@@ -109,11 +113,13 @@ private fun DatePickerView(
     }
 }
 
-enum class Gender : SegmentedType {
-    MALE {
+enum class Gender(
+    val type: String,
+) : SegmentedType {
+    MALE(type = "Male") {
         override val labelId: Int
             get() = R.string.pet_info_male
-    }, FEMALE {
+    }, FEMALE(type = "Female") {
         override val labelId: Int
             get() = R.string.pet_info_female
     }

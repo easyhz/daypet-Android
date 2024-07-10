@@ -23,26 +23,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
+import com.easyhz.daypet.design_system.component.dialog.DayPetDialog
+import com.easyhz.daypet.design_system.component.dialog.DialogButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.snackBar.DayPetSnackBarHost
 import com.easyhz.daypet.design_system.component.topbar.TopBar
+import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.MainBackground
 import com.easyhz.daypet.design_system.theme.Primary
+import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
 import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
+import com.easyhz.daypet.sign.contract.group.GroupIntent
 import com.easyhz.daypet.sign.contract.pet.PetIntent
+import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.util.PetStep
 
 @Composable
 fun PetScreen(
-    viewModel: PetViewModel = hiltViewModel()
+    viewModel: PetViewModel = hiltViewModel(),
+    groupId: String,
+    navigateToHome: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val snackBarHostState = remember { SnackbarHostState() }
     val animatedProgress by animateFloatAsState(
         targetValue = uiState.progress,
@@ -50,7 +62,7 @@ fun PetScreen(
     )
 
     LaunchedEffect(Unit) {
-        viewModel.postIntent(PetIntent.InitPetScreen)
+        viewModel.postIntent(PetIntent.InitPetScreen(groupId))
     }
 
     BackHandler(onBack = {
@@ -108,6 +120,44 @@ fun PetScreen(
                 PetStep.ATTRIBUTE -> PetAttributeView()
                 PetStep.MEMO -> PetMemoView()
             }
+        }
+        if (uiState.isOpenPetDialog) {
+            DayPetDialog(
+                title = stringResource(id = R.string.pet_group_invite_dialog_title),
+                content = stringResource(id = R.string.pet_group_invite_dialog_content),
+                negativeButton = DialogButton(
+                    text = stringResource(id = R.string.pet_add_dialog_negative),
+                    contentColor = TextColor,
+                    containerColor = ButtonShapeColor,
+                    onClick = {
+                        viewModel.postIntent(PetIntent.ClickDialogPositiveButton)
+                    }
+                ),
+                positiveButton = DialogButton(
+                    text = stringResource(id = R.string.pet_group_invite_positive),
+                    contentColor = MainBackground,
+                    containerColor = Primary,
+                    onClick = {
+                        viewModel.postIntent(PetIntent.ClickDialogNegativeButton)
+                    }
+                ),
+            )
+        }
+    }
+
+    viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
+        when (sideEffect) {
+            is PetSideEffect.ShowSnackBar -> {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(sideEffect.stringId),
+                    withDismissAction = true
+                )
+            }
+            is PetSideEffect.NavigateToHome -> {
+                navigateToHome(sideEffect.groupId)
+            }
+
+            else -> { }
         }
     }
 }
