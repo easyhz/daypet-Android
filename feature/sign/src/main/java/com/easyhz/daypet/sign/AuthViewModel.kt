@@ -141,7 +141,7 @@ class AuthViewModel @Inject constructor(
             val sideEffect = when(loginStep) {
                 is LoginStep.NewUser -> AuthSideEffect.NavigateToProfile
                 is LoginStep.NoGroup -> AuthSideEffect.NavigateToGroup(loginStep.name, uid)
-                is LoginStep.ExistUser -> AuthSideEffect.NavigateToHome
+                is LoginStep.ExistUser -> AuthSideEffect.NavigateToHome(loginStep.groupId)
             }
             postSideEffect { sideEffect }
         }.onFailure { e ->

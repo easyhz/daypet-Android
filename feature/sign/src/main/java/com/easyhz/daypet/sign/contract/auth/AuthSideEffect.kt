@@ -6,7 +6,7 @@ import com.easyhz.daypet.common.base.UiSideEffect
 sealed class AuthSideEffect: UiSideEffect() {
     data object NavigateToProfile: AuthSideEffect()
     data class NavigateToGroup(val name: String, val uid: String): AuthSideEffect()
-    data object NavigateToHome: AuthSideEffect()
+    data class NavigateToHome(val groupId: String): AuthSideEffect()
     data object ClearFocus: AuthSideEffect()
     data class ShowSnackBar(@StringRes val stringId: Int): AuthSideEffect()
 }

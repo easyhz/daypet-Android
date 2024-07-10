@@ -32,7 +32,7 @@ class AuthRepositoryImpl @Inject constructor(
         }.mapCatching { userInfo ->
             when {
                 userInfo.groupId.isBlank() -> LoginStep.NoGroup(userInfo.name)
-                else -> LoginStep.ExistUser
+                else -> LoginStep.ExistUser(userInfo.groupId)
             }
         }.recoverCatching { error ->
             if (error is DayPetError.NoResultError) {
