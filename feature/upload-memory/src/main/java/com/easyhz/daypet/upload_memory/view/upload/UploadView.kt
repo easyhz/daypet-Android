@@ -39,7 +39,7 @@ internal fun UploadView(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.showMemberBottomSheet) {
+    if (uiState.isShowMemberBottomSheet) {
         BottomSheet(onDismissRequest = { viewModel.postIntent(UploadIntent.HideMemberBottomSheet) }) {
             MemberSelectView(
                 pets = uiState.pets,

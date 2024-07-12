@@ -90,12 +90,12 @@ class UploadMemoryViewModel @Inject constructor(
     private fun showMemberBottomSheet() = viewModelScope.launch {
         val param = GroupMemberParam("groupId") // FIXME
         fetchGroupMemberUseCase.invoke(param).onSuccess {
-            reduce { copy(pets = it.pets, users = it.groupUsers, showMemberBottomSheet = true) }
+            reduce { copy(pets = it.pets, users = it.groupUsers, isShowMemberBottomSheet = true) }
         }.onFailure { println("fail > > $it") }
     }
 
     private fun hideMemberBottomSheet() {
-        reduce { copy(showMemberBottomSheet = false) }
+        reduce { copy(isShowMemberBottomSheet = false) }
     }
 
     private fun changeTitleFocus(isFocused: Boolean) {

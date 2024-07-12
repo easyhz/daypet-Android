@@ -17,7 +17,7 @@ data class UploadState(
     val selectedMembers: List<Member>,
     val pets: List<Pet>,
     val users: List<GroupUser>,
-    val showMemberBottomSheet: Boolean,
+    val isShowMemberBottomSheet: Boolean,
     val takePictureUri: String,
 ): UiState() {
     companion object {
@@ -30,7 +30,7 @@ data class UploadState(
             selectedMembers = emptyList(),
             pets = emptyList(),
             users = emptyList(),
-            showMemberBottomSheet = false,
+            isShowMemberBottomSheet = false,
             takePictureUri = "",
         )
     }
