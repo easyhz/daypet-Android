@@ -1,8 +1,11 @@
 package com.easyhz.daypet.design_system.component.bottomSheet
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -30,6 +33,7 @@ fun BottomSheet(
         containerColor = MainBackground,
         scrimColor = ModalDimColor,
         dragHandle = dragHandle,
+        windowInsets = BottomSheetDefaults.windowInsets.only(WindowInsetsSides.Bottom),
     ) {
         content()
         Spacer(modifier = Modifier.navigationBarsPadding())
