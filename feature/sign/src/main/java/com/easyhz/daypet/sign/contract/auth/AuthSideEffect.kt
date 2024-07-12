@@ -9,4 +9,5 @@ sealed class AuthSideEffect: UiSideEffect() {
     data class NavigateToHome(val groupId: String): AuthSideEffect()
     data object ClearFocus: AuthSideEffect()
     data class ShowSnackBar(@StringRes val stringId: Int): AuthSideEffect()
+    data object NavigateToGallery: AuthSideEffect()
 }

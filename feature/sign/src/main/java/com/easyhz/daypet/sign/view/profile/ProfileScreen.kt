@@ -1,6 +1,9 @@
 package com.easyhz.daypet.sign.view.profile
 
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +54,11 @@ fun ProfileScreen(
     val focusManager = LocalFocusManager.current
     val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-
+    val galleryLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { viewModel.postIntent(AuthIntent.PickImage(it)) }
+        )
     DayPetScaffold(
         topBar = {
             TopBar(
@@ -88,12 +95,13 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     ProfileImage(
-                        imageUri = Uri.EMPTY,
+                        imageUri = uiState.profileThumbnail,
                         type = ProfileImageType.User,
                         modifier = Modifier
                             .padding(24.dp)
                             .align(Alignment.CenterHorizontally)
                     ) {
+                        viewModel.postIntent(AuthIntent.ClickProfile)
                     }
 
                     BaseTextField(
@@ -133,6 +141,9 @@ fun ProfileScreen(
                     message = context.getString(sideEffect.stringId),
                     withDismissAction = true
                 )
+            }
+            is AuthSideEffect.NavigateToGallery -> {
+                galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         }
     }

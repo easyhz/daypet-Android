@@ -13,6 +13,9 @@ data class UserInfoRequest(
     @set:PropertyName("groupID")
     @get:PropertyName("groupID")
     var groupId: String,
+    @set:PropertyName("thumbnailURL")
+    @get:PropertyName("thumbnailURL")
+    var thumbnailUrl: String,
     @PropertyName("uploadedMemoryCount")
     val uploadedMemoryCount: Int,
     @PropertyName("visitCount")

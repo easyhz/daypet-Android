@@ -1,21 +1,23 @@
 package com.easyhz.daypet.sign
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.lifecycle.viewModelScope
+import com.easyhz.daypet.common.R
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.common.base.UiSideEffect
 import com.easyhz.daypet.common.error.getMessageStringRes
-import com.easyhz.daypet.common.R
 import com.easyhz.daypet.domain.model.sign.LoginStep
 import com.easyhz.daypet.domain.param.sign.UserInfoParam
 import com.easyhz.daypet.domain.usecase.sign.CheckUserInfoUseCase
 import com.easyhz.daypet.domain.usecase.sign.SaveUserInfoUseCase
 import com.easyhz.daypet.domain.usecase.sign.SignInWithGoogleUseCase
+import com.easyhz.daypet.sign.component.BottomSheetItem
 import com.easyhz.daypet.sign.contract.auth.AuthIntent
 import com.easyhz.daypet.sign.contract.auth.AuthSideEffect
 import com.easyhz.daypet.sign.contract.auth.AuthState
@@ -43,6 +45,9 @@ class AuthViewModel @Inject constructor(
                 onClickProfileNextButton()
                 postSideEffect { AuthSideEffect.ClearFocus }
             }
+            is AuthIntent.ClickProfile -> { onClickProfile() }
+            is AuthIntent.PickImage -> { onPickImage(intent.uri) }
+            is AuthIntent.ClickBottomSheetItem -> { onClickBottomSheetItem(intent.bottomSheetItem) }
         }
     }
 
@@ -70,11 +75,11 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun onClickProfileNextButton() = viewModelScope.launch {
-        val param = UserInfoParam(uid = uiState.value.uid, name = uiState.value.name)
+        val param = UserInfoParam(uid = currentState.uid, name = currentState.name, thumbnailUrl = currentState.profileThumbnail.toString())
         setLoading(true)
         saveUserInfoUseCase.invoke(param)
             .onSuccess {
-                postSideEffect { AuthSideEffect.NavigateToGroup(uiState.value.name, uid = uiState.value.uid) }
+                postSideEffect { AuthSideEffect.NavigateToGroup(currentState.name, uid = currentState.uid) }
             }.onFailure { e ->
                 showErrorLog(e.message)
                 postSideEffect { AuthSideEffect.ShowSnackBar(e.getMessageStringRes()) }
@@ -151,5 +156,48 @@ class AuthViewModel @Inject constructor(
 
     private fun showErrorLog(message: String?) {
         Log.e(tag, message ?: "Unexpected.")
+    }
+
+    private fun onClickProfile() {
+        if (currentState.profileThumbnail == Uri.EMPTY) {
+            navigateToGallery()
+        } else {
+            showBottomSheet()
+        }
+    }
+
+    private fun onPickImage(uri: Uri?) = viewModelScope.launch {
+        uri?.let {
+            reduce { copy(profileThumbnail = it) }
+            if (currentState.isShowBottomSheet) {
+                hideBottomSheet()
+            }
+        }
+    }
+
+    private fun navigateToGallery() {
+        postSideEffect { AuthSideEffect.NavigateToGallery }
+    }
+
+    private fun showBottomSheet() {
+        reduce { copy(isShowBottomSheet = true) }
+    }
+
+    private fun hideBottomSheet() {
+        reduce { copy(isShowBottomSheet = false) }
+    }
+
+    private fun initProfileThumbnailUri() {
+        reduce { copy(profileThumbnail = Uri.EMPTY) }
+    }
+
+    private fun onClickBottomSheetItem(bottomSheetItem: BottomSheetItem) {
+        when(bottomSheetItem) {
+            BottomSheetItem.SELECT -> { navigateToGallery() }
+            BottomSheetItem.DELETE -> {
+                initProfileThumbnailUri()
+                hideBottomSheet()
+            }
+        }
     }
 }

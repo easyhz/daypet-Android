@@ -18,7 +18,8 @@ fun UserInfoParam.toRequest(): UserInfoRequest = UserInfoRequest(
     groupId = "",
     uploadedMemoryCount = 0,
     visitCount = 1,
-    creationTime = Timestamp.now()
+    creationTime = Timestamp.now(),
+    thumbnailUrl = this.thumbnailUrl
 )
 
 fun UserInfoResponse.toModel(): UserInfo = UserInfo(

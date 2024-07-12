@@ -1,9 +1,13 @@
 package com.easyhz.daypet.data.repository.sign
 
+import android.net.Uri
+import androidx.core.net.toUri
 import com.easyhz.daypet.common.error.DayPetError
+import com.easyhz.daypet.data.datasource.image.ImageDataSource
 import com.easyhz.daypet.data.datasource.sign.AuthDataSource
 import com.easyhz.daypet.data.mapper.sign.toModel
 import com.easyhz.daypet.data.mapper.sign.toRequest
+import com.easyhz.daypet.data.util.Storage
 import com.easyhz.daypet.domain.model.sign.AuthUser
 import com.easyhz.daypet.domain.model.sign.LoginStep
 import com.easyhz.daypet.domain.model.sign.UserInfo
@@ -12,15 +16,31 @@ import com.easyhz.daypet.domain.repository.sign.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authDataSource: AuthDataSource
-): AuthRepository {
+    private val authDataSource: AuthDataSource,
+    private val imageDataSource: ImageDataSource,
+) : AuthRepository {
     override suspend fun signInWithGoogle(idToken: String): Result<AuthUser> =
         authDataSource.signInWithGoogle(idToken).map { it.toModel() }
 
     override suspend fun saveUserInfo(userInfoParam: UserInfoParam): Result<Unit> =
-        authDataSource.saveUserInfo(
-            uid = userInfoParam.uid,
-            userInfoRequest = userInfoParam.toRequest()
+        runCatching {
+            val thumbnailUri = userInfoParam.thumbnailUrl.toUri()
+            val updatedThumbnailUrl = if (thumbnailUri != Uri.EMPTY) {
+                imageDataSource.uploadImage(
+                    Storage.USERS,
+                    thumbnailUri,
+                    userInfoParam.uid
+                ).getOrThrow()
+            } else ""
+
+            val updatedUserInfo = userInfoParam.copy(thumbnailUrl = updatedThumbnailUrl)
+            authDataSource.saveUserInfo(
+                uid = userInfoParam.uid,
+                userInfoRequest = updatedUserInfo.toRequest()
+            ).getOrThrow()
+        }.fold(
+            onSuccess = { Result.success(it) },
+            onFailure = { Result.failure(it) }
         )
 
     override suspend fun fetchUserInfo(uid: String): Result<UserInfo> =
