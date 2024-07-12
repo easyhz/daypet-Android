@@ -67,6 +67,9 @@ class PetViewModel @Inject constructor(
     private fun onPickImage(uri: Uri?) = viewModelScope.launch {
         uri?.let {
             reduce { copy(profileThumbnail = it) }
+            if (currentState.isShowBottomSheet) {
+                hideBottomSheet()
+            }
         }
     }
     private fun onChangePetNameText(newText: String) {
@@ -96,10 +99,12 @@ class PetViewModel @Inject constructor(
     private fun onClickBackButton() {
         currentState.step.currentStep.beforeStep()?.let { beforeStep ->
             reduce { updateProgressAndStep(currentStep = beforeStep, progress = progress - PetStep.stepProgress) }
-        } ?: savePetProfile()
+        }
     }
 
     private fun savePetProfile() = viewModelScope.launch {
+        postSideEffect { PetSideEffect.HideKeyboard }
+        setLoading(true)
         val param = PetInsertParam(
             groupId = currentState.groupId,
             petList = listOf(
@@ -119,6 +124,8 @@ class PetViewModel @Inject constructor(
                 reduce { copy(isOpenPetDialog = true) }
             }.onFailure { e ->
                 postSideEffect { PetSideEffect.ShowSnackBar(e.getMessageStringRes()) }
+            }.also {
+                setLoading(false)
             }
     }
 
@@ -146,6 +153,7 @@ class PetViewModel @Inject constructor(
     private fun onClickDialogPositiveButton() {
         reduce { copy(isOpenPetDialog = false) }
 //        postSideEffect { PetSideEffect.NavigateToPet(currentState.groupId) }
+        // TODO: 초대로 가기
     }
 
     private fun onClickDialogNegativeButton() {
@@ -172,5 +180,9 @@ class PetViewModel @Inject constructor(
                 hideBottomSheet()
             }
         }
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        reduce { copy(isLoading = isLoading) }
     }
 }

@@ -38,6 +38,7 @@ import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.dialog.DayPetDialog
 import com.easyhz.daypet.design_system.component.dialog.DialogButton
+import com.easyhz.daypet.design_system.component.loading.LoadingScreenProvider
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.snackBar.DayPetSnackBarHost
 import com.easyhz.daypet.design_system.component.topbar.TopBar
@@ -114,33 +115,39 @@ fun PetScreen(
             )
         }
     ) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxWidth()
-                .height(2.dp),
-            progress = { animatedProgress },
-            color = Primary,
-            trackColor = MainBackground
-        )
-        AnimatedContent(
-            modifier = Modifier.fillMaxSize().padding(it),
-            targetState = uiState.step.currentStep,
-            transitionSpec = {
-                if (uiState.step.currentStep.ordinal >= (uiState.step.previousStep?.ordinal ?: 0)) {
-                    (slideInHorizontally { width -> width } + fadeIn()).togetherWith(
-                        slideOutHorizontally { width -> -width } + fadeOut())
-                } else {
-                    (slideInHorizontally { width -> -width } + fadeIn()).togetherWith(
-                        slideOutHorizontally { width -> width } + fadeOut())
-                }.using(SizeTransform(clip = false))
-            }, label = "pet"
-        ) { targetScreen ->
-            when (targetScreen) {
-                PetStep.PROFILE -> PetProfileView()
-                PetStep.INFO -> PetInfoView()
-                PetStep.ATTRIBUTE -> PetAttributeView()
-                PetStep.MEMO -> PetMemoView()
+        LoadingScreenProvider(
+            isLoading = uiState.isLoading
+        ) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxWidth()
+                    .height(2.dp),
+                progress = { animatedProgress },
+                color = Primary,
+                trackColor = MainBackground
+            )
+            AnimatedContent(
+                modifier = Modifier.fillMaxSize().padding(it),
+                targetState = uiState.step.currentStep,
+                transitionSpec = {
+                    if (uiState.step.currentStep.ordinal >= (uiState.step.previousStep?.ordinal
+                            ?: 0)
+                    ) {
+                        (slideInHorizontally { width -> width } + fadeIn()).togetherWith(
+                            slideOutHorizontally { width -> -width } + fadeOut())
+                    } else {
+                        (slideInHorizontally { width -> -width } + fadeIn()).togetherWith(
+                            slideOutHorizontally { width -> width } + fadeOut())
+                    }.using(SizeTransform(clip = false))
+                }, label = "pet"
+            ) { targetScreen ->
+                when (targetScreen) {
+                    PetStep.PROFILE -> PetProfileView()
+                    PetStep.INFO -> PetInfoView()
+                    PetStep.ATTRIBUTE -> PetAttributeView()
+                    PetStep.MEMO -> PetMemoView()
+                }
             }
         }
         if (uiState.isOpenPetDialog) {
@@ -186,6 +193,9 @@ fun PetScreen(
             }
             is PetSideEffect.OpenKeyboard -> {
                 keyboardController?.show()
+            }
+            is PetSideEffect.HideKeyboard -> {
+                keyboardController?.hide()
             }
             is PetSideEffect.NavigateToGallery -> {
                 galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

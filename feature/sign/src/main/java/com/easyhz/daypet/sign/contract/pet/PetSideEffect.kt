@@ -10,6 +10,7 @@ sealed class PetSideEffect: UiSideEffect() {
     data class ScrollToBottom(val scrollState: ScrollState): PetSideEffect()
     data class RequestFocus(val focusRequester: FocusRequester): PetSideEffect()
     data object OpenKeyboard: PetSideEffect()
+    data object HideKeyboard: PetSideEffect()
     data class ShowSnackBar(@StringRes val stringId: Int): PetSideEffect()
     data class NavigateToHome(val groupId: String): PetSideEffect()
 }
