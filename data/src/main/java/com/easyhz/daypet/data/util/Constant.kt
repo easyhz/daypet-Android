@@ -15,3 +15,8 @@ object Fields {
     const val GROUP_ID = "groupID"
     const val PETS = "pets"
 }
+
+object Storage {
+    const val PETS = "Pets"
+    const val USERS = "Users"
+}

@@ -2,6 +2,8 @@ package com.easyhz.daypet.data.di
 
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSource
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSourceImpl
+import com.easyhz.daypet.data.datasource.image.ImageDataSource
+import com.easyhz.daypet.data.datasource.image.ImageDataSourceImpl
 import com.easyhz.daypet.data.datasource.member.GroupDataSource
 import com.easyhz.daypet.data.datasource.member.GroupDataSourceImpl
 import com.easyhz.daypet.data.datasource.member.GroupUserDataSource
@@ -50,4 +52,9 @@ interface DataSourceModule {
     fun bindAuthDataSource(
         authDataSourceImpl: AuthDataSourceImpl
     ): AuthDataSource
+
+    @Binds
+    fun bindImageDataSource(
+        imageDataSourceImpl: ImageDataSourceImpl
+    ): ImageDataSource
 }

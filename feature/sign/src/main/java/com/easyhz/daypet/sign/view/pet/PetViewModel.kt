@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PetViewModel @Inject constructor(
-    private val insertPetInGroupUseCase: InsertPetInGroupUseCase
+    private val insertPetInGroupUseCase: InsertPetInGroupUseCase,
 ): BaseViewModel<PetState, PetIntent, PetSideEffect>(
     initialState = PetState.init()
 ) {
@@ -64,12 +64,9 @@ class PetViewModel @Inject constructor(
         postSideEffect { PetSideEffect.NavigateToGallery }
     }
 
-    private fun onPickImage(uri: Uri?) {
+    private fun onPickImage(uri: Uri?) = viewModelScope.launch {
         uri?.let {
             reduce { copy(profileThumbnail = it) }
-            if (currentState.isShowBottomSheet) {
-                hideBottomSheet()
-            }
         }
     }
     private fun onChangePetNameText(newText: String) {
@@ -111,7 +108,7 @@ class PetViewModel @Inject constructor(
                     breed = currentState.breed,
                     name = currentState.petName,
                     gender = currentState.gender.type,
-                    thumbnailUrl = "",
+                    thumbnailUrl = currentState.profileThumbnail.toString(),
                     memo = currentState.memo,
                     attributes = currentState.chipTags.filter { it.isSelected.value }.map { it.label }
                 )

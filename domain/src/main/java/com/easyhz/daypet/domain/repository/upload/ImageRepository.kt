@@ -1,6 +1,6 @@
 package com.easyhz.daypet.domain.repository.upload
 
 
-interface MemoryImageRepository {
+interface ImageRepository {
     suspend fun getTakePictureUri(): Result<String>
 }
