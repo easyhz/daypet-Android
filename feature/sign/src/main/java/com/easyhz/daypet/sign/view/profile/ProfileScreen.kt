@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -99,6 +100,7 @@ fun ProfileScreen(
                         type = ProfileImageType.User,
                         modifier = Modifier
                             .padding(24.dp)
+                            .size(120.dp)
                             .align(Alignment.CenterHorizontally)
                     ) {
                         viewModel.postIntent(AuthIntent.ClickProfile)

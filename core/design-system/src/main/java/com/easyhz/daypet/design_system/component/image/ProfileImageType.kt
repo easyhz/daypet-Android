@@ -56,7 +56,6 @@ fun ProfileImage(
         if (imageUri == Uri.EMPTY) {
             Image(
                 modifier = Modifier
-                    .size(148.dp)
                     .align(Alignment.Center),
                 painter = painterResource(id = painterId),
                 contentDescription = "profile"

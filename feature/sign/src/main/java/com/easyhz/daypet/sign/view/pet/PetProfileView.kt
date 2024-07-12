@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ internal fun PetProfileView(
                 type = ProfileImageType.Pet,
                 modifier = Modifier
                     .padding(24.dp)
+                    .size(120.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
                 viewModel.postIntent(PetIntent.ClickProfile)
