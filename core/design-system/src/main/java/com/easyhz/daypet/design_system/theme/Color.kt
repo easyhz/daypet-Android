@@ -40,6 +40,9 @@ val ImageFadeBackgroundColor = Color(0xFF000000).copy(0.1f)
 val ErrorColor = Color(0xFFC97070)
 
 @Stable
+val Red = Color(0xFFFF3B30)
+
+@Stable
 val GoogleContainerColor = Color(0xFFFFFFFF)
 
 @Stable
