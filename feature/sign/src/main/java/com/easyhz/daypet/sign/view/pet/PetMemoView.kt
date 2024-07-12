@@ -45,7 +45,6 @@ internal fun PetMemoView(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusRequester = remember { FocusRequester() }
-    val keyboardController = LocalSoftwareKeyboardController.current
     val scrollState = rememberScrollState()
 
     Box(modifier = modifier
@@ -58,7 +57,7 @@ internal fun PetMemoView(
                 .imePadding()
                 .padding(bottom = 92.dp)
                 .fillMaxHeight()
-                .noRippleClickable { viewModel.postIntent(PetIntent.ClickField) },
+                .noRippleClickable { viewModel.postIntent(PetIntent.ClickField(focusRequester)) },
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Text(
@@ -81,7 +80,7 @@ internal fun PetMemoView(
                             viewModel.postIntent(PetIntent.FocusMemoField(focusState.isFocused))
                         },
                     memo = uiState.memo,
-                    onValueChange = { viewModel.postIntent(PetIntent.ChangeMemoText(it)) },
+                    onValueChange = { viewModel.postIntent(PetIntent.ChangeMemoText(it, scrollState)) },
                 )
             }
         }
@@ -95,22 +94,6 @@ internal fun PetMemoView(
             containerColor = Primary
         ) {
             viewModel.postIntent(PetIntent.ClickNextButton)
-        }
-    }
-
-
-    viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
-        when(sideEffect) {
-            is PetSideEffect.ScrollToBottom -> {
-                scrollState.animateScrollTo(scrollState.maxValue)
-            }
-            is PetSideEffect.RequestFocus -> {
-                focusRequester.requestFocus()
-            }
-            is PetSideEffect.OpenKeyboard -> {
-                keyboardController?.show()
-            }
-            else -> { }
         }
     }
 }

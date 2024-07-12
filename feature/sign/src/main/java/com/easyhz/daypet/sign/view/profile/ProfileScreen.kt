@@ -1,5 +1,6 @@
 package com.easyhz.daypet.sign.view.profile
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -87,6 +88,7 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     ProfileImage(
+                        imageUri = Uri.EMPTY,
                         type = ProfileImageType.User,
                         modifier = Modifier
                             .padding(24.dp)

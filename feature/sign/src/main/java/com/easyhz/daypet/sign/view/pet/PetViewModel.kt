@@ -1,5 +1,8 @@
 package com.easyhz.daypet.sign.view.pet
 
+import android.net.Uri
+import androidx.compose.foundation.ScrollState
+import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.common.error.getMessageStringRes
@@ -25,6 +28,8 @@ class PetViewModel @Inject constructor(
     override fun handleIntent(intent: PetIntent) {
         when(intent) {
             is PetIntent.InitPetScreen -> { initPetScreen(intent.groupId) }
+            is PetIntent.ClickProfile -> { onClickProfile() }
+            is PetIntent.PickImage -> { onPickImage(intent.uri) }
             is PetIntent.ChangePetNameText -> { onChangePetNameText(intent.newText) }
             is PetIntent.ClickNextButton -> { onClickNextButton() }
             is PetIntent.ChangeBreedText -> { onChangeBreedText(intent.newText)}
@@ -32,8 +37,8 @@ class PetViewModel @Inject constructor(
             is PetIntent.ChangeGender -> { onChangeGender(intent.gender)}
             is PetIntent.ClickBackButton -> { onClickBackButton() }
             is PetIntent.ClickChipButton -> { onClickChipButton(intent.clickIndex) }
-            is PetIntent.ChangeMemoText -> { onChangeMemoText(intent.newText) }
-            is PetIntent.ClickField -> { onClickField() }
+            is PetIntent.ChangeMemoText -> { onChangeMemoText(intent.newText, intent.scrollState) }
+            is PetIntent.ClickField -> { onClickField(intent.focusRequester) }
             is PetIntent.FocusMemoField -> { onFocusMemoField(intent.isFocused) }
             is PetIntent.ClickDialogPositiveButton -> { onClickDialogPositiveButton() }
             is PetIntent.ClickDialogNegativeButton -> { onClickDialogNegativeButton() }
@@ -43,6 +48,14 @@ class PetViewModel @Inject constructor(
     private fun initPetScreen(groupId: String) {
         if (currentState.progress != 0f) return
         reduce { copy(progress = PetStep.firstProgress, groupId = groupId) }
+    }
+    private fun onClickProfile() {
+        postSideEffect { PetSideEffect.NavigateToGallery }
+    }
+    private fun onPickImage(uri: Uri?) {
+        uri?.let {
+            reduce { copy(profileThumbnail = it) }
+        }
     }
     private fun onChangePetNameText(newText: String) {
         val isButtonEnabled = newText.isNotBlank()
@@ -101,17 +114,17 @@ class PetViewModel @Inject constructor(
         reduce { updateChipTags(clickIndex = clickIndex) }
     }
 
-    private fun onChangeMemoText(newText: String) {
+    private fun onChangeMemoText(newText: String, scrollState: ScrollState) {
         if (newText.length > MEMO_MAX) return
         reduce { copy(memo = newText) }
-        postSideEffect { PetSideEffect.ScrollToBottom }
+        postSideEffect { PetSideEffect.ScrollToBottom(scrollState) }
     }
 
-    private fun onClickField() {
+    private fun onClickField(focusRequester: FocusRequester) {
         if(currentState.isFocusedMemo) {
             postSideEffect { PetSideEffect.OpenKeyboard }
         } else {
-            postSideEffect { PetSideEffect.RequestFocus }
+            postSideEffect { PetSideEffect.RequestFocus(focusRequester) }
         }
     }
     private fun onFocusMemoField(isFocused: Boolean) {

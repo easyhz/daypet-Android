@@ -1,5 +1,6 @@
 package com.easyhz.daypet.sign.contract.pet
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import com.easyhz.daypet.common.base.UiState
 import com.easyhz.daypet.design_system.util.button.ChipState
@@ -15,6 +16,7 @@ data class PetState(
     val progress: Float,
     val step: Step,
     val petName: String,
+    val profileThumbnail: Uri,
     val isButtonEnabled: Boolean,
     val breed: String,
     val birthTime: LocalDate,
@@ -32,6 +34,7 @@ data class PetState(
             progress = 0f,
             step = Step(currentStep = PetStep.PROFILE, previousStep = null),
             petName = "",
+            profileThumbnail= Uri.EMPTY,
             isButtonEnabled = false,
             breed = "",
             birthTime = LocalDate.now(),

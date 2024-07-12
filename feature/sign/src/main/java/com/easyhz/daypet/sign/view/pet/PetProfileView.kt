@@ -30,7 +30,6 @@ internal fun PetProfileView(
     viewModel: PetViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
     Box(
         modifier = modifier.screenHorizonPadding()
     ) {
@@ -38,11 +37,13 @@ internal fun PetProfileView(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             ProfileImage(
+                imageUri = uiState.profileThumbnail,
                 type = ProfileImageType.Pet,
                 modifier = Modifier
                     .padding(24.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
+                viewModel.postIntent(PetIntent.ClickProfile)
             }
 
             BaseTextField(

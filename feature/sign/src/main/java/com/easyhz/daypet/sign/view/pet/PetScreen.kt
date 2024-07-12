@@ -1,6 +1,9 @@
 package com.easyhz.daypet.sign.view.pet
 
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateFloatAsState
@@ -24,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,7 +46,6 @@ import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
 import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
-import com.easyhz.daypet.sign.contract.group.GroupIntent
 import com.easyhz.daypet.sign.contract.pet.PetIntent
 import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.util.PetStep
@@ -60,6 +63,12 @@ fun PetScreen(
         targetValue = uiState.progress,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec, label = "screenProgress"
     )
+    val galleryLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { viewModel.postIntent(PetIntent.PickImage(it)) }
+        )
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
         viewModel.postIntent(PetIntent.InitPetScreen(groupId))
@@ -156,8 +165,18 @@ fun PetScreen(
             is PetSideEffect.NavigateToHome -> {
                 navigateToHome(sideEffect.groupId)
             }
-
-            else -> { }
+            is PetSideEffect.ScrollToBottom -> {
+                sideEffect.scrollState.animateScrollTo(sideEffect.scrollState.maxValue)
+            }
+            is PetSideEffect.RequestFocus -> {
+                sideEffect.focusRequester.requestFocus()
+            }
+            is PetSideEffect.OpenKeyboard -> {
+                keyboardController?.show()
+            }
+            is PetSideEffect.NavigateToGallery -> {
+                galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
         }
     }
 }
