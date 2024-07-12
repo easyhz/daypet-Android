@@ -69,6 +69,7 @@ desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.r
 calendar-compose = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "calendar" }
 glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
