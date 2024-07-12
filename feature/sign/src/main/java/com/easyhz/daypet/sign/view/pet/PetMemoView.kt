@@ -102,7 +102,6 @@ internal fun PetMemoView(
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle { sideEffect ->
         when(sideEffect) {
             is PetSideEffect.ScrollToBottom -> {
-                println("scrollBottom 왜 안되노 ${scrollState.maxValue}")
                 scrollState.animateScrollTo(scrollState.maxValue)
             }
             is PetSideEffect.RequestFocus -> {
