@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.SnackbarHostState
@@ -34,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
+import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.dialog.DayPetDialog
 import com.easyhz.daypet.design_system.component.dialog.DialogButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
@@ -46,10 +48,13 @@ import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.snackbar.SnackBarType
 import com.easyhz.daypet.design_system.util.snackbar.snackBarPadding
 import com.easyhz.daypet.design_system.util.topbar.TopBarType
+import com.easyhz.daypet.sign.component.BottomSheetItem
+import com.easyhz.daypet.sign.component.ImageBottomSheetContent
 import com.easyhz.daypet.sign.contract.pet.PetIntent
 import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.util.PetStep
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PetScreen(
     viewModel: PetViewModel = hiltViewModel(),
@@ -77,7 +82,15 @@ fun PetScreen(
     BackHandler(onBack = {
         viewModel.postIntent(PetIntent.ClickBackButton)
     })
-
+    if (uiState.isShowBottomSheet) {
+        BottomSheet(onDismissRequest = { viewModel.postIntent(PetIntent.HideBottomSheet) }) {
+            ImageBottomSheetContent(
+                items = BottomSheetItem.entries
+            ) {
+                viewModel.postIntent(PetIntent.ClickBottomSheetItem(it))
+            }
+        }
+    }
     DayPetScaffold(
         topBar = {
             TopBar(

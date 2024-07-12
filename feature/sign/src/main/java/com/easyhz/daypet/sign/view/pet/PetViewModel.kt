@@ -9,6 +9,7 @@ import com.easyhz.daypet.common.error.getMessageStringRes
 import com.easyhz.daypet.domain.model.member.Pet
 import com.easyhz.daypet.domain.param.member.PetInsertParam
 import com.easyhz.daypet.domain.usecase.member.InsertPetInGroupUseCase
+import com.easyhz.daypet.sign.component.BottomSheetItem
 import com.easyhz.daypet.sign.contract.pet.PetIntent
 import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.contract.pet.PetState
@@ -42,6 +43,8 @@ class PetViewModel @Inject constructor(
             is PetIntent.FocusMemoField -> { onFocusMemoField(intent.isFocused) }
             is PetIntent.ClickDialogPositiveButton -> { onClickDialogPositiveButton() }
             is PetIntent.ClickDialogNegativeButton -> { onClickDialogNegativeButton() }
+            is PetIntent.HideBottomSheet -> { hideBottomSheet() }
+            is PetIntent.ClickBottomSheetItem -> { onClickBottomSheetItem(intent.bottomSheetItem) }
         }
     }
 
@@ -50,11 +53,23 @@ class PetViewModel @Inject constructor(
         reduce { copy(progress = PetStep.firstProgress, groupId = groupId) }
     }
     private fun onClickProfile() {
+        if (currentState.profileThumbnail == Uri.EMPTY) {
+            navigateToGallery()
+        } else {
+            showBottomSheet()
+        }
+    }
+
+    private fun navigateToGallery() {
         postSideEffect { PetSideEffect.NavigateToGallery }
     }
+
     private fun onPickImage(uri: Uri?) {
         uri?.let {
             reduce { copy(profileThumbnail = it) }
+            if (currentState.isShowBottomSheet) {
+                hideBottomSheet()
+            }
         }
     }
     private fun onChangePetNameText(newText: String) {
@@ -139,5 +154,26 @@ class PetViewModel @Inject constructor(
     private fun onClickDialogNegativeButton() {
         reduce { copy(isOpenPetDialog = false) }
         postSideEffect { PetSideEffect.NavigateToHome(currentState.groupId) }
+    }
+
+    private fun hideBottomSheet() {
+        reduce { copy(isShowBottomSheet = false) }
+    }
+
+    private fun showBottomSheet() {
+        reduce { copy(isShowBottomSheet = true) }
+    }
+    private fun initProfileThumbnailUri() {
+        reduce { copy(profileThumbnail = Uri.EMPTY) }
+    }
+
+    private fun onClickBottomSheetItem(bottomSheetItem: BottomSheetItem) {
+        when(bottomSheetItem) {
+            BottomSheetItem.SELECT -> { navigateToGallery() }
+            BottomSheetItem.DELETE -> {
+                initProfileThumbnailUri()
+                hideBottomSheet()
+            }
+        }
     }
 }

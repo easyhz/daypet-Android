@@ -25,6 +25,7 @@ data class PetState(
     val memo: String,
     val isFocusedMemo: Boolean,
     val isOpenPetDialog: Boolean,
+    val isShowBottomSheet: Boolean,
 ): UiState() {
     companion object {
         const val MEMO_MAX = 500
@@ -42,7 +43,8 @@ data class PetState(
             chipTags = chipTags.toChipState(),
             memo = "",
             isFocusedMemo = false,
-            isOpenPetDialog = false
+            isOpenPetDialog = false,
+            isShowBottomSheet = false
         )
     }
     fun PetState.updateProgressAndStep(currentStep: PetStep, progress: Float): PetState {

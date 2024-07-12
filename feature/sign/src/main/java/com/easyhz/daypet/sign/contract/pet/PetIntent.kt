@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.compose.foundation.ScrollState
 import androidx.compose.ui.focus.FocusRequester
 import com.easyhz.daypet.common.base.UiIntent
+import com.easyhz.daypet.sign.component.BottomSheetItem
 import com.easyhz.daypet.sign.view.pet.Gender
 import java.time.LocalDate
 
@@ -23,4 +24,6 @@ sealed class PetIntent: UiIntent() {
     data class FocusMemoField(val isFocused: Boolean) : PetIntent()
     data object ClickDialogPositiveButton: PetIntent()
     data object ClickDialogNegativeButton: PetIntent()
+    data object HideBottomSheet: PetIntent()
+    data class ClickBottomSheetItem(val bottomSheetItem: BottomSheetItem): PetIntent()
 }
