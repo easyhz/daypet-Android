@@ -128,7 +128,9 @@ fun PetScreen(
                 trackColor = MainBackground
             )
             AnimatedContent(
-                modifier = Modifier.fillMaxSize().padding(it),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
                 targetState = uiState.step.currentStep,
                 transitionSpec = {
                     if (uiState.step.currentStep.ordinal >= (uiState.step.previousStep?.ordinal
@@ -159,7 +161,7 @@ fun PetScreen(
                     contentColor = TextColor,
                     containerColor = ButtonShapeColor,
                     onClick = {
-                        viewModel.postIntent(PetIntent.ClickDialogPositiveButton)
+                        viewModel.postIntent(PetIntent.ClickDialogNegativeButton)
                     }
                 ),
                 positiveButton = DialogButton(
@@ -167,7 +169,7 @@ fun PetScreen(
                     contentColor = MainBackground,
                     containerColor = Primary,
                     onClick = {
-                        viewModel.postIntent(PetIntent.ClickDialogNegativeButton)
+                        viewModel.postIntent(PetIntent.ClickDialogPositiveButton)
                     }
                 ),
             )
