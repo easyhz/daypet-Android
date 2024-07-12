@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.theme.DimColor
-import com.easyhz.daypet.design_system.theme.MainBackground
 
 /**
  * Dim 효과 주는 컴포저블
@@ -30,8 +29,8 @@ import com.easyhz.daypet.design_system.theme.MainBackground
 fun DimScreenProvider(
     isDim: Boolean,
     dimColor: Color = DimColor,
-    statusBarColor: Color? = MainBackground,
-    navigationBarColor: Color? = MainBackground,
+    statusBarColor: Color? = Color.Transparent,
+    navigationBarColor: Color? = Color.Transparent,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {
