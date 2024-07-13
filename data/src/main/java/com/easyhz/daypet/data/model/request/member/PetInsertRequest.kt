@@ -10,6 +10,7 @@ data class PetInsertRequest(
 )
 
 data class PetInsert(
+    val id: String,
     val birthTime: Timestamp,
     val breed: String,
     val name: String,

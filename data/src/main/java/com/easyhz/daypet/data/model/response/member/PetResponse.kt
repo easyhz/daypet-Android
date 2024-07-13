@@ -4,6 +4,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.PropertyName
 
 data class PetResponse(
+    @PropertyName("id")
+    val id: String = "",
     @PropertyName("birthTime")
     val birthTime: Timestamp = Timestamp.now(),
     @PropertyName("breed")

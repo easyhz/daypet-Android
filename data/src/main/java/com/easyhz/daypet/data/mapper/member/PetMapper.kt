@@ -10,6 +10,7 @@ import com.easyhz.daypet.domain.model.member.Pet
 import com.easyhz.daypet.domain.param.member.PetInsertParam
 
 fun PetResponse.toModel(): Pet = Pet(
+    id = this.id,
     birthTime = this.birthTime.toLocalDate(),
     breed = this.breed,
     name = this.name,
@@ -34,6 +35,7 @@ fun PetInsertParam.toRequest(): PetInsertRequest = PetInsertRequest(
 )
 
 fun Pet.toRequest(): PetInsert = PetInsert(
+    id = this.id,
     birthTime = this.birthTime.toTimeStamp(),
     breed = this.breed,
     name = this.name,

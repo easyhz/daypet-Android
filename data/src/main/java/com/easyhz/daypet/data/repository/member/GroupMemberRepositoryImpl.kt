@@ -11,7 +11,8 @@ import com.easyhz.daypet.data.mapper.member.GroupMemberMapper
 import com.easyhz.daypet.data.mapper.member.toEntity
 import com.easyhz.daypet.data.mapper.member.toPairEntity
 import com.easyhz.daypet.data.mapper.member.toRequest
-import com.easyhz.daypet.data.util.Storage
+import com.easyhz.daypet.data.util.Storage.GROUPS
+import com.easyhz.daypet.data.util.Storage.PETS
 import com.easyhz.daypet.database.datasource.member.GroupMemberDatabaseDataSource
 import com.easyhz.daypet.domain.model.member.GroupMember
 import com.easyhz.daypet.domain.param.member.GroupInfoParam
@@ -23,8 +24,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
-import java.util.Locale
-import java.util.UUID
 import javax.inject.Inject
 
 class GroupMemberRepositoryImpl @Inject constructor(
@@ -85,9 +84,7 @@ class GroupMemberRepositoryImpl @Inject constructor(
             val updatedPetList = param.petList.map { pet ->
                 pet.thumbnailUrl.toUri().takeIf { it != Uri.EMPTY }?.let { thumbnailUri ->
                     pet.copy(thumbnailUrl = imageDataSource
-                        .uploadImage(Storage.PETS, thumbnailUri,
-                            UUID.randomUUID().toString().uppercase(Locale.getDefault())
-                        )
+                        .uploadImage("$GROUPS/${param.groupId}/$PETS", thumbnailUri, pet.id)
                         .getOrThrow())
                 } ?: pet
             }

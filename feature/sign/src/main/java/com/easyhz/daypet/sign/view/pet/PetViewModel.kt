@@ -18,6 +18,7 @@ import com.easyhz.daypet.sign.util.PetStep
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,6 +110,7 @@ class PetViewModel @Inject constructor(
             groupId = currentState.groupId,
             petList = listOf(
                 Pet(
+                    id = UUID.randomUUID().toString().uppercase(),
                     birthTime = currentState.birthTime,
                     breed = currentState.breed,
                     name = currentState.petName,
