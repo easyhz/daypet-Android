@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DayPet.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FF6A926F</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="windowSplashScreenAnimationDuration">100</item>
+        <item name="postSplashScreenTheme">@style/Theme.DayPet</item>
+    </style>
+</resources>

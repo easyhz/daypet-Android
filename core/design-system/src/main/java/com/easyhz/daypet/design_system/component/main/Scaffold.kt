@@ -2,6 +2,8 @@ package com.easyhz.daypet.design_system.component.main
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -24,7 +26,7 @@ fun DayPetScaffold(
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.statusBarsPadding().navigationBarsPadding(),
         topBar = topBar,
         bottomBar = bottomBar,
         snackbarHost = snackbarHost,

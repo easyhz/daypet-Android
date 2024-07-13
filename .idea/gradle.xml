@@ -35,6 +35,7 @@
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/memory-detail" />
             <option value="$PROJECT_DIR$/feature/sign" />
+            <option value="$PROJECT_DIR$/feature/splash" />
             <option value="$PROJECT_DIR$/feature/upload-memory" />
           </set>
         </option>

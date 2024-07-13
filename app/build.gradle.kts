@@ -53,6 +53,7 @@ dependencies {
     implementation(projects.feature.memoryDetail)
     implementation(projects.feature.uploadMemory)
     implementation(projects.feature.sign)
+    implementation(projects.feature.splash)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -71,4 +72,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }
