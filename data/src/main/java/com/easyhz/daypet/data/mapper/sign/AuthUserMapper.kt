@@ -27,5 +27,6 @@ fun UserInfoResponse.toModel(): UserInfo = UserInfo(
     commentCount = this.commentCount,
     groupId = this.groupId,
     uploadedMemoryCount = this.uploadedMemoryCount,
+    thumbnailUrl = this.thumbnailUrl,
     visitCount = this.visitCount
 )

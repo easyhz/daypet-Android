@@ -10,4 +10,6 @@ interface AuthDataSource {
     suspend fun fetchUserInfo(uid: String): Result<UserInfoResponse>
     suspend fun hasUserInfo(uid: String): Result<Boolean>
     suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit>
+    fun isLogin(): Boolean
+    fun getUserId(): String?
 }

@@ -18,6 +18,9 @@ class AuthDataSourceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : AuthDataSource {
+    override fun isLogin(): Boolean = firebaseAuth.currentUser != null
+    override fun getUserId(): String? = firebaseAuth.currentUser?.uid
+
     override suspend fun signInWithGoogle(idToken: String): Result<FirebaseUser> =
         try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)

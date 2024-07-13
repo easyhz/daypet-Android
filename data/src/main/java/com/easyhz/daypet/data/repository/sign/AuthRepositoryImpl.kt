@@ -51,7 +51,7 @@ class AuthRepositoryImpl @Inject constructor(
             authDataSource.fetchUserInfo(uid).getOrThrow()
         }.mapCatching { userInfo ->
             when {
-                userInfo.groupId.isBlank() -> LoginStep.NoGroup(userInfo.name)
+                userInfo.groupId.isBlank() -> LoginStep.NoGroup(userInfo.name, uid)
                 else -> LoginStep.ExistUser(userInfo.groupId)
             }
         }.recoverCatching { error ->
@@ -65,4 +65,8 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit> =
         authDataSource.updateUserGroupId(userId, groupId)
+
+    override fun isLogin(): Result<Boolean> = runCatching{ authDataSource.isLogin() }
+
+    override fun getUserId(): Result<String?> = runCatching{ authDataSource.getUserId() }
 }
