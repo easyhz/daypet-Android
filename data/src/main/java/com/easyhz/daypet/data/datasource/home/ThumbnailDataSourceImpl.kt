@@ -7,7 +7,7 @@ import com.easyhz.daypet.data.util.Fields.GROUP_ID
 import com.easyhz.daypet.data.util.Fields.MONTH_DATE
 import com.easyhz.daypet.data.util.collectionHandler
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query.Direction.DESCENDING
+import com.google.firebase.firestore.Query.Direction.ASCENDING
 import javax.inject.Inject
 
 class ThumbnailDataSourceImpl @Inject constructor(
@@ -18,7 +18,7 @@ class ThumbnailDataSourceImpl @Inject constructor(
             .whereEqualTo(GROUP_ID, data.groupId)
             .whereGreaterThan(MONTH_DATE, data.startDate)
             .whereLessThan(MONTH_DATE, data.endDate)
-            .orderBy(MONTH_DATE, DESCENDING)
+            .orderBy(MONTH_DATE, ASCENDING)
             .get()
     }
 }
