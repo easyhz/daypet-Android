@@ -14,6 +14,8 @@ data class UserInfoResponse(
     val groupId: String = "",
     @PropertyName("uploadedMemoryCount")
     val uploadedMemoryCount: Int = 0,
+    @PropertyName("thumbnailURL")
+    val thumbnailUrl: String = "",
     @PropertyName("visitCount")
     val visitCount: Int = 1
 )
