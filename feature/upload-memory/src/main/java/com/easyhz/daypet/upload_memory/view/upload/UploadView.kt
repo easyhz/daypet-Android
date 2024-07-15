@@ -26,7 +26,6 @@ import com.easyhz.daypet.upload_memory.UploadMemoryViewModel
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 
 /**
- * TODO: 화면 밖 터치하면 키보드 내리기
  * TODO: 멤버 삭제 추가 로직 -> Bottom Sheet 처리 어디서?
  * TODO: 멤버 파라미터 변경
  * TODO: content FOCUS 될떄 스크롤 처리
