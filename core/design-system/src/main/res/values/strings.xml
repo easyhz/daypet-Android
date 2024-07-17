@@ -54,7 +54,7 @@
     </string>
     <string name="pet_add_dialog_content">나중에 마이페이지에서 추가할 수 있어요.</string>
     <string name="pet_add_dialog_positive">추가</string>
-    <string name="pet_add_dialog_negative">취소</string>
+    <string name="pet_add_dialog_negative">나중에</string>
 
     <string name="title_pet_profile">반려동물 등록</string>
     <string name="pet_info_heading">%1$s에 대해서 알려주세요.</string>
