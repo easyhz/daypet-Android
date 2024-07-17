@@ -16,6 +16,7 @@ import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.button.MainButton
 import com.easyhz.daypet.design_system.component.image.MemberImage
 import com.easyhz.daypet.design_system.component.image.MemberSelectType
+import com.easyhz.daypet.design_system.component.image.MemberType
 import com.easyhz.daypet.design_system.component.main.DayPetRow
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody2
@@ -45,6 +46,7 @@ internal fun UploadMemberView(
                     selectType = MemberSelectType.DELETE,
                     imageUrl = it.thumbnail,
                     name = it.name,
+                    memberType = MemberType.valueOf(it.memberType),
                     isChecked = true
                 ) {
                     println("it > $it")
@@ -55,6 +57,7 @@ internal fun UploadMemberView(
                     selectType = MemberSelectType.ADD,
                     imageUrl = "",
                     name = "",
+                    memberType = MemberType.NONE,
                     onClick = onAddClick
                 )
             }
@@ -85,6 +88,7 @@ internal fun MemberSelectView(
                     selectType = MemberSelectType.CHECK,
                     imageUrl = it.thumbnailUrl,
                     name = it.name,
+                    memberType = MemberType.PET,
                     isChecked = false
                 ) {
                     println("it > $it")
@@ -97,6 +101,7 @@ internal fun MemberSelectView(
                     selectType = MemberSelectType.CHECK,
                     imageUrl = it.thumbnailUrl,
                     name = it.name,
+                    memberType = MemberType.PERSON,
                     isChecked = false
                 ) {
                     println("it > $it")

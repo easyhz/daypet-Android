@@ -92,26 +92,9 @@ fun UploadMemoryScreen(
             is UploadSideEffect.ScrollToBottom -> {
                 scrollState.animateScrollTo(scrollState.maxValue)
             }
-            is UploadSideEffect.ChangeFocus -> {
-                //FIXME: 고치기
-//                handleChangeFocus(sideEffect.focusType, scrollState)
-            }
         }
     }
 }
-
-//private suspend fun handleChangeFocus(focusType: FocusType, scrollState: ScrollState) {
-//    when(focusType) {
-//        FocusType.NONE -> { println("none")
-//        }
-//        FocusType.TITLE -> { println("title") }
-//        FocusType.CONTENT -> {
-////            println("maxVlaue > ${scrollState.maxValue}")
-////            scrollState.animateScrollTo(scrollState.maxValue)
-//        }
-//    }
-//
-//}
 
 
 @Preview(showBackground = true)

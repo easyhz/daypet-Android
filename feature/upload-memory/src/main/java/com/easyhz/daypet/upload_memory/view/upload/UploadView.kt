@@ -10,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,7 +54,6 @@ internal fun UploadView(
                 .padding(top = 8.dp)
                 .screenHorizonPadding(),
             text = uiState.title,
-            onChangeFocus = { viewModel.postIntent(UploadIntent.ChangeTitleFocus(it)) }
         ) {
             viewModel.postIntent(UploadIntent.ChangeTitleText(it))
         }
@@ -80,7 +78,6 @@ internal fun UploadView(
         UploadContent(
             modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 12.dp).screenHorizonPadding(),
             text = uiState.content,
-            onChangeFocus = { viewModel.postIntent(UploadIntent.ChangeContentFocus(it)) }
         ) {
             viewModel.postIntent(UploadIntent.ChangeContentText(it))
         }
@@ -91,11 +88,10 @@ internal fun UploadView(
 private fun UploadTitle(
     modifier: Modifier = Modifier,
     text: String,
-    onChangeFocus: (Boolean) -> Unit,
     onValueChange: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.onFocusChanged { onChangeFocus(it.isFocused) },
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         BaseTextField(
@@ -113,11 +109,10 @@ private fun UploadTitle(
 private fun UploadContent(
     modifier: Modifier,
     text: String,
-    onChangeFocus: (Boolean) -> Unit,
     onValueChange: (String) -> Unit
 ) {
     ContentTextField(
-        modifier = modifier.onFocusChanged { onChangeFocus(it.isFocused) },
+        modifier = modifier,
         value = text,
         onValueChange = onValueChange,
         title = stringResource(id = R.string.upload_content),

@@ -6,7 +6,6 @@ import com.easyhz.daypet.common.base.BaseViewModel
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.usecase.member.FetchGroupMemberUseCase
 import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUriUseCase
-import com.easyhz.daypet.upload_memory.contract.FocusType
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
 import com.easyhz.daypet.upload_memory.contract.UploadState
@@ -36,8 +35,6 @@ class UploadMemoryViewModel @Inject constructor(
             is UploadIntent.DeleteImage -> { deleteImage(intent.image)}
             is UploadIntent.ShowMemberBottomSheet -> { showMemberBottomSheet() }
             is UploadIntent.HideMemberBottomSheet -> { hideMemberBottomSheet() }
-            is UploadIntent.ChangeTitleFocus -> { changeTitleFocus(intent.isFocused) }
-            is UploadIntent.ChangeContentFocus -> { changeContentFocus(intent.isFocused) }
         }
     }
 
@@ -88,7 +85,7 @@ class UploadMemoryViewModel @Inject constructor(
         reduce { deleteImage(image = image) }
     }
     private fun showMemberBottomSheet() = viewModelScope.launch {
-        val param = GroupMemberParam("groupId") // FIXME
+        val param = GroupMemberParam("ysw5f3wDi7Zfm7bcTnUo") // FIXME
         fetchGroupMemberUseCase.invoke(param).onSuccess {
             reduce { copy(pets = it.pets, users = it.groupUsers, isShowMemberBottomSheet = true) }
         }.onFailure { println("fail > > $it") }
@@ -96,18 +93,6 @@ class UploadMemoryViewModel @Inject constructor(
 
     private fun hideMemberBottomSheet() {
         reduce { copy(isShowMemberBottomSheet = false) }
-    }
-
-    private fun changeTitleFocus(isFocused: Boolean) {
-        if (isFocused) {
-            postSideEffect { UploadSideEffect.ChangeFocus(FocusType.TITLE) }
-        }
-    }
-
-    private fun changeContentFocus(isFocused: Boolean) {
-        if (isFocused) {
-            postSideEffect { UploadSideEffect.ChangeFocus(FocusType.CONTENT) }
-        }
     }
 
 }

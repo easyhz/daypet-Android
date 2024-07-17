@@ -3,6 +3,7 @@ package com.easyhz.daypet.sign.contract.group
 import com.easyhz.daypet.common.base.UiIntent
 
 sealed class GroupIntent: UiIntent() {
+    data class InitScreen(val ownerId: String): GroupIntent()
     data class ChangeGroupNameText(val newText: String): GroupIntent()
     data class ClickCreateGroup(val ownerId: String): GroupIntent()
     data object ClickEnterGroup: GroupIntent()

@@ -15,8 +15,6 @@ sealed class UploadIntent: UiIntent() {
     data class PickImages(val images: List<Uri>) : UploadIntent()
     data class TakePicture(val isUsed: Boolean) : UploadIntent()
     data class DeleteImage(val image: Uri) : UploadIntent()
-    data class ChangeTitleFocus(val isFocused: Boolean) : UploadIntent()
-    data class ChangeContentFocus(val isFocused: Boolean) : UploadIntent()
     data object ShowMemberBottomSheet: UploadIntent()
     data object HideMemberBottomSheet: UploadIntent()
 }

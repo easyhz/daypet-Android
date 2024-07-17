@@ -70,6 +70,10 @@ fun GroupScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.postIntent(GroupIntent.InitScreen(ownerId))
+    }
+
     DayPetScaffold(
         topBar = {
             TopBar(
