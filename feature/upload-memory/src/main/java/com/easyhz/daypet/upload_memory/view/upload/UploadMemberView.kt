@@ -20,15 +20,14 @@ import com.easyhz.daypet.design_system.component.image.MemberType
 import com.easyhz.daypet.design_system.component.main.DayPetRow
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody2
-import com.easyhz.daypet.domain.model.member.GroupUser
-import com.easyhz.daypet.domain.model.member.Pet
-import com.easyhz.daypet.domain.model.upload.Member
+import com.easyhz.daypet.upload_memory.contract.MemberState
 
 @Composable
 internal fun UploadMemberView(
     modifier: Modifier = Modifier,
-    members: List<Member>,
-    onAddClick: () -> Unit
+    members: List<MemberState>,
+    onAddClick: () -> Unit,
+    onDeleteClick: (MemberState) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -44,12 +43,12 @@ internal fun UploadMemberView(
             items(members) {
                 MemberImage(
                     selectType = MemberSelectType.DELETE,
-                    imageUrl = it.thumbnail,
+                    imageUrl = it.thumbnailUrl,
                     name = it.name,
-                    memberType = MemberType.valueOf(it.memberType),
+                    memberType = it.memberType,
                     isChecked = true
                 ) {
-                    println("it > $it")
+                    onDeleteClick(it)
                 }
             }
             item {
@@ -68,8 +67,9 @@ internal fun UploadMemberView(
 @Composable
 internal fun MemberSelectView(
     modifier: Modifier = Modifier,
-    pets: List<Pet>,
-    members: List<GroupUser>,
+    members: List<MemberState>,
+    onSelect: (MemberState) -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -83,37 +83,36 @@ internal fun MemberSelectView(
         )
 
         DayPetRow {
-            items(pets) {
+            items(members.filter { it.memberType == MemberType.PET }) {
                 MemberImage(
                     selectType = MemberSelectType.CHECK,
                     imageUrl = it.thumbnailUrl,
                     name = it.name,
                     memberType = MemberType.PET,
-                    isChecked = false
+                    isChecked = it.isChecked.value
                 ) {
-                    println("it > $it")
+                    onSelect(it)
                 }
             }
         }
         DayPetRow {
-            items(members) {
+            items(members.filter { it.memberType == MemberType.PERSON }) {
                 MemberImage(
                     selectType = MemberSelectType.CHECK,
                     imageUrl = it.thumbnailUrl,
                     name = it.name,
                     memberType = MemberType.PERSON,
-                    isChecked = false
+                    isChecked = it.isChecked.value
                 ) {
-                    println("it > $it")
+                    onSelect(it)
                 }
             }
         }
         Spacer(modifier = Modifier.height(12.dp))
         MainButton(
             text = stringResource(id = R.string.button_select_success),
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) {
-
-        }
+            modifier = Modifier.padding(horizontal = 20.dp),
+            onClick = onClick
+        )
     }
 }

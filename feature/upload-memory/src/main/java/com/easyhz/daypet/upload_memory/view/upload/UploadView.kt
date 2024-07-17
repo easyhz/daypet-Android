@@ -24,11 +24,7 @@ import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.upload_memory.UploadMemoryViewModel
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 
-/**
- * TODO: 멤버 삭제 추가 로직 -> Bottom Sheet 처리 어디서?
- * TODO: 멤버 파라미터 변경
- * TODO: content FOCUS 될떄 스크롤 처리
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UploadView(
@@ -40,9 +36,11 @@ internal fun UploadView(
     if (uiState.isShowMemberBottomSheet) {
         BottomSheet(onDismissRequest = { viewModel.postIntent(UploadIntent.HideMemberBottomSheet) }) {
             MemberSelectView(
-                pets = uiState.pets,
-                members = uiState.users
-            )
+                members = uiState.members,
+                onSelect = { viewModel.postIntent(UploadIntent.SelectMember(it)) }
+            ) {
+                viewModel.postIntent(UploadIntent.ClickSelectedSuccessButton)
+            }
         }
     }
     Column(
@@ -74,7 +72,9 @@ internal fun UploadView(
             modifier = Modifier.padding(top = 4.dp),
             members = uiState.selectedMembers,
             onAddClick = { viewModel.postIntent(UploadIntent.ShowMemberBottomSheet)}
-        )
+        ) {
+            viewModel.postIntent(UploadIntent.DeleteSelectedMember(it))
+        }
         UploadContent(
             modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 12.dp).screenHorizonPadding(),
             text = uiState.content,

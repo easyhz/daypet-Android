@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 sealed class UploadIntent: UiIntent() {
+    data object InitScreen : UploadIntent()
     data object ClickToGallery : UploadIntent()
     data object ClickToCamera : UploadIntent()
     data class ChangeTitleText(val newText: String) : UploadIntent()
@@ -17,4 +18,7 @@ sealed class UploadIntent: UiIntent() {
     data class DeleteImage(val image: Uri) : UploadIntent()
     data object ShowMemberBottomSheet: UploadIntent()
     data object HideMemberBottomSheet: UploadIntent()
+    data class SelectMember(val member: MemberState): UploadIntent()
+    data object ClickSelectedSuccessButton: UploadIntent()
+    data class DeleteSelectedMember(val member: MemberState): UploadIntent()
 }

@@ -1,10 +1,13 @@
 package com.easyhz.daypet.upload_memory.contract
 
 import android.net.Uri
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.easyhz.daypet.common.base.UiState
+import com.easyhz.daypet.design_system.component.image.MemberType
+import com.easyhz.daypet.domain.model.member.GroupMember
 import com.easyhz.daypet.domain.model.member.GroupUser
 import com.easyhz.daypet.domain.model.member.Pet
-import com.easyhz.daypet.domain.model.upload.Member
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -14,9 +17,8 @@ data class UploadState(
     val date: LocalDate,
     val time: LocalTime,
     val selectedImages: List<Uri>,
-    val selectedMembers: List<Member>,
-    val pets: List<Pet>,
-    val users: List<GroupUser>,
+    val selectedMembers: List<MemberState>,
+    val members: List<MemberState>,
     val isShowMemberBottomSheet: Boolean,
     val takePictureUri: String,
 ): UiState() {
@@ -28,8 +30,7 @@ data class UploadState(
             time = LocalTime.now(),
             selectedImages = emptyList(),
             selectedMembers = emptyList(),
-            pets = emptyList(),
-            users = emptyList(),
+            members = emptyList(),
             isShowMemberBottomSheet = false,
             takePictureUri = "",
         )
@@ -38,7 +39,37 @@ data class UploadState(
     fun UploadState.updateImages(newImages: List<Uri>): UploadState =
         this.copy(selectedImages = this.selectedImages + newImages)
 
-    fun UploadState.deleteImage(image: Uri): UploadState {
-        return this.copy(selectedImages = this.selectedImages.filter { it != image })
-    }
+    fun UploadState.deleteImage(image: Uri): UploadState =
+        this.copy(selectedImages = this.selectedImages.filter { it != image })
+
+    fun UploadState.deleteSelectedMember(member: MemberState): UploadState =
+        this.copy(selectedMembers = this.selectedMembers.filter { it != member })
 }
+
+data class MemberState(
+    val id: String,
+    val memberType: MemberType,
+    val thumbnailUrl: String,
+    val name: String,
+    val isChecked: MutableState<Boolean>
+)
+
+internal fun GroupMember.toMember(): List<MemberState> {
+    return (this.pets.map { it.toMemberState() } + this.groupUsers.map { it.toMemberState() }).toList()
+}
+
+fun Pet.toMemberState() = MemberState(
+    id = this.id,
+    memberType = MemberType.PET,
+    thumbnailUrl = this.thumbnailUrl,
+    name = this.name,
+    isChecked = mutableStateOf(false)
+)
+
+fun GroupUser.toMemberState() = MemberState(
+    id = this.name,
+    memberType = MemberType.PERSON,
+    thumbnailUrl = this.thumbnailUrl,
+    name = this.name,
+    isChecked = mutableStateOf(false)
+)

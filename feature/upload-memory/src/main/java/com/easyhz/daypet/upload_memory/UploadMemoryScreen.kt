@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -42,7 +43,9 @@ fun UploadMemoryScreen(
         )
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
-
+    LaunchedEffect(Unit) {
+        viewModel.postIntent(UploadIntent.InitScreen)
+    }
     DayPetScaffold(
         modifier = Modifier.noRippleClickable { focusManager.clearFocus() },
         topBar = {
