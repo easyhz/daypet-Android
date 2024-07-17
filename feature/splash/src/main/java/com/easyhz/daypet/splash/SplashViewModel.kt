@@ -41,11 +41,10 @@ class SplashViewModel @Inject constructor(
     private fun fetchUserInfo(groupId: String, userId: String) = viewModelScope.launch {
         runCatching {
             val param = GroupMemberParam(groupId)
-            UserManager.groupId = groupId
-            UserManager.userId = userId
-            UserManager.groupInfo = fetchGroupMemberUseCase.invoke(param).getOrNull()
+            val groupInfo = fetchGroupMemberUseCase.invoke(param).getOrThrow()
+            UserManager.setUserInfo(userId, groupId, groupInfo)
         }.onSuccess {
-            postSideEffect { SplashSideEffect.NavigateToHome(groupId) }
+            postSideEffect { SplashSideEffect.NavigateToHome(groupId, userId) }
         }.onFailure {
             postSideEffect { SplashSideEffect.NavigateToLogin }
         }

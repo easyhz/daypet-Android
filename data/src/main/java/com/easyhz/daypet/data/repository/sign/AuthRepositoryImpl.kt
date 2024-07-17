@@ -69,4 +69,6 @@ class AuthRepositoryImpl @Inject constructor(
     override fun isLogin(): Result<Boolean> = runCatching{ authDataSource.isLogin() }
 
     override fun getUserId(): Result<String?> = runCatching{ authDataSource.getUserId() }
+
+    override fun logOut(): Result<Unit> = runCatching{ authDataSource.logout() }
 }

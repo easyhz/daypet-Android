@@ -2,10 +2,13 @@ package com.easyhz.daypet.home
 
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.domain.manager.UserManager
 import com.easyhz.daypet.domain.param.home.ThumbnailParam
+import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.param.memory.MemoryParam
 import com.easyhz.daypet.domain.param.todo.TodoParam
 import com.easyhz.daypet.domain.usecase.home.FetchThumbnailUseCase
+import com.easyhz.daypet.domain.usecase.member.FetchGroupMemberUseCase
 import com.easyhz.daypet.domain.usecase.memory.FetchMemoriesUseCase
 import com.easyhz.daypet.domain.usecase.todo.FetchTodosUseCase
 import com.easyhz.daypet.home.contract.HomeIntent
@@ -22,13 +25,14 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val fetchMemoriesUseCase: FetchMemoriesUseCase,
     private val fetchTodosUseCase: FetchTodosUseCase,
-    private val fetchThumbnailUseCase: FetchThumbnailUseCase
+    private val fetchThumbnailUseCase: FetchThumbnailUseCase,
+    private val fetchGroupMemberUseCase: FetchGroupMemberUseCase,
 ) : BaseViewModel<HomeState, HomeIntent, HomeSideEffect>(
     initialState = HomeState.init()
 ) {
     override fun handleIntent(intent: HomeIntent) {
         when (intent) {
-            is HomeIntent.InitScreen -> { initScreen(intent.groupId) }
+            is HomeIntent.InitScreen -> { initScreen(intent.groupId, intent.userId) }
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
             is HomeIntent.ChangeDateOnMonth -> { changeDateOnMonth(intent.clickedDay) }
             is HomeIntent.ClickMemory -> {}
@@ -46,12 +50,26 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun initScreen(groupId: String) {
-        reduce { copy(groupId = groupId) }
+    private fun initScreen(groupId: String, userId: String) {
+        reduce { copy(groupId = groupId, userId = userId) }
+        fetchUserInfo()
         fetchMemoires(uiState.value.selection)
         fetchTodos(uiState.value.selection)
         fetchThumbnail(uiState.value.selection)
     }
+
+    private fun fetchUserInfo() = viewModelScope.launch {
+        runCatching {
+            val param = GroupMemberParam(currentState.groupId)
+            val groupInfo = fetchGroupMemberUseCase.invoke(param).getOrThrow()
+            UserManager.setUserInfo(currentState.userId, currentState.groupId, groupInfo)
+            UserManager.printInfo()
+        }.onFailure { e ->
+            println("> $e")
+            // TODO Fail 처리 스낵바
+        }
+    }
+
     private fun fetchMemoires(selection: LocalDate) = viewModelScope.launch {
         val param = MemoryParam(startDate = selection, endDate = selection, groupId = currentState.groupId)
         fetchMemoriesUseCase.invoke(param)

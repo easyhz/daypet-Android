@@ -11,6 +11,7 @@ import com.easyhz.daypet.sign.view.pet.Gender
 import java.time.LocalDate
 
 data class PetState(
+    val userId: String,
     val groupId: String,
     val isLoading: Boolean,
     val progress: Float,
@@ -30,6 +31,7 @@ data class PetState(
     companion object {
         const val MEMO_MAX = 500
         fun init() = PetState(
+            userId = "",
             groupId = "",
             isLoading = false,
             progress = 0f,

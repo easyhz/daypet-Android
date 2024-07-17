@@ -56,7 +56,7 @@ class GroupViewModel @Inject constructor(
 
     private fun onClickDialogPositiveButton() = viewModelScope.launch {
         saveUserInfo().onSuccess {
-            postSideEffect { GroupSideEffect.NavigateToPet(currentState.groupId) }
+            postSideEffect { GroupSideEffect.NavigateToPet(currentState.groupId, currentState.userId) }
         }.also {
             reduce { copy(isOpenPetDialog = false) }
         }
@@ -66,16 +66,15 @@ class GroupViewModel @Inject constructor(
     private fun onClickDialogNegativeButton() = viewModelScope.launch {
         reduce { copy(isOpenPetDialog = false) }
         saveUserInfo().onSuccess {
-            postSideEffect { GroupSideEffect.NavigateToHome(currentState.groupId) }
+            postSideEffect { GroupSideEffect.NavigateToHome(currentState.groupId, currentState.userId) }
         }
     }
 
     private suspend fun saveUserInfo() =
         runCatching {
             val param = GroupMemberParam(currentState.groupId)
-            UserManager.groupId = currentState.groupId
-            UserManager.userId = currentState.userId
-            UserManager.groupInfo = fetchGroupMemberUseCase.invoke(param).getOrNull()
+            val groupInfo = fetchGroupMemberUseCase.invoke(param).getOrThrow()
+            UserManager.setUserInfo(currentState.userId, currentState.groupId, groupInfo)
         }.onFailure { e ->
             postSideEffect { GroupSideEffect.ShowSnackBar(e.getMessageStringRes()) }
         }

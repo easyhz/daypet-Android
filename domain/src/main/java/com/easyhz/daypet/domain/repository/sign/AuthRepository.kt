@@ -13,4 +13,5 @@ interface AuthRepository {
     suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit>
     fun isLogin(): Result<Boolean>
     fun getUserId(): Result<String?>
+    fun logOut(): Result<Unit>
 }

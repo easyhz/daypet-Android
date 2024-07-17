@@ -20,6 +20,7 @@ class AuthDataSourceImpl @Inject constructor(
 ) : AuthDataSource {
     override fun isLogin(): Boolean = firebaseAuth.currentUser != null
     override fun getUserId(): String? = firebaseAuth.currentUser?.uid
+    override fun logout() = firebaseAuth.signOut()
 
     override suspend fun signInWithGoogle(idToken: String): Result<FirebaseUser> =
         try {

@@ -53,6 +53,7 @@ internal fun NavGraphBuilder.signScreen(
         val args = navBackStackEntry.toRoute<Pet>()
         PetScreen(
             groupId = args.groupId,
+            userId = args.userId,
             navigateToHome = navController::navigateToHome,
         )
     }
@@ -68,14 +69,14 @@ internal fun NavController.navigateToGroup(name: String, ownerId: String) {
     }
 }
 
-internal fun NavController.navigateToPet(groupId: String) {
-    navigate(Pet(groupId = groupId)) {
+internal fun NavController.navigateToPet(groupId: String, userId: String) {
+    navigate(Pet(groupId = groupId, userId = userId)) {
         popUpTo(this@navigateToPet.graph.id) { inclusive = true }
     }
 }
 
-internal fun NavController.navigateToHome(groupId: String) {
-    navigate(Home(groupId = groupId)) {
+internal fun NavController.navigateToHome(groupId: String, userId: String) {
+    navigate(Home(groupId = groupId, userId = userId)) {
         popUpTo(this@navigateToHome.graph.id) { inclusive = true }
     }
 }

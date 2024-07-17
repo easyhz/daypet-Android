@@ -29,7 +29,7 @@ class PetViewModel @Inject constructor(
 ) {
     override fun handleIntent(intent: PetIntent) {
         when(intent) {
-            is PetIntent.InitPetScreen -> { initPetScreen(intent.groupId) }
+            is PetIntent.InitPetScreen -> { initPetScreen(intent.groupId, intent.userId) }
             is PetIntent.ClickProfile -> { onClickProfile() }
             is PetIntent.PickImage -> { onPickImage(intent.uri) }
             is PetIntent.ChangePetNameText -> { onChangePetNameText(intent.newText) }
@@ -49,9 +49,9 @@ class PetViewModel @Inject constructor(
         }
     }
 
-    private fun initPetScreen(groupId: String) {
+    private fun initPetScreen(groupId: String, userId: String) {
         if (currentState.progress != 0f) return
-        reduce { copy(progress = PetStep.firstProgress, groupId = groupId) }
+        reduce { copy(progress = PetStep.firstProgress, groupId = groupId, userId = userId) }
     }
     private fun onClickProfile() {
         if (currentState.profileThumbnail == Uri.EMPTY) {
@@ -160,7 +160,7 @@ class PetViewModel @Inject constructor(
 
     private fun onClickDialogNegativeButton() {
         reduce { copy(isOpenPetDialog = false) }
-        postSideEffect { PetSideEffect.NavigateToHome(currentState.groupId) }
+        postSideEffect { PetSideEffect.NavigateToHome(currentState.groupId, currentState.userId) }
     }
 
     private fun hideBottomSheet() {

@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Pet(
-    val groupId: String
+    val groupId: String,
+    val userId: String
 )

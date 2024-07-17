@@ -23,6 +23,7 @@ internal fun NavGraphBuilder.homeScreen(
         val args = navBackStackEntry.toRoute<Home>()
         HomeScreen(
             groupId = args.groupId,
+            userId = args.userId,
             navigateToMemoryDetail = navigateToMemoryDetail,
             navigateToUploadMemory = navigateToUploadMemory
         )

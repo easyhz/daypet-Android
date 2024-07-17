@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class Home(
-    val groupId: String
+    val groupId: String,
+    val userId: String
 )

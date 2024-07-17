@@ -9,7 +9,7 @@ import com.easyhz.daypet.sign.view.pet.Gender
 import java.time.LocalDate
 
 sealed class PetIntent: UiIntent() {
-    data class InitPetScreen(val groupId: String) : PetIntent()
+    data class InitPetScreen(val groupId: String, val userId: String) : PetIntent()
     data object ClickProfile : PetIntent()
     data class PickImage(val uri: Uri?) : PetIntent()
     data class ChangePetNameText(val newText: String) : PetIntent()

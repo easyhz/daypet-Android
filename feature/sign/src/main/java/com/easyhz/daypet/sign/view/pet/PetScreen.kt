@@ -60,7 +60,8 @@ import com.easyhz.daypet.sign.util.PetStep
 fun PetScreen(
     viewModel: PetViewModel = hiltViewModel(),
     groupId: String,
-    navigateToHome: (String) -> Unit,
+    userId: String,
+    navigateToHome: (String, String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -77,7 +78,7 @@ fun PetScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        viewModel.postIntent(PetIntent.InitPetScreen(groupId))
+        viewModel.postIntent(PetIntent.InitPetScreen(groupId, userId))
     }
 
     BackHandler(onBack = {
@@ -185,7 +186,7 @@ fun PetScreen(
                 )
             }
             is PetSideEffect.NavigateToHome -> {
-                navigateToHome(sideEffect.groupId)
+                navigateToHome(sideEffect.groupId, sideEffect.userId)
             }
             is PetSideEffect.ScrollToBottom -> {
                 sideEffect.scrollState.animateScrollTo(sideEffect.scrollState.maxValue)

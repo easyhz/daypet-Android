@@ -8,6 +8,7 @@ import com.easyhz.daypet.domain.model.todo.Todo
 import java.time.LocalDate
 
 data class HomeState(
+    val userId: String,
     val groupId: String,
     val thumbnail: Thumbnail,
     val memoryList: List<Memory>,
@@ -19,6 +20,7 @@ data class HomeState(
 ) : UiState() {
     companion object {
         fun init() = HomeState(
+            userId = "",
             groupId = "",
             thumbnail = Thumbnail(month = hashSetOf(), thumbnailUrls = hashMapOf()),
             memoryList = emptyList(),

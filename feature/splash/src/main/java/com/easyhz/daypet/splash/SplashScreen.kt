@@ -17,7 +17,7 @@ import com.easyhz.daypet.splash.contract.SplashSideEffect
 fun SplashScreen(
     modifier: Modifier = Modifier,
     viewModel: SplashViewModel = hiltViewModel(),
-    navigateToHome: (String) -> Unit,
+    navigateToHome: (String, String) -> Unit,
     navigateToGroup: (String, String) -> Unit,
     navigateToLogin: () -> Unit,
 ) {
@@ -40,7 +40,7 @@ fun SplashScreen(
         when(sideEffect) {
             is SplashSideEffect.NavigateToLogin -> { navigateToLogin() }
             is SplashSideEffect.NavigateToGroup -> { navigateToGroup(sideEffect.name, sideEffect.ownerId) }
-            is SplashSideEffect.NavigateToHome -> { navigateToHome(sideEffect.groupId) }
+            is SplashSideEffect.NavigateToHome -> { navigateToHome(sideEffect.groupId, sideEffect.userId) }
         }
     }
 }

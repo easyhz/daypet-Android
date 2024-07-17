@@ -12,5 +12,5 @@ sealed class PetSideEffect: UiSideEffect() {
     data object OpenKeyboard: PetSideEffect()
     data object HideKeyboard: PetSideEffect()
     data class ShowSnackBar(@StringRes val stringId: Int): PetSideEffect()
-    data class NavigateToHome(val groupId: String): PetSideEffect()
+    data class NavigateToHome(val groupId: String, val userId: String): PetSideEffect()
 }

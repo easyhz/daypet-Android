@@ -12,4 +12,5 @@ interface AuthDataSource {
     suspend fun updateUserGroupId(userId: String, groupId: String): Result<Unit>
     fun isLogin(): Boolean
     fun getUserId(): String?
+     fun logout()
 }
