@@ -23,7 +23,3 @@ object Storage {
     const val USERS = "Users"
     const val MEMORIES = "Memories"
 }
-
-object Constant {
-    const val EMPTY = "https://EMPTY"
-}
