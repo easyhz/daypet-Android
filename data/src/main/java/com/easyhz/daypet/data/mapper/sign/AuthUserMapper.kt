@@ -23,6 +23,7 @@ fun UserInfoParam.toRequest(): UserInfoRequest = UserInfoRequest(
 )
 
 fun UserInfoResponse.toModel(): UserInfo = UserInfo(
+    id = this.userId,
     name = this.name,
     commentCount = this.commentCount,
     groupId = this.groupId,

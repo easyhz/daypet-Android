@@ -1,6 +1,7 @@
 package com.easyhz.daypet.domain.model.sign
 
 data class UserInfo(
+    val id: String,
     val name: String,
     val commentCount: Int,
     val groupId: String,

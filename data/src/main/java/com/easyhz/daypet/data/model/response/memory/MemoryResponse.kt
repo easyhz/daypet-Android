@@ -22,6 +22,8 @@ data class MemoryResponse(
     val thumbnailUrl: String = "",
     @PropertyName("memberIDs")
     val memberIds: List<String> = emptyList(),
+    @PropertyName("petIDs")
+    val petIds: List<String> = emptyList(),
     @PropertyName("fcmTokens")
     val fcmTokens: List<String> = emptyList(),
 )

@@ -6,6 +6,7 @@ import com.easyhz.daypet.database.entity.member.GroupUserEntity
 import com.easyhz.daypet.domain.model.member.GroupUser
 
 fun GroupUserResponse.toModel(): GroupUser = GroupUser(
+    userId = this.userId,
     joinDate = this.joinDate.toLocalDate(),
     name = this.name,
     groupId = this.groupId,

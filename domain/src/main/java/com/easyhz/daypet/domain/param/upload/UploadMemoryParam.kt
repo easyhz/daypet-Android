@@ -9,6 +9,10 @@ data class UploadMemoryParam(
     val date: LocalDate,
     val time: LocalTime,
     val images: List<String>,
-    val members: List<Member>,
-    val content: String
+    val users: List<String>,
+    val pets: List<String>,
+    val content: String,
+    val groupId: String,
+    val uploaderId: String,
+    val thumbnailUrl: String
 )

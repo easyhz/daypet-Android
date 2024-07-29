@@ -11,5 +11,4 @@ class FetchGroupMemberUseCase @Inject constructor(
 ): BaseUseCase<GroupMemberParam, GroupMember>() {
     override suspend fun invoke(param: GroupMemberParam): Result<GroupMember> =
         groupMemberRepository.fetchGroupMember(param)
-    // TODO: DB에서 받는 걸로 수정!! -> 서버에서는 처음 fetch or FCM onMessageReceived 에서 type 에 따라 fecth or 내가 가족 업데이트 했을때
 }

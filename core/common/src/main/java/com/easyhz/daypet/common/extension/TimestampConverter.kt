@@ -3,6 +3,8 @@ package com.easyhz.daypet.common.extension
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 import java.util.Date
 import java.util.Locale
@@ -28,6 +30,11 @@ fun LocalDate.toTimeStamp(plusDays: Long = 0): Timestamp {
     return Timestamp(instant.epochSecond, instant.nano)
 }
 
+fun convertToTimeStamp(date: LocalDate, time: LocalTime): Timestamp {
+    val localDateTime = LocalDateTime.of(date, time)
+    val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+    return Timestamp(instant.epochSecond, instant.nano)
+}
 
 /**
  *

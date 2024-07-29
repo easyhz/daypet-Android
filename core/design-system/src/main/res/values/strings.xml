@@ -20,6 +20,10 @@
     <string name="upload_member_select">함께한 가족 선택하기</string>
     <string name="upload_content">내용</string>
     <string name="upload_content_placeholder">내용을 입력하세요.</string>
+    <string name="upload_need_member">함께한 가족을 추가해 주세요.</string>
+    <string name="upload_need_title">제목을 입력해 주세요.</string>
+    <string name="upload_dialog_title">기억이 저장되었어요!</string>
+    <string name="upload_dialog_button">확인</string>
 
     <string name="social_login_apple">Apple로 로그인</string>
     <string name="social_login_google">Google로 로그인</string>

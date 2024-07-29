@@ -3,10 +3,15 @@ package com.easyhz.daypet.upload_memory
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.common.error.getMessageStringRes
+import com.easyhz.daypet.design_system.component.image.MemberType
 import com.easyhz.daypet.domain.manager.UserManager
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
+import com.easyhz.daypet.domain.param.upload.UploadMemoryParam
 import com.easyhz.daypet.domain.usecase.member.FetchGroupMemberUseCase
 import com.easyhz.daypet.domain.usecase.upload.GetTakePictureUriUseCase
+import com.easyhz.daypet.domain.usecase.upload.UploadMemoryUseCase
+import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.upload_memory.contract.MemberState
 import com.easyhz.daypet.upload_memory.contract.UploadIntent
 import com.easyhz.daypet.upload_memory.contract.UploadSideEffect
@@ -22,6 +27,7 @@ import javax.inject.Inject
 class UploadMemoryViewModel @Inject constructor(
     private val getTakePictureUriUseCase: GetTakePictureUriUseCase,
     private val fetchGroupMemberUseCase: FetchGroupMemberUseCase,
+    private val uploadMemoryUseCase: UploadMemoryUseCase,
 ) : BaseViewModel<UploadState, UploadIntent, UploadSideEffect>(
     initialState = UploadState.init()
 ) {
@@ -41,7 +47,11 @@ class UploadMemoryViewModel @Inject constructor(
             is UploadIntent.HideMemberBottomSheet -> { hideMemberBottomSheet() }
             is UploadIntent.SelectMember -> { onSelectMember(intent.member) }
             is UploadIntent.ClickSelectedSuccessButton -> { onClickSelectedSuccessButton() }
-            is UploadIntent.DeleteSelectedMember -> { onDeleteSelectedMember(intent.member)}
+            is UploadIntent.DeleteSelectedMember -> { onDeleteSelectedMember(intent.member) }
+            is UploadIntent.ClickUploadButton -> { onClickUploadButton() }
+            is UploadIntent.ClickDialogButton -> { onClickDialogButton() }
+            is UploadIntent.ClickBackButton -> { onClickBackButton() }
+            is UploadIntent.ClearFocus -> { onClearFocus() }
         }
     }
 
@@ -63,8 +73,8 @@ class UploadMemoryViewModel @Inject constructor(
                 val uri = Uri.parse(it)
                 reduce { copy(takePictureUri = it) }
                 postSideEffect { UploadSideEffect.NavigateToCamera(uri) }
-            }.onFailure {
-                // TODO : Fail 처리
+            }.onFailure { e->
+                postSideEffect { UploadSideEffect.ShowSnackBar(e.getMessageStringRes()) }
             }
     }
 
@@ -80,10 +90,12 @@ class UploadMemoryViewModel @Inject constructor(
 
     private fun onChangeDateValue(newDate: LocalDate) {
         reduce { copy(date = newDate) }
+        onClearFocus()
     }
 
     private fun onChangeTimeValue(newTime: LocalTime) {
         reduce { copy(time = newTime) }
+        onClearFocus()
     }
 
     private fun updatedSelectedImages(newImage: List<Uri>) {
@@ -113,6 +125,7 @@ class UploadMemoryViewModel @Inject constructor(
             }
             reduce { copy(members = updatedMembers, isShowMemberBottomSheet = true) }
         }
+        onClearFocus()
     }
 
     private fun fetchGroupMember() = viewModelScope.launch {
@@ -156,4 +169,49 @@ class UploadMemoryViewModel @Inject constructor(
         reduce { deleteSelectedMember(member) }
     }
 
+    private fun onClickUploadButton() = viewModelScope.launch {
+        if (UserManager.groupId == null || UserManager.userId == null) return@launch
+        if (currentState.members.isEmpty()) return@launch
+        if (currentState.title.isBlank()) {
+            postSideEffect { UploadSideEffect.ShowSnackBar(R.string.upload_need_title) }
+            return@launch
+        }
+        if (currentState.selectedMembers.isEmpty()) {
+            postSideEffect { UploadSideEffect.ShowSnackBar(R.string.upload_need_member) }
+            return@launch
+        }
+        reduce { copy(isLoading = true) }
+        val param = UploadMemoryParam(
+            title = currentState.title,
+            date = currentState.date,
+            time = currentState.time,
+            images = currentState.selectedImages.map { it.toString() },
+            users = currentState.selectedMembers.filter { it.memberType == MemberType.PERSON }.map { it.id },
+            pets = currentState.selectedMembers.filter { it.memberType == MemberType.PET }.map { it.id },
+            content = currentState.content,
+            groupId = UserManager.groupId!!,
+            uploaderId = UserManager.userId!!,
+            thumbnailUrl = currentState.selectedImages.firstOrNull()?.toString() ?: ""
+        )
+        uploadMemoryUseCase.invoke(param).onSuccess {
+            reduce { copy(isVisibleDialog = true) }
+        }.onFailure { e ->
+            postSideEffect { UploadSideEffect.ShowSnackBar(e.getMessageStringRes()) }
+        }.also {
+            reduce { copy(isLoading = false) }
+        }
+    }
+
+    private fun onClickDialogButton() {
+        if (UserManager.groupId == null || UserManager.userId == null) return
+        postSideEffect { UploadSideEffect.NavigateToHome(UserManager.groupId!!, UserManager.userId!!) }
+    }
+
+    private fun onClickBackButton() {
+        postSideEffect { UploadSideEffect.NavigateToUp }
+    }
+
+    private fun onClearFocus() {
+        postSideEffect { UploadSideEffect.ClearFocus }
+    }
 }

@@ -73,7 +73,7 @@ fun DatePickerButton(
                         dateTextAppearance = R.style.CalenderViewDateCustomText
                         weekDayTextAppearance = R.style.CalenderViewWeekCustomText
                         setOnDateChangeListener { _, year, month, dayOfMonth ->
-                            selectedDate = DatePickerUtil.toString(year, month, dayOfMonth)
+                            selectedDate = DatePickerUtil.toString(year, month + 1, dayOfMonth)
                         }
                     }
                   },

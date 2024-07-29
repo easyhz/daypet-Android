@@ -21,4 +21,8 @@ sealed class UploadIntent: UiIntent() {
     data class SelectMember(val member: MemberState): UploadIntent()
     data object ClickSelectedSuccessButton: UploadIntent()
     data class DeleteSelectedMember(val member: MemberState): UploadIntent()
+    data object ClickUploadButton: UploadIntent()
+    data object ClickDialogButton: UploadIntent()
+    data object ClickBackButton: UploadIntent()
+    data object ClearFocus: UploadIntent()
 }

@@ -3,6 +3,8 @@ package com.easyhz.daypet.data.mapper.home
 import com.easyhz.daypet.common.extension.toHashMap
 import com.easyhz.daypet.common.extension.toLocalDate
 import com.easyhz.daypet.common.extension.toTimeStamp
+import com.easyhz.daypet.data.model.request.home.CreateThumbnail
+import com.easyhz.daypet.data.model.request.home.SetThumbnailRequest
 import com.easyhz.daypet.data.model.request.home.ThumbnailRequest
 import com.easyhz.daypet.data.model.response.home.ThumbnailResponse
 import com.easyhz.daypet.domain.model.home.Thumbnail
@@ -27,4 +29,10 @@ fun ThumbnailParam.toRequest(): ThumbnailRequest = ThumbnailRequest(
     startDate = this.startDate.toTimeStamp(),
     endDate = this.endDate.toTimeStamp(1),
     groupId = this.groupId
+)
+
+fun SetThumbnailRequest.toCreateThumbnail(): CreateThumbnail = CreateThumbnail(
+    groupId = this.groupId,
+    monthDate = this.monthDate,
+    thumbnailUrlDict = mapOf(this.day to this.url)
 )

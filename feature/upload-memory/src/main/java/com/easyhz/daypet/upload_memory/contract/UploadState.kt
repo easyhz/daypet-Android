@@ -21,6 +21,8 @@ data class UploadState(
     val members: List<MemberState>,
     val isShowMemberBottomSheet: Boolean,
     val takePictureUri: String,
+    val isVisibleDialog: Boolean,
+    val isLoading: Boolean
 ): UiState() {
     companion object {
         fun init() = UploadState(
@@ -33,6 +35,8 @@ data class UploadState(
             members = emptyList(),
             isShowMemberBottomSheet = false,
             takePictureUri = "",
+            isVisibleDialog = false,
+            isLoading = false
         )
     }
 
@@ -67,7 +71,7 @@ fun Pet.toMemberState() = MemberState(
 )
 
 fun GroupUser.toMemberState() = MemberState(
-    id = this.name,
+    id = this.userId,
     memberType = MemberType.PERSON,
     thumbnailUrl = this.thumbnailUrl,
     name = this.name,

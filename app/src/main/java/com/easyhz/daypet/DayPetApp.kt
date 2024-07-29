@@ -9,6 +9,7 @@ import com.easyhz.daypet.navigation.home.homeScreen
 import com.easyhz.daypet.navigation.home.navigateToMemoryDetail
 import com.easyhz.daypet.navigation.home.navigateToUploadMemory
 import com.easyhz.daypet.navigation.memory_detail.memoryDetailScreen
+import com.easyhz.daypet.navigation.sign.navigateToHome
 import com.easyhz.daypet.navigation.sign.signScreen
 import com.easyhz.daypet.navigation.splash.Splash
 import com.easyhz.daypet.navigation.splash.splashScreen
@@ -35,7 +36,10 @@ fun DayPetApp() {
             navigateToUploadMemory = navController::navigateToUploadMemory
         )
         memoryDetailScreen()
-        uploadMemoryScreen()
+        uploadMemoryScreen(
+            navigateToUp = navController::navigateUp,
+            navigateToHome = navController::navigateToHome
+        )
         signScreen(
             navController = navController,
         )

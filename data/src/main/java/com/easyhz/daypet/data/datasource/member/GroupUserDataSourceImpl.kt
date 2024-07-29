@@ -16,6 +16,4 @@ class GroupUserDataSourceImpl @Inject constructor(
             .whereEqualTo(GROUP_ID, data.groupId)
             .get()
     }
-
-
 }

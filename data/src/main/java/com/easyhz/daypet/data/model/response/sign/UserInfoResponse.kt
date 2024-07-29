@@ -4,6 +4,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.PropertyName
 
 data class UserInfoResponse(
+    @PropertyName("userID")
+    val userId: String = "",
     @PropertyName("name")
     val name: String = "",
     @PropertyName("commentCount")
