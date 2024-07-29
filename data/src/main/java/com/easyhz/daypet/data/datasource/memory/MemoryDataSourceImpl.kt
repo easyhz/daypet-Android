@@ -17,8 +17,8 @@ class MemoryDataSourceImpl @Inject constructor(
     override suspend fun fetchMemoriesOnDate(data: MemoryRequest): Result<List<MemoryResponse>> = collectionHandler {
         firestore.collection(MEMORIES)
             .whereEqualTo(GROUP_ID, data.groupId)
-            .whereGreaterThan(CREATION_TIME, data.startDate)
-            .whereLessThan(CREATION_TIME, data.endDate)
+            .whereGreaterThanOrEqualTo(CREATION_TIME, data.startDate)
+            .whereLessThanOrEqualTo(CREATION_TIME, data.endDate)
             .orderBy(CREATION_TIME, ASCENDING)
             .get()
     }
