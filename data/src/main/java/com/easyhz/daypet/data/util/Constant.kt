@@ -14,10 +14,16 @@ object Fields {
     const val MONTH_DATE = "monthDate"
     const val GROUP_ID = "groupID"
     const val PETS = "pets"
+    const val THUMBNAIL_URL_DICT = "thumbnailURLDict"
 }
 
 object Storage {
     const val GROUPS = "Groups"
     const val PETS = "Pets"
     const val USERS = "Users"
+    const val MEMORIES = "Memories"
+}
+
+object Constant {
+    const val EMPTY = "https://EMPTY"
 }
