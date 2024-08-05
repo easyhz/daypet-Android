@@ -19,7 +19,7 @@ import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.Primary
 
 @Composable
-fun UploadBottomBar(
+internal fun UploadBottomBar(
     modifier: Modifier = Modifier,
     onClickGallery: () -> Unit,
     onClickCamera: () -> Unit
@@ -52,6 +52,5 @@ fun UploadBottomBar(
                 )
             ) { onClickCamera() }
         }
-
     }
 }
