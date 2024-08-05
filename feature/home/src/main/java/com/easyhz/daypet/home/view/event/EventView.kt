@@ -9,8 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -46,7 +45,7 @@ fun<T> LazyListScope.eventItem(
     modifier: Modifier = Modifier,
     list: List<T>,
     event: Event,
-    content: @Composable (T) -> Unit
+    content: @Composable (Int, T) -> Unit
 ) {
     item {
         Spacer(modifier = Modifier.height(12.dp))
@@ -66,9 +65,9 @@ fun<T> LazyListScope.eventItem(
             )
         }
     } else {
-        items(list) {type ->
+        itemsIndexed(list) {index, type ->
             Box(modifier = modifier.fillMaxWidth()) {
-                content(type)
+                content(index, type)
             }
         }
     }
