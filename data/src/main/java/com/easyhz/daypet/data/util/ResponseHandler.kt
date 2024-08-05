@@ -32,6 +32,28 @@ internal suspend inline fun < reified T: Any> collectionHandler(
     )
 }
 
+
+internal suspend inline fun <reified T: Any> collectionWithIdHandler(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    crossinline execute: () -> Task<QuerySnapshot>
+): Result<List<DocumentWithId<T>>> = withContext(dispatcher) {
+    runCatching {
+        val querySnapshot = execute().await()
+        querySnapshot.documents.map { document ->
+            val data = document.toObject(T::class.java)
+            if (data != null) {
+                DocumentWithId(id = document.id, data = data)
+            } else {
+                throw IllegalArgumentException("Document data is null")
+            }
+        }
+    }.fold(
+        onSuccess = { Result.success(it) },
+        onFailure = { e -> handleException(e, "collection") }
+    )
+}
+
+
 /**
  * collection 에서 원하는 document 를 받는 함수
  *

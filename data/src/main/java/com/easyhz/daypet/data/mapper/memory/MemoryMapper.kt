@@ -8,13 +8,24 @@ import com.easyhz.daypet.data.model.request.memory.MemoryRequest
 import com.easyhz.daypet.data.model.request.memory.UploadMemoryRequest
 import com.easyhz.daypet.data.model.response.memory.MemoryResponse
 import com.easyhz.daypet.domain.model.memory.Memory
+import com.easyhz.daypet.domain.model.memory.MemoryDetail
 import com.easyhz.daypet.domain.param.memory.MemoryParam
 import com.easyhz.daypet.domain.param.upload.UploadMemoryParam
 
-fun MemoryResponse.toModel(): Memory = Memory(
+fun MemoryResponse.toModel(id: String): Memory = Memory(
+    documentId = id,
     title = this.title,
     imageUrl = this.thumbnailUrl,
     time = this.creationTime.toFormattedTime()
+)
+
+fun MemoryResponse.toDetail(): MemoryDetail = MemoryDetail(
+    title = this.title,
+    content = this.content,
+    membersId = this.memberIds,
+    petsId = this.petIds,
+    imageUrl = this.imageUrls,
+    date = this.creationTime.toFormattedTime(pattern = "yyyy.MM.dd HH:mm")
 )
 
 fun MemoryParam.toRequest(): MemoryRequest = MemoryRequest(

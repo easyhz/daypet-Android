@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.InitScreen -> { initScreen(intent.groupId, intent.userId) }
             is HomeIntent.ChangeDate -> { changeDate(intent.clickedDay) }
             is HomeIntent.ChangeDateOnMonth -> { changeDateOnMonth(intent.clickedDay) }
-            is HomeIntent.ClickMemory -> {}
+            is HomeIntent.ClickMemory -> { onClickMemory(intent.index) }
             is HomeIntent.ClickTodo -> {}
             is HomeIntent.ShowMonthCalendar -> { showMonthCalendar() }
             is HomeIntent.HideMonthCalendar -> { hideMonthCalendar() }
@@ -151,5 +151,10 @@ class HomeViewModel @Inject constructor(
         datesToFetch.forEach { date ->
             fetchThumbnail(date)
         }
+    }
+
+    private fun onClickMemory(index: Int) {
+        val memory = currentState.memoryList[index]
+        postSideEffect { HomeSideEffect.NavigateToMemoryDetail(memory.documentId, memory.title) }
     }
 }

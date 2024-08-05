@@ -133,6 +133,19 @@ val Body4 = TextStyle(
     )
 )
 
+val Body5 = TextStyle(
+    fontFamily = AppleSDGothicNeo,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    lineHeight = (16 * 1.3).sp,
+    color = TextColor,
+    letterSpacing = LetterSpacing,
+    textAlign = TextAlign.Justify,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false,
+    ),
+)
+
 
 val SubHeading1 = TextStyle(
     fontFamily = AppleSDGothicNeo,

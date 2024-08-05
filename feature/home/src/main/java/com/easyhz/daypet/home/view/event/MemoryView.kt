@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.easyhz.daypet.design_system.component.image.ImageCircle
+import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.theme.Body1
 import com.easyhz.daypet.design_system.theme.SubBody2
 import com.easyhz.daypet.design_system.theme.SubTextColor
@@ -25,12 +26,15 @@ import com.easyhz.daypet.domain.model.memory.Memory
 
 @Composable
 internal fun MemoryContent(
-    memory: Memory
+    memory: Memory,
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .height(72.dp)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+            .noRippleClickable { onClick() }
+    ) {
         Row(
             modifier = Modifier.align(Alignment.CenterStart),
             verticalAlignment = Alignment.CenterVertically,
@@ -81,6 +85,6 @@ private fun MemoryInfo(
 @Preview(showBackground = true)
 @Composable
 private fun MemoryContentPrev() {
-    val memory = Memory(title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07")
-    MemoryContent(memory)
+    val memory = Memory(documentId = "", title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07")
+    MemoryContent(memory) {}
 }

@@ -35,7 +35,9 @@ fun DayPetApp() {
             navigateToMemoryDetail = navController::navigateToMemoryDetail,
             navigateToUploadMemory = navController::navigateToUploadMemory
         )
-        memoryDetailScreen()
+        memoryDetailScreen(
+            navigateToUp = navController::navigateUp
+        )
         uploadMemoryScreen(
             navigateToUp = navController::navigateUp,
             navigateToHome = navController::navigateToHome

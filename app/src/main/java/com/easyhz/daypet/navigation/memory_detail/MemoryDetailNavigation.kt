@@ -5,9 +5,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.easyhz.daypet.memory_detail.MemoryDetailScreen
 
-fun NavGraphBuilder.memoryDetailScreen() {
+fun NavGraphBuilder.memoryDetailScreen(
+    navigateToUp: () -> Unit
+) {
     composable<MemoryDetail> { navBackStackEntry ->
         val args = navBackStackEntry.toRoute<MemoryDetail>()
-        MemoryDetailScreen(title = args.title)
+        MemoryDetailScreen(
+            id = args.id,
+            title = args.title,
+            navigateToUp = navigateToUp
+        )
     }
 }

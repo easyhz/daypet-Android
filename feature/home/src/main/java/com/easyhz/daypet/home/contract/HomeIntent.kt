@@ -10,7 +10,7 @@ sealed class HomeIntent: UiIntent() {
     data class InitScreen(val groupId: String, val userId: String): HomeIntent()
     data class ChangeDate(val clickedDay: LocalDate): HomeIntent()
     data class ChangeDateOnMonth(val clickedDay: LocalDate): HomeIntent()
-    data class ClickMemory(val memory: Memory): HomeIntent()
+    data class ClickMemory(val index: Int): HomeIntent()
     data class ClickTodo(val todo: Todo): HomeIntent()
     data object ShowMonthCalendar: HomeIntent()
     data object HideMonthCalendar: HomeIntent()

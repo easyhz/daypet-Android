@@ -16,7 +16,7 @@ import com.easyhz.daypet.navigation.upload_memory.UploadMemory
 
 
 internal fun NavGraphBuilder.homeScreen(
-    navigateToMemoryDetail: (String) -> Unit,
+    navigateToMemoryDetail: (String, String) -> Unit,
     navigateToUploadMemory: () -> Unit
 ) {
     composable<Home> {navBackStackEntry ->
@@ -30,8 +30,8 @@ internal fun NavGraphBuilder.homeScreen(
     }
 }
 
-internal fun NavController.navigateToMemoryDetail(title: String) {
-    navigate(MemoryDetail(title = title))
+internal fun NavController.navigateToMemoryDetail(id: String, title: String) {
+    navigate(MemoryDetail(id = id, title = title))
 }
 
 internal fun NavController.navigateToUploadMemory() {

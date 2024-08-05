@@ -57,7 +57,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     groupId: String,
     userId: String,
-    navigateToMemoryDetail: (String) -> Unit,
+    navigateToMemoryDetail: (String, String) -> Unit,
     navigateToUploadMemory: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -151,16 +151,18 @@ fun HomeScreen(
                     list = uiState.memoryList,
                     event = Event.MEMORY,
                     modifier = Modifier.screenHorizonPadding()
-                ) { memory ->
+                ) { index, memory ->
                     MemoryContent(
                         memory = memory
-                    )
+                    ) {
+                        viewModel.postIntent(HomeIntent.ClickMemory(index))
+                    }
                 }
                 eventItem(
                     list = uiState.todoList,
                     event = Event.TODO,
                     modifier = Modifier.screenHorizonPadding()
-                ) { todo->
+                ) { _, todo->
                     TodoContent(
                         todo = todo
                     )
@@ -180,6 +182,7 @@ fun HomeScreen(
         when(sideEffect) {
             is HomeSideEffect.ChangeWeekCalendar -> { scrollToSelection(weekState, sideEffect.localDate) }
             is HomeSideEffect.NavigateToUploadMemory -> { navigateToUploadMemory() }
+            is HomeSideEffect.NavigateToMemoryDetail -> { navigateToMemoryDetail(sideEffect.id, sideEffect.title) }
         }
     }
 }
@@ -198,6 +201,6 @@ private fun HomeScreenPrev() {
     HomeScreen(
         userId = " ",
         groupId = "",
-        navigateToMemoryDetail = { }
+        navigateToMemoryDetail = { _, _ -> }
     ) { }
 }

@@ -8,12 +8,14 @@ import com.easyhz.daypet.data.datasource.home.ThumbnailDataSource
 import com.easyhz.daypet.data.datasource.image.ImageDataSource
 import com.easyhz.daypet.data.datasource.memory.MemoryDataSource
 import com.easyhz.daypet.data.di.IoDispatcher
+import com.easyhz.daypet.data.mapper.memory.toDetail
 import com.easyhz.daypet.data.mapper.memory.toModel
 import com.easyhz.daypet.data.mapper.memory.toRequest
 import com.easyhz.daypet.data.mapper.memory.toSetThumbnail
 import com.easyhz.daypet.data.provider.FileProvider
 import com.easyhz.daypet.data.util.Storage
 import com.easyhz.daypet.domain.model.memory.Memory
+import com.easyhz.daypet.domain.model.memory.MemoryDetail
 import com.easyhz.daypet.domain.param.memory.MemoryParam
 import com.easyhz.daypet.domain.param.upload.UploadMemoryParam
 import com.easyhz.daypet.domain.repository.memory.MemoryRepository
@@ -32,7 +34,7 @@ class MemoryRepositoryImpl @Inject constructor(
 ): MemoryRepository {
     override suspend fun fetchMemoriesOnDate(param: MemoryParam): Result<List<Memory>> =
         memoryDataSource.fetchMemoriesOnDate(param.toRequest()).map { list ->
-            list.map { res -> res.toModel() }
+            list.map { it.data.toModel(it.id) }
         }
 
     override suspend fun uploadMemory(param: UploadMemoryParam): Result<Unit> = withContext(dispatcher) {
@@ -61,4 +63,7 @@ class MemoryRepositoryImpl @Inject constructor(
             onFailure = { Result.failure(it) }
         )
     }
+
+    override suspend fun fetchMemoryDetail(id: String): Result<MemoryDetail> =
+        memoryDataSource.fetchMemoryDetail(id).map { it.toDetail() }
 }
