@@ -18,12 +18,13 @@ fun BaseTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    title: String,
+    title: String?,
     placeholder: String,
     singleLine: Boolean,
     isFilled: Boolean,
     minLines: Int = 1,
     spacing: Dp = 4.dp,
+    textFieldType: TextFieldType = TextFieldType.ONE_LINE,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -46,7 +47,8 @@ fun BaseTextField(
                 title = title,
                 placeholder = placeholder,
                 innerTextField = innerTextField,
-                spacing = spacing
+                spacing = spacing,
+                textFieldType = textFieldType
             )
         }
     )

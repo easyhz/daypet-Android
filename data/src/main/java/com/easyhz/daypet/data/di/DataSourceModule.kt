@@ -1,5 +1,7 @@
 package com.easyhz.daypet.data.di
 
+import com.easyhz.daypet.data.datasource.comment.CommentDataSource
+import com.easyhz.daypet.data.datasource.comment.CommentDataSourceImpl
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSource
 import com.easyhz.daypet.data.datasource.home.ThumbnailDataSourceImpl
 import com.easyhz.daypet.data.datasource.image.ImageDataSource
@@ -57,4 +59,9 @@ interface DataSourceModule {
     fun bindImageDataSource(
         imageDataSourceImpl: ImageDataSourceImpl
     ): ImageDataSource
+
+    @Binds
+    fun bindCommentDataSource(
+        commentDataSourceImpl: CommentDataSourceImpl
+    ): CommentDataSource
 }

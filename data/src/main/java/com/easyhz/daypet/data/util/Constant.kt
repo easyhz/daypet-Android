@@ -6,6 +6,7 @@ object Collections {
     const val MONTHLY_THUMBNAILS = "MonthlyThumbnails"
     const val GROUPS = "Groups"
     const val USERS = "Users"
+    const val COMMENTS = "Comments"
 }
 
 
@@ -15,6 +16,7 @@ object Fields {
     const val GROUP_ID = "groupID"
     const val PETS = "pets"
     const val THUMBNAIL_URL_DICT = "thumbnailURLDict"
+    const val MEMORY_ID = "memoryID"
 }
 
 object Storage {

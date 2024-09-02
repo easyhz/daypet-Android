@@ -2,11 +2,13 @@ package com.easyhz.daypet.memory_detail.contract
 
 import com.easyhz.daypet.common.base.UiState
 import com.easyhz.daypet.domain.manager.UserManager
+import com.easyhz.daypet.domain.model.comment.Comment
 import com.easyhz.daypet.domain.model.memory.MemoryDetail
 
 data class DetailState(
     val isLoading: Boolean,
     val memoryState: MemoryState,
+    val commentList: List<Comment>,
 ): UiState() {
     companion object {
         fun init() = DetailState(
@@ -18,8 +20,10 @@ data class DetailState(
                 membersId = emptyList(),
                 petsId = emptyList(),
                 imageUrl = emptyList(),
-                date = ""
-            )
+                date = "",
+                thumbnailUrl = "",
+            ),
+            commentList = emptyList()
         )
     }
 }
@@ -47,6 +51,7 @@ internal fun MemoryDetail.toMemoryState(): MemoryState {
         petsId = pets ?: emptyList(),
         imageUrl = this.imageUrl,
         date = this.date,
+        thumbnailUrl = this.thumbnailUrl
     )
 }
 
@@ -57,7 +62,8 @@ data class MemoryState(
     val membersId: List<Member>,
     val petsId: List<Member>,
     val imageUrl: List<String>,
-    val date: String
+    val date: String,
+    val thumbnailUrl: String,
 )
 
 data class Member(

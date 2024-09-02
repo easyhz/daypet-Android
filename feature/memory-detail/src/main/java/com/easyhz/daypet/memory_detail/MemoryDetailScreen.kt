@@ -37,7 +37,8 @@ fun MemoryDetailScreen(
     viewModel: MemoryDetailViewModel = hiltViewModel(),
     id: String,
     title: String,
-    navigateToUp: () -> Unit
+    navigateToUp: () -> Unit,
+    navigateToComment: (String, String, String) -> Unit // FIXME 고치기 댓글 전달로
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState { uiState.memoryState.imageUrl.size }
@@ -62,7 +63,7 @@ fun MemoryDetailScreen(
         },
         bottomBar = {
             DetailBottomBar(
-                commentCount = 3
+                commentCount = uiState.commentList.size
             ) {
                 viewModel.postIntent(DetailIntent.ClickComment)
             }
@@ -101,6 +102,7 @@ fun MemoryDetailScreen(
     viewModel.sideEffect.collectInLaunchedEffectWithLifecycle {sideEffect ->
         when(sideEffect) {
             is DetailSideEffect.NavigateToUp -> { navigateToUp() }
+            is DetailSideEffect.NavigateToComment -> { navigateToComment(sideEffect.id, sideEffect.title, sideEffect.url) }
         }
     }
 }

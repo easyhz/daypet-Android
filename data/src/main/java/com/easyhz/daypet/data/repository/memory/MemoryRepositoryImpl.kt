@@ -65,5 +65,5 @@ class MemoryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchMemoryDetail(id: String): Result<MemoryDetail> =
-        memoryDataSource.fetchMemoryDetail(id).map { it.toDetail() }
+        memoryDataSource.fetchMemoryDetail(id).map { it.toDetail(id) }
 }

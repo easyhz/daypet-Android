@@ -19,6 +19,10 @@ sealed class TopBarType {
         @StringRes val stringId: Int
     ): TopBarType()
 
+    data class TopBarTitleString(
+        val string: String
+    ):TopBarType()
+
     data class TopBarTextButton(
         @StringRes val stringId: Int,
         val onClick: () -> Unit
@@ -58,6 +62,13 @@ fun TopBarType?.content(
             Text(
                 modifier = modifier,
                 text = stringResource(id = this.stringId),
+                style = Heading4
+            )
+        }
+        is TopBarType.TopBarTitleString -> {
+            Text(
+                modifier = modifier,
+                text = this.string,
                 style = Heading4
             )
         }

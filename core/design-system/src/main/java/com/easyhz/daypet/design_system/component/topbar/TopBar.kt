@@ -20,7 +20,7 @@ import com.easyhz.daypet.design_system.util.topbar.content
 @Composable
 fun TopBar(
     left: TopBarType?,
-    title: TopBarType.TopBarTitle?,
+    title: TopBarType?,
     right: TopBarType?,
 ) {
     Box(

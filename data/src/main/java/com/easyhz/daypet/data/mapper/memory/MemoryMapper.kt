@@ -19,12 +19,14 @@ fun MemoryResponse.toModel(id: String): Memory = Memory(
     time = this.creationTime.toFormattedTime()
 )
 
-fun MemoryResponse.toDetail(): MemoryDetail = MemoryDetail(
+fun MemoryResponse.toDetail(id: String): MemoryDetail = MemoryDetail(
+    documentId = id,
     title = this.title,
     content = this.content,
     membersId = this.memberIds,
     petsId = this.petIds,
     imageUrl = this.imageUrls,
+    thumbnailUrl = this.thumbnailUrl,
     date = this.creationTime.toFormattedTime(pattern = "yyyy.MM.dd HH:mm")
 )
 

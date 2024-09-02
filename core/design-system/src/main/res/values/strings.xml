@@ -88,4 +88,11 @@
 
     <string name="member_over">외 %d</string>
 
+    <string name="comment_title">댓글 %s</string>
+    <string name="comment_placeholder">댓글을 입력하세요</string>
+    <string name="comment_empty">
+        아직 댓글이 없어요.
+        \n첫 댓글의 주인공이 되어주세요!
+    </string>
+
 </resources>

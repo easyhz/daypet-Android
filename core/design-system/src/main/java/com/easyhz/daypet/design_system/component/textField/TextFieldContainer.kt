@@ -26,6 +26,7 @@ enum class TextFieldType(
     val placeholderAlignment: Alignment,
 ) {
     ONE_LINE(hasDivider = true, verticalAlignment = Alignment.Bottom, placeholderAlignment = Alignment.BottomStart),
+    NO_LINE(hasDivider = false, verticalAlignment = Alignment.Bottom, placeholderAlignment = Alignment.BottomStart),
     CONTENT(hasDivider = false, verticalAlignment = Alignment.Top, placeholderAlignment = Alignment.TopStart)
 }
 
@@ -35,6 +36,7 @@ internal fun TextFieldContainer(
     state: TextFieldState,
     title: String?,
     placeholder: String,
+    textFieldType: TextFieldType,
     spacing: Dp = 4.dp,
     innerTextField: @Composable () -> Unit
 ) {
@@ -49,7 +51,7 @@ internal fun TextFieldContainer(
         }
         TextFieldContainerContent(
             modifier = Modifier.height(25.dp),
-            type = TextFieldType.ONE_LINE,
+            type = textFieldType,
             state = state,
             placeholder = placeholder,
             innerTextField = innerTextField,
@@ -135,7 +137,7 @@ private fun TextFieldContainerContent(
 @Composable
 private fun TextFieldContainerPrev() {
     val state = getTextFieldState("", false)
-    TextFieldContainer(state = state, title = "제목", placeholder = "제목을 입력하세요.") {
+    TextFieldContainer(state = state, title = null, placeholder = "제목을 입력하세요.", textFieldType = TextFieldType.NO_LINE) {
 
     }
 }
