@@ -9,8 +9,8 @@
 2. Hilt
 3. Glide
 4. Firebase Cloud Messaging
-5. Datastore
-6. WorkManager
+5. WorkManager
+6. Room
 etc.
 ```
 
