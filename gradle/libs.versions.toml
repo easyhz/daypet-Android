@@ -34,6 +34,7 @@ work = "2.9.0"
 playServicesAuth = "21.2.0"
 googleid = "1.1.1"
 lottie = "6.4.0"
+fcm = "24.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -82,6 +83,7 @@ firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx"}
 gms-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth"}
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie"}
+firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "fcm" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
