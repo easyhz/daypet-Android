@@ -2,6 +2,7 @@ package com.easyhz.daypet.memory_detail.screen.comment
 
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.common.error.getMessageStringRes
 import com.easyhz.daypet.domain.manager.UserManager
 import com.easyhz.daypet.domain.model.comment.Comment
 import com.easyhz.daypet.domain.usecase.comment.CreateMemoryCommentUseCase
@@ -43,10 +44,9 @@ class CommentViewModel @Inject constructor(
         reduce { copy(memoryId = id) }
         fetchMemoryCommentListUseCase.invoke(id)
             .onSuccess {
-                println(">> $it")
                 reduce { copy(comment = it) }
             }.onFailure {
-                /* 오류 처리*/
+                postSideEffect { CommentSideEffect.ShowSnackBar(it.getMessageStringRes()) }
             }
     }
 
@@ -75,7 +75,9 @@ class CommentViewModel @Inject constructor(
             reduce { copy(commentString = "") }
             fetchMemoryCommentList(currentState.memoryId)
         }.onFailure {
-            println("실패 $it")
+            postSideEffect { CommentSideEffect.ShowSnackBar(it.getMessageStringRes()) }
+        }.also {
+            postSideEffect { CommentSideEffect.HideKeyboard }
         }
     }
 }

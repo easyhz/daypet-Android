@@ -9,12 +9,16 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,6 +29,7 @@ import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.topbar.TopBar
 import com.easyhz.daypet.design_system.extension.borderTop
+import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Body1
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
@@ -44,12 +49,15 @@ fun CommentScreen(
     thumbnailUrl: String,
     navigateToUp: () -> Unit
 ) {
+    val snackBarHostState = remember { SnackbarHostState() }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     LaunchedEffect(key1 = Unit) {
         viewModel.postIntent(CommentIntent.InitScreen(memoryId, memoryTitle, thumbnailUrl))
     }
     DayPetScaffold(
+        modifier = Modifier.noRippleClickable { focusManager.clearFocus() },
         topBar = {
             TopBar(
                 left = TopBarType.TopBarIconButton(
@@ -118,6 +126,15 @@ fun CommentScreen(
         when (sideEffect) {
             is CommentSideEffect.NavigateToUp -> {
                 navigateToUp()
+            }
+            is CommentSideEffect.ShowSnackBar -> {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(sideEffect.stringId),
+                    withDismissAction = true
+                )
+            }
+            is CommentSideEffect.HideKeyboard -> {
+                focusManager.clearFocus()
             }
         }
     }
