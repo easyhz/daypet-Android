@@ -26,7 +26,6 @@ import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.button.ExpandedFloatingActionButton
 import com.easyhz.daypet.design_system.component.main.DayPetScaffold
 import com.easyhz.daypet.design_system.component.main.DimScreenProvider
-import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.ButtonShapeColor
 import com.easyhz.daypet.design_system.theme.TextColor
 import com.easyhz.daypet.design_system.util.fab.FabButtonItem

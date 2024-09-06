@@ -70,7 +70,7 @@ fun CommentScreen(
                 title = TopBarType.TopBarTitleString(
                     string = stringResource(
                         id = R.string.comment_title,
-                        (uiState.comment.size.takeIf { it > 0 } ?: "").toString() ?: "")
+                        (uiState.comment.size.takeIf { it > 0 } ?: "").toString())
                 ),
                 right = TopBarType.TopBarIconButton(
                     iconId = R.drawable.ic_more_horiz,
