@@ -18,6 +18,7 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("firebase.auth.ktx").get())
                 "implementation"(libs.findLibrary("firebase.storage.ktx").get())
                 "implementation"(libs.findLibrary("gms.play.services.auth").get())
+                "implementation"(libs.findLibrary("firebase.cloud.messaging").get())
 
 //                "implementation"(libs.findLibrary("firebase.crashlytics").get())
             }
