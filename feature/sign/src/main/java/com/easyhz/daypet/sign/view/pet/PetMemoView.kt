@@ -18,13 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.easyhz.daypet.common.extension.collectInLaunchedEffectWithLifecycle
 import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.component.button.MainButton
 import com.easyhz.daypet.design_system.component.textField.ContentTextField
@@ -35,7 +33,6 @@ import com.easyhz.daypet.design_system.theme.MainBackground
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubBody2
 import com.easyhz.daypet.sign.contract.pet.PetIntent
-import com.easyhz.daypet.sign.contract.pet.PetSideEffect
 import com.easyhz.daypet.sign.contract.pet.PetState.Companion.MEMO_MAX
 
 @Composable
