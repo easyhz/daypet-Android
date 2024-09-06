@@ -1,16 +1,16 @@
 package com.easyhz.daypet.home.view.calendar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.NavigateNext
 import androidx.compose.material3.Icon
@@ -20,11 +20,12 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.theme.Body2
 import com.easyhz.daypet.design_system.theme.Heading3
+import com.easyhz.daypet.design_system.theme.ImageFadeBackgroundColor
 import com.easyhz.daypet.design_system.theme.MainBackground
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubHeading1
@@ -94,10 +95,14 @@ internal fun Day(
     isCurrentDate: Boolean,
     onClick: (LocalDate) -> Unit
 ) {
-    val selectionColor = if (isSelected) TextColor else MainBackground
     val date = when (dayType) {
         is DayType.Calendar -> dayType.calendarDay.date
         is DayType.Week -> dayType.weekDay.date
+    }
+    val selectionColor = if(isSelected) {
+        ImageFadeBackgroundColor
+    } else {
+        MainBackground
     }
     val currentDateColor = when {
         dayType is DayType.Calendar -> when (dayType.calendarDay.position) {
@@ -113,10 +118,14 @@ internal fun Day(
         else -> true
     }
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .noRippleClickable { onClick(date) },
-        contentAlignment = Alignment.Center,
+            .padding(horizontal = 3.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(selectionColor)
+            .clickable { onClick(date) }
+            .padding(vertical = 4.dp),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -133,12 +142,6 @@ internal fun Day(
                 color = currentDateColor,
                 modifier = Modifier
                     .wrapContentHeight(align = Alignment.CenterVertically)
-            )
-            Box(
-                modifier = Modifier
-                    .width(18.dp)
-                    .height(1.dp)
-                    .background(selectionColor)
             )
         }
     }
