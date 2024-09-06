@@ -150,7 +150,7 @@ fun HomeScreen(
                 eventItem(
                     list = uiState.memoryList,
                     event = Event.MEMORY,
-                    modifier = Modifier.screenHorizonPadding()
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 ) { index, memory ->
                     MemoryContent(
                         memory = memory
@@ -161,7 +161,7 @@ fun HomeScreen(
                 eventItem(
                     list = uiState.todoList,
                     event = Event.TODO,
-                    modifier = Modifier.screenHorizonPadding()
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 ) { _, todo->
                     TodoContent(
                         todo = todo

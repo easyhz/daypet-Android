@@ -9,7 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListScope import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -22,10 +23,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.easyhz.daypet.design_system.R
 import com.easyhz.daypet.design_system.extension.screenHorizonPadding
 import com.easyhz.daypet.design_system.theme.Heading4
 import com.easyhz.daypet.design_system.theme.SubBody1
-import com.easyhz.daypet.design_system.R
 
 enum class Event(
     @StringRes val titleId: Int,
@@ -51,7 +52,7 @@ fun<T> LazyListScope.eventItem(
         Spacer(modifier = Modifier.height(12.dp))
     }
     item {
-        EventTitle(modifier = modifier, event = event)
+        EventTitle(modifier = modifier.padding(horizontal = 8.dp), event = event)
     }
     if (list.isEmpty()) {
         item {
@@ -82,7 +83,7 @@ private fun EventTitle(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp),
+            .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
