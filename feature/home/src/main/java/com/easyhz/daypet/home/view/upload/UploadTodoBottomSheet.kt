@@ -1,14 +1,15 @@
 package com.easyhz.daypet.home.view.upload
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ import com.easyhz.daypet.design_system.component.bottomSheet.BottomSheet
 import com.easyhz.daypet.design_system.component.picker.DatePickerButton
 import com.easyhz.daypet.design_system.component.textField.BaseTextField
 import com.easyhz.daypet.design_system.component.textField.TextFieldType
+import com.easyhz.daypet.design_system.extension.noRippleClickable
 import com.easyhz.daypet.design_system.theme.Primary
 import com.easyhz.daypet.design_system.theme.SubTitle
 import com.easyhz.daypet.design_system.util.color.TodoColor
@@ -105,12 +107,13 @@ internal fun UploadTodoBottomSheet(
                     singleLine = true,
                     isFilled = false,
                 )
-                Text(
-                    text = stringResource(id = R.string.todo_upload_button),
-                    style = SubTitle,
-                    color = Primary,
-                    modifier = Modifier.clickable { onClickAdd(uiState.selectedDate, uiState.selectedColor, uiState.todoText) }
-                )
+                Box(modifier = Modifier.heightIn(min = 32.dp).widthIn(min = 32.dp).noRippleClickable { onClickAdd(uiState.selectedDate, uiState.selectedColor, uiState.todoText) }, contentAlignment = Alignment.CenterEnd) {
+                    Text(
+                        text = stringResource(id = R.string.todo_upload_button),
+                        style = SubTitle,
+                        color = Primary,
+                    )
+                }
             }
             AnimatedVisibility(visible = uiState.isDateExpanded) {
                 Box(modifier = Modifier.height(300.dp))
