@@ -17,6 +17,7 @@ data class HomeState(
     val selection: LocalDate,
     val monthSelection: LocalDate,
     val showMonthCalendar: Boolean,
+    val isShowUploadTodoBottomSheet: Boolean
 ) : UiState() {
     companion object {
         fun init() = HomeState(
@@ -28,7 +29,8 @@ data class HomeState(
             isLoading = false,
             selection = LocalDate.now(),
             monthSelection = LocalDate.now(),
-            showMonthCalendar = false
+            showMonthCalendar = false,
+            isShowUploadTodoBottomSheet = false,
         )
     }
 

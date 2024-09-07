@@ -59,7 +59,7 @@ internal fun UploadView(
             modifier = Modifier.screenHorizonPadding(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            DatePickerButton(uiState.date) { viewModel.postIntent(UploadIntent.ChangeDate(it)) }
+            DatePickerButton(date = uiState.date) { viewModel.postIntent(UploadIntent.ChangeDate(it)) }
             TimePickerButton(uiState.time) { viewModel.postIntent(UploadIntent.ChangeTime(it)) }
         }
         UploadImageView(

@@ -47,6 +47,8 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.ScrollMonth -> {
                 onScroll(intent.firstDate, intent.lastDate)
             }
+            is HomeIntent.HideUploadTodoBottomSheet -> { hideUploadTodoBottomSheet() }
+            is HomeIntent.CompleteHideUploadTodoBottomSheet -> { completeHideUploadBottomSheet() }
         }
     }
 
@@ -138,7 +140,7 @@ class HomeViewModel @Inject constructor(
                 postSideEffect { HomeSideEffect.NavigateToUploadMemory }
             }
             is SubMenu.Todo -> {
-                // TODO: Bottom Sheet
+                reduce { copy(isShowUploadTodoBottomSheet = true)}
             }
         }
     }
@@ -156,5 +158,13 @@ class HomeViewModel @Inject constructor(
     private fun onClickMemory(index: Int) {
         val memory = currentState.memoryList[index]
         postSideEffect { HomeSideEffect.NavigateToMemoryDetail(memory.documentId, memory.title) }
+    }
+
+    private fun hideUploadTodoBottomSheet() {
+        postSideEffect { HomeSideEffect.HideUploadTodoBottomSheet }
+    }
+
+    private fun completeHideUploadBottomSheet() {
+        reduce { copy(isShowUploadTodoBottomSheet = false) }
     }
 }

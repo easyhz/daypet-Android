@@ -18,4 +18,6 @@ sealed class HomeIntent: UiIntent() {
     data class ClickFabSubMenu(val subMenu: SubMenu): HomeIntent()
     data class ScrollWeek(val firstDate: LocalDate, val lastDate: LocalDate): HomeIntent()
     data class ScrollMonth(val firstDate: LocalDate, val lastDate: LocalDate): HomeIntent()
+    data object HideUploadTodoBottomSheet: HomeIntent()
+    data object CompleteHideUploadTodoBottomSheet: HomeIntent()
 }

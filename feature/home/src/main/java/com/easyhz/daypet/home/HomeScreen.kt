@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +47,7 @@ import com.easyhz.daypet.home.view.event.TodoContent
 import com.easyhz.daypet.home.view.event.eventItem
 import com.easyhz.daypet.home.view.fab.MainMenu
 import com.easyhz.daypet.home.view.fab.SubMenu
+import com.easyhz.daypet.home.view.upload.UploadTodoBottomSheet
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
@@ -72,7 +74,7 @@ fun HomeScreen(
     )
     val visibleWeek = rememberFirstVisibleWeekAfterScroll(weekState)
     val fabState = rememberMultiFabState()
-
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     LaunchedEffect(Unit) {
         viewModel.postIntent(HomeIntent.InitScreen(groupId, userId))
     }
@@ -170,6 +172,11 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(76.dp)) // FAB 만큼의 space
                 }
             }
+            if (uiState.isShowUploadTodoBottomSheet) {
+                UploadTodoBottomSheet(onDismissRequest = { viewModel.postIntent(HomeIntent.HideUploadTodoBottomSheet) }) { selectedDate, selectedColor, todoText ->
+                    
+                }
+            }
         }
     }
 
@@ -182,6 +189,10 @@ fun HomeScreen(
             is HomeSideEffect.ChangeWeekCalendar -> { scrollToSelection(weekState, sideEffect.localDate) }
             is HomeSideEffect.NavigateToUploadMemory -> { navigateToUploadMemory() }
             is HomeSideEffect.NavigateToMemoryDetail -> { navigateToMemoryDetail(sideEffect.id, sideEffect.title) }
+            is HomeSideEffect.HideUploadTodoBottomSheet -> {
+                sheetState.hide()
+                viewModel.postIntent(HomeIntent.CompleteHideUploadTodoBottomSheet)
+            }
         }
     }
 }

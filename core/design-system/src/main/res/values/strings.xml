@@ -95,4 +95,7 @@
         \n첫 댓글의 주인공이 되어주세요!
     </string>
 
+    <string name="todo_upload_placeholder">할 일을 입력해주세요.</string>
+    <string name="todo_upload_button">추가</string>
+
 </resources>

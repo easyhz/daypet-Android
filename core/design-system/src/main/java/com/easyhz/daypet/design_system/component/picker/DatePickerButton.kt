@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,12 +35,17 @@ import java.time.LocalDate
 
 @Composable
 fun DatePickerButton(
+    modifier: Modifier = Modifier,
     date: LocalDate = LocalDate.now(),
-    onSelected: (LocalDate) -> Unit
+    onChangeExpanded: (Boolean) -> Unit = { },
+    onSelected: (LocalDate) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedDate by remember { mutableStateOf(dateFormatter.format(date)) }
-    Column {
+    LaunchedEffect(key1 = expanded) {
+        onChangeExpanded(expanded)
+    }
+    Column(modifier = modifier) {
         Box(
             modifier = Modifier
                 .height(32.dp)
@@ -91,7 +97,7 @@ fun DatePickerButton(
 @Preview
 @Composable
 private fun DateButtonPrev() {
-    DatePickerButton(LocalDate.now()) {
+    DatePickerButton(date = LocalDate.now()) {
 
     }
 }

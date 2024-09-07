@@ -7,4 +7,5 @@ sealed class HomeSideEffect: UiSideEffect() {
     data class ChangeWeekCalendar(val localDate: LocalDate): HomeSideEffect()
     data object NavigateToUploadMemory: HomeSideEffect()
     data class NavigateToMemoryDetail(val id: String, val title: String): HomeSideEffect()
+    data object HideUploadTodoBottomSheet: HomeSideEffect()
 }
