@@ -47,7 +47,6 @@ fun CommentBottomBar(
                 color = Primary
             )
         ) {
-            println("click 예아")
             onClick()
         }
     }
