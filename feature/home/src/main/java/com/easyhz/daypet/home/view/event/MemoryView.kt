@@ -90,6 +90,6 @@ private fun MemoryInfo(
 @Preview(showBackground = true)
 @Composable
 private fun MemoryContentPrev() {
-    val memory = Memory(documentId = "", title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07")
+    val memory = Memory(documentId = "", title = "뽀삐 초코 바닷가 간 날", imageUrl = "https://picsum.photos/id/237/200/300", time = "10:07", creationTime = "10:30")
     MemoryContent(memory) {}
 }

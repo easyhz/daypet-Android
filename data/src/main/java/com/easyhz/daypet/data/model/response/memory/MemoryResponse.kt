@@ -26,4 +26,6 @@ data class MemoryResponse(
     val petIds: List<String> = emptyList(),
     @PropertyName("fcmTokens")
     val fcmTokens: List<String> = emptyList(),
+    @PropertyName("memoryDate")
+    val memoryDate: Timestamp = Timestamp.now()
 )

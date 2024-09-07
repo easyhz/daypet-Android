@@ -32,5 +32,7 @@ data class UploadMemoryRequest(
     var thumbnailUrl: String,
     @set:PropertyName("uploaderID")
     @get:PropertyName("uploaderID")
-    var uploaderId: String
+    var uploaderId: String,
+    @PropertyName("memoryDate")
+    val memoryDate: Timestamp
 )
