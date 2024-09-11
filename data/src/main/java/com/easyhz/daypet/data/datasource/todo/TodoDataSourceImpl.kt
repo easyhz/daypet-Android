@@ -1,5 +1,7 @@
 package com.easyhz.daypet.data.datasource.todo
 
+import com.easyhz.daypet.common.util.Generate
+import com.easyhz.daypet.data.model.request.todo.CreateTodoRequest
 import com.easyhz.daypet.data.model.request.todo.TodoRequest
 import com.easyhz.daypet.data.model.response.todo.TodoResponse
 import com.easyhz.daypet.data.util.Collections.TODOS
@@ -7,6 +9,7 @@ import com.easyhz.daypet.data.util.Fields.CREATION_TIME
 import com.easyhz.daypet.data.util.Fields.GROUP_ID
 import com.easyhz.daypet.data.util.Fields.TODO_DATE
 import com.easyhz.daypet.data.util.collectionHandler
+import com.easyhz.daypet.data.util.setHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import javax.inject.Inject
@@ -22,5 +25,9 @@ class TodoDataSourceImpl @Inject constructor(
             .orderBy(CREATION_TIME, ASCENDING)
             .orderBy(TODO_DATE, ASCENDING)
             .get()
+    }
+
+    override suspend fun createTodo(data: CreateTodoRequest): Result<Unit> = setHandler {
+        firestore.collection(TODOS).document(Generate.randomUUID()).set(data)
     }
 }

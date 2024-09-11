@@ -1,7 +1,7 @@
 package com.easyhz.daypet.home.contract
 
 import com.easyhz.daypet.common.base.UiIntent
-import com.easyhz.daypet.domain.model.memory.Memory
+import com.easyhz.daypet.design_system.util.color.TodoColor
 import com.easyhz.daypet.domain.model.todo.Todo
 import com.easyhz.daypet.home.view.fab.SubMenu
 import java.time.LocalDate
@@ -20,4 +20,5 @@ sealed class HomeIntent: UiIntent() {
     data class ScrollMonth(val firstDate: LocalDate, val lastDate: LocalDate): HomeIntent()
     data object HideUploadTodoBottomSheet: HomeIntent()
     data object CompleteHideUploadTodoBottomSheet: HomeIntent()
+    data class CreateTodo(val selectedDate: LocalDate, val todoColor: TodoColor, val text: String): HomeIntent()
 }

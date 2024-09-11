@@ -1,15 +1,19 @@
 package com.easyhz.daypet.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.easyhz.daypet.common.base.BaseViewModel
+import com.easyhz.daypet.design_system.util.color.TodoColor
 import com.easyhz.daypet.domain.manager.UserManager
 import com.easyhz.daypet.domain.param.home.ThumbnailParam
 import com.easyhz.daypet.domain.param.member.GroupMemberParam
 import com.easyhz.daypet.domain.param.memory.MemoryParam
+import com.easyhz.daypet.domain.param.todo.CreateTodoParam
 import com.easyhz.daypet.domain.param.todo.TodoParam
 import com.easyhz.daypet.domain.usecase.home.FetchThumbnailUseCase
 import com.easyhz.daypet.domain.usecase.member.FetchGroupMemberUseCase
 import com.easyhz.daypet.domain.usecase.memory.FetchMemoriesUseCase
+import com.easyhz.daypet.domain.usecase.todo.CreateTodoUseCase
 import com.easyhz.daypet.domain.usecase.todo.FetchTodosUseCase
 import com.easyhz.daypet.home.contract.HomeIntent
 import com.easyhz.daypet.home.contract.HomeSideEffect
@@ -27,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val fetchTodosUseCase: FetchTodosUseCase,
     private val fetchThumbnailUseCase: FetchThumbnailUseCase,
     private val fetchGroupMemberUseCase: FetchGroupMemberUseCase,
+    private val createTodoUseCase: CreateTodoUseCase,
 ) : BaseViewModel<HomeState, HomeIntent, HomeSideEffect>(
     initialState = HomeState.init()
 ) {
@@ -49,6 +54,8 @@ class HomeViewModel @Inject constructor(
             }
             is HomeIntent.HideUploadTodoBottomSheet -> { hideUploadTodoBottomSheet() }
             is HomeIntent.CompleteHideUploadTodoBottomSheet -> { completeHideUploadBottomSheet() }
+            is HomeIntent.CreateTodo -> { createTodo(intent.selectedDate, intent.todoColor, intent.text)
+            }
         }
     }
 
@@ -158,6 +165,25 @@ class HomeViewModel @Inject constructor(
     private fun onClickMemory(index: Int) {
         val memory = currentState.memoryList[index]
         postSideEffect { HomeSideEffect.NavigateToMemoryDetail(memory.documentId, memory.title) }
+    }
+
+    private fun createTodo(selectedDate: LocalDate, selectedColor: TodoColor, todoText: String) = viewModelScope.launch {
+        if (UserManager.userId == null || UserManager.groupId == null) return@launch
+        val param = CreateTodoParam(
+            todoDate = selectedDate,
+            todoColor = selectedColor.code,
+            title = todoText,
+            groupId = UserManager.groupId!!,
+            uploaderId = UserManager.userId!!
+        )
+        createTodoUseCase.invoke(param)
+            .onSuccess {
+                fetchTodos(selectedDate)
+            }.onFailure {
+                Log.e("HomeViewModel", "createTodo: $it")
+            }.also {
+                hideUploadTodoBottomSheet()
+            }
     }
 
     private fun hideUploadTodoBottomSheet() {

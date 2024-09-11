@@ -7,3 +7,11 @@ data class TodoParam(
     val startDate: LocalDate,
     val endDate: LocalDate
 )
+
+data class CreateTodoParam(
+    val groupId: String,
+    val uploaderId: String,
+    val title: String,
+    val todoColor: String,
+    val todoDate: LocalDate
+)

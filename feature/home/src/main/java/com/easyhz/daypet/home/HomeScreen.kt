@@ -174,7 +174,7 @@ fun HomeScreen(
             }
             if (uiState.isShowUploadTodoBottomSheet) {
                 UploadTodoBottomSheet(onDismissRequest = { viewModel.postIntent(HomeIntent.HideUploadTodoBottomSheet) }) { selectedDate, selectedColor, todoText ->
-                    
+                    viewModel.postIntent(HomeIntent.CreateTodo(selectedDate, selectedColor, todoText))
                 }
             }
         }
