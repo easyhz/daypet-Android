@@ -25,7 +25,7 @@ fun Timestamp.toLocalDate(): LocalDate {
  * @return [Timestamp]
  */
 fun LocalDate.toTimeStamp(plusDays: Long = 0): Timestamp {
-    val localDateTime = this.plusDays(plusDays).atStartOfDay()
+    val localDateTime = this.plusDays(plusDays).atStartOfDay().plusMinutes(1)
     val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
     return Timestamp(instant.epochSecond, instant.nano)
 }
