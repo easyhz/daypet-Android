@@ -13,6 +13,7 @@ object Collections {
 object Fields {
     const val CREATION_TIME = "creationTime"
     const val MEMORY_DATE = "memoryDate"
+    const val TODO_DATE = "todoDate"
     const val MONTH_DATE = "monthDate"
     const val GROUP_ID = "groupID"
     const val PETS = "pets"

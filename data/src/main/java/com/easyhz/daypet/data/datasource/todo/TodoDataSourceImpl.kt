@@ -5,6 +5,7 @@ import com.easyhz.daypet.data.model.response.todo.TodoResponse
 import com.easyhz.daypet.data.util.Collections.TODOS
 import com.easyhz.daypet.data.util.Fields.CREATION_TIME
 import com.easyhz.daypet.data.util.Fields.GROUP_ID
+import com.easyhz.daypet.data.util.Fields.TODO_DATE
 import com.easyhz.daypet.data.util.collectionHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.ASCENDING
@@ -16,8 +17,10 @@ class TodoDataSourceImpl @Inject constructor(
     override suspend fun fetchTodosOnDate(data: TodoRequest): Result<List<TodoResponse>> = collectionHandler {
         firestore.collection(TODOS)
             .whereEqualTo(GROUP_ID, data.groupId)
-            .whereGreaterThan(CREATION_TIME, data.startDate)
-            .whereLessThan(CREATION_TIME, data.endDate)
-            .orderBy(CREATION_TIME, ASCENDING).get()
+            .whereGreaterThanOrEqualTo(TODO_DATE, data.startDate)
+            .whereLessThanOrEqualTo(TODO_DATE, data.endDate)
+            .orderBy(CREATION_TIME, ASCENDING)
+            .orderBy(TODO_DATE, ASCENDING)
+            .get()
     }
 }
