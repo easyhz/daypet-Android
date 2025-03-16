@@ -15,3 +15,4 @@ etc.
 ```
 
 ## Documentation
+1. [Learning Point](https://github.com/easyhz/daypet-Android/blob/main/docs/LearningPoint.md)
